@@ -1,4 +1,5 @@
 import { Button } from "@/components/ui/button";
+import { LogoIcon } from "@/components/logo-icon";
 import { heroStats } from "@/lib/site-data";
 
 export function HeroSection() {
@@ -6,24 +7,24 @@ export function HeroSection() {
     <section id="top" className="relative bg-ink-950 text-paper pt-16 overflow-hidden">
       <div className="mx-auto max-w-[1160px] px-7 grid gap-10 items-center md:grid-cols-[1.1fr_1fr]">
         <div>
-          <span className="inline-flex items-center gap-2 mb-[18px] text-sage-300 font-heading font-semibold tracking-[0.09em] uppercase text-[0.72rem]">
+          <span className="rise-in d1 inline-flex items-center gap-2 mb-[18px] text-sage-300 font-heading font-semibold tracking-[0.09em] uppercase text-[0.72rem]">
             <span className="h-px w-5 bg-sage-300" aria-hidden="true" />
             Aménagement paysager &amp; élagage — Robillard &amp; Prévost
           </span>
-          <h1 className="font-heading font-bold text-[clamp(2.3rem,4.4vw,3.4rem)] leading-[1.08] max-w-[15ch]">
+          <h1 className="rise-in d2 font-heading font-bold text-[clamp(2.3rem,4.4vw,3.4rem)] leading-[1.08] max-w-[15ch]">
             Des jardins pensés avec <em className="not-italic text-gold-600">élégance</em>, de la racine à la cime.
           </h1>
-          <p className="mt-5 max-w-[46ch] text-[1.06rem] text-paper/85">
+          <p className="rise-in d3 mt-5 max-w-[46ch] text-[1.06rem] text-paper/85">
             Création d&apos;espaces verts, portails et clôtures, entretien et taille pour particuliers
             et professionnels. Un travail soigné, sécurisé, et pensé pour la santé de vos arbres sur le
             long terme.
           </p>
-          <div className="flex gap-[14px] mt-8 flex-wrap">
+          <div className="rise-in d4 flex gap-[14px] mt-8 flex-wrap">
             <Button
               render={<a href="#contact" />}
               nativeButton={false}
               size="lg"
-              className="bg-paper text-ink-950 hover:bg-gold-600 hover:text-white rounded-[3px] h-auto py-[13px] px-[22px]"
+              className="bg-paper text-ink-950 hover:bg-gold-600 hover:text-white rounded-[3px] h-auto py-[13px] px-[22px] transition-transform hover:-translate-y-0.5"
             >
               Demander un devis gratuit
             </Button>
@@ -32,13 +33,13 @@ export function HeroSection() {
               nativeButton={false}
               variant="outline"
               size="lg"
-              className="border-white/15 text-paper bg-transparent hover:bg-transparent hover:border-sage-300 hover:text-paper rounded-[3px] h-auto py-[13px] px-[22px]"
+              className="border-white/15 text-paper bg-transparent hover:bg-transparent hover:border-sage-300 hover:text-paper rounded-[3px] h-auto py-[13px] px-[22px] transition-transform hover:-translate-y-0.5"
             >
               Voir les services
             </Button>
           </div>
 
-          <div className="flex gap-[30px] mt-12 pt-6 border-t border-white/10 flex-wrap">
+          <div className="rise-in d5 flex gap-[30px] mt-12 pt-6 border-t border-white/10 flex-wrap">
             {heroStats.map((stat) => (
               <div key={stat.label}>
                 <b className="block font-heading text-[1.4rem]">{stat.value}</b>
@@ -56,14 +57,9 @@ export function HeroSection() {
                 <stop offset="100%" stopColor="#B98B4E" stopOpacity="0" />
               </radialGradient>
             </defs>
-            <circle cx="100" cy="100" r="100" fill="url(#logoGlow)" />
+            <circle className="glow-pulse" cx="100" cy="100" r="100" fill="url(#logoGlow)" />
           </svg>
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            src="/brand/logo-icon-dark.svg"
-            alt=""
-            className="absolute inset-0 m-auto w-full h-auto max-w-[400px]"
-          />
+          <LogoIcon onDark className="absolute inset-0 m-auto w-full h-auto max-w-[400px]" />
         </div>
       </div>
 

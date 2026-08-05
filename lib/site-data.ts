@@ -131,7 +131,7 @@ export const contactInfo = {
 };
 
 export const zoneInfo = {
-  city: "Ruitz",
+  city: "Olhain",
   radiusKm: 80,
 };
 

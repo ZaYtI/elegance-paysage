@@ -2,7 +2,8 @@
 
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { brand, nav } from "@/lib/site-data";
+import { LogoLockup } from "@/components/logo-lockup";
+import { nav } from "@/lib/site-data";
 import { cn } from "@/lib/utils";
 
 export function SiteHeader() {
@@ -12,12 +13,7 @@ export function SiteHeader() {
     <header className="sticky top-0 z-50 bg-ink-950 text-paper border-b border-white/10">
       <nav className="mx-auto max-w-[1160px] px-7 py-3.5 flex items-center justify-between">
         <a href="#top" className="flex items-center text-paper no-underline">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            src="/brand/logo-full-dark.svg"
-            alt={`${brand.name} — ${brand.tagline}`}
-            className="h-10 w-auto"
-          />
+          <LogoLockup onDark className="h-10 w-auto" />
         </a>
 
         <button

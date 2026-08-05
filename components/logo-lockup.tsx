@@ -23,9 +23,9 @@ export function LogoLockup({ className, onDark = false }: LogoLockupProps) {
       aria-label="Élégance Paysages — Robillard & Prévost"
       className="block w-full h-full"
       style={{
-        ["--cls-1" as string]: onDark ? "var(--sage-300)" : "#a0a794",
+        ["--cls-1" as string]: "#a0a794",
         ["--cls-2" as string]: onDark ? "var(--paper)" : "#1d1d1b",
-        ["--cls-3" as string]: onDark ? "var(--bark-500)" : "#6c5d4f",
+        ["--cls-3" as string]: "#6c5d4f",
       }}
     >
       <path fill="var(--cls-2)" d="M239.45,221.32c0,2.46-1.46,3.85-3.83,4.25l3.57,7.02h-1.17l-3.48-6.89h-4.23v6.89h-1.02v-15.5h5.18c2.88,0,4.98,1.17,4.98,4.23ZM238.43,221.35c0-2.39-1.51-3.32-4.01-3.32h-4.12v6.75h3.85c2.79,0,4.27-1.06,4.27-3.43Z" />

@@ -19,8 +19,8 @@ export function ZoneSection() {
         </div>
         <div className="mx-auto w-full max-w-[340px]" aria-hidden="true">
           <svg viewBox="0 0 300 300" className="w-full h-auto">
-            <circle cx="150" cy="150" r="120" fill="none" stroke="#A08469" strokeWidth="1" strokeDasharray="4 6" />
-            <circle cx="150" cy="150" r="80" fill="none" stroke="#A08469" strokeWidth="1" strokeDasharray="4 6" />
+            <circle cx="150" cy="150" r="120" fill="none" stroke="#6c5d4f" strokeWidth="1" strokeDasharray="4 6" />
+            <circle cx="150" cy="150" r="80" fill="none" stroke="#6c5d4f" strokeWidth="1" strokeDasharray="4 6" />
             <circle cx="150" cy="150" r="6" fill="#B98B4E" />
             <text x="150" y="140" textAnchor="middle" fontFamily="var(--font-poppins)" fontWeight="600" fontSize="9" fill="#5B5546">
               {zoneInfo.city.toUpperCase()}

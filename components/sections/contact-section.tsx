@@ -99,7 +99,7 @@ export function ContactSection() {
 
           <Button
             type="submit"
-            className="self-start mt-1.5 bg-paper text-ink-950 hover:bg-gold-600 hover:text-white rounded-[3px] h-auto py-[13px] px-[22px]"
+            className="self-start mt-1.5 bg-paper text-ink-950 hover:bg-bark-700 hover:text-white rounded-[3px] h-auto py-[13px] px-[22px]"
           >
             Envoyer la demande
           </Button>

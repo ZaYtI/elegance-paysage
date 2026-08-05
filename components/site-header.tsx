@@ -51,7 +51,7 @@ export function SiteHeader() {
         <Button
           render={<a href="#contact" />}
           nativeButton={false}
-          className="hidden md:inline-flex bg-paper text-ink-950 hover:bg-gold-600 hover:text-white rounded-[3px]"
+          className="hidden md:inline-flex bg-paper text-ink-950 hover:bg-bark-700 hover:text-white rounded-[3px]"
         >
           Devis gratuit
         </Button>

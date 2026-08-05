@@ -12,7 +12,7 @@ export function HeroSection() {
             Aménagement paysager &amp; élagage — Robillard &amp; Prévost
           </span>
           <h1 className="rise-in d2 font-heading font-bold text-[clamp(2.3rem,4.4vw,3.4rem)] leading-[1.08] max-w-[15ch]">
-            Des jardins pensés avec <em className="not-italic text-gold-600">élégance</em>, de la racine à la cime.
+            Des jardins pensés avec <em className="not-italic text-bark-700">élégance</em>, de la racine à la cime.
           </h1>
           <p className="rise-in d3 mt-5 max-w-[46ch] text-[1.06rem] text-paper/85">
             Création d&apos;espaces verts, portails et clôtures, entretien et taille pour particuliers
@@ -24,7 +24,7 @@ export function HeroSection() {
               render={<a href="#contact" />}
               nativeButton={false}
               size="lg"
-              className="bg-paper text-ink-950 hover:bg-gold-600 hover:text-white rounded-[3px] h-auto py-[13px] px-[22px] transition-transform hover:-translate-y-0.5"
+              className="bg-paper text-ink-950 hover:bg-bark-700 hover:text-white rounded-[3px] h-auto py-[13px] px-[22px] transition-transform hover:-translate-y-0.5"
             >
               Demander un devis gratuit
             </Button>

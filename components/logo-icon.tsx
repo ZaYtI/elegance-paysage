@@ -22,9 +22,9 @@ export function LogoIcon({ className, onDark = false }: LogoIconProps) {
       aria-hidden="true"
       className="block w-full h-full"
       style={{
-        ["--cls-1" as string]: onDark ? "var(--sage-300)" : "#a0a794",
+        ["--cls-1" as string]: "#a0a794",
         ["--cls-2" as string]: onDark ? "var(--paper)" : "#1d1d1b",
-        ["--cls-3" as string]: onDark ? "var(--bark-500)" : "#6c5d4f",
+        ["--cls-3" as string]: "#6c5d4f",
       }}
     >
       <path fill="var(--cls-3)" d="M125.26,178.57v-10.97c0-.49.41-.88.91-.88h0c3.49.05,16.14.95,34.94,12l10.78,6.51c15.57,10.4,23.47,13.74,35.22,16.48.69.06.94.31.94.8l-.02,10.72c0,.54-.45.97-1.01.96-2.55-.04-9.8-.97-20.92-5.73-6.62-2.84-12.59-6.43-18.82-10.38l-5.71-3.93c-18.72-12.46-35.59-14.89-35.59-14.89-.4,0-.73-.31-.73-.7h0" />

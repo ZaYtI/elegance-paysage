@@ -5,9 +5,9 @@ import { heroStats } from "@/lib/site-data";
 export function HeroSection() {
   return (
     <section id="top" className="relative bg-ink-950 text-paper pt-16 overflow-hidden">
-      <div className="mx-auto max-w-[1160px] px-7 grid gap-10 items-center md:grid-cols-[1.1fr_1fr]">
+      <div className="mx-auto max-w-290 px-7 grid gap-10 items-center md:grid-cols-[1.1fr_1fr]">
         <div>
-          <span className="rise-in d1 inline-flex items-center gap-2 mb-[18px] text-sage-300 font-heading font-semibold tracking-[0.09em] uppercase text-[0.72rem]">
+          <span className="rise-in d1 inline-flex items-center gap-2 mb-4.5 text-sage-300 font-heading font-semibold tracking-[0.09em] uppercase text-[0.72rem]">
             <span className="h-px w-5 bg-sage-300" aria-hidden="true" />
             Aménagement paysager &amp; élagage — Robillard &amp; Prévost
           </span>
@@ -19,12 +19,12 @@ export function HeroSection() {
             et professionnels. Un travail soigné, sécurisé, et pensé pour la santé de vos arbres sur le
             long terme.
           </p>
-          <div className="rise-in d4 flex gap-[14px] mt-8 flex-wrap">
+          <div className="rise-in d4 flex gap-3.5 mt-8 flex-wrap">
             <Button
               render={<a href="#contact" />}
               nativeButton={false}
               size="lg"
-              className="bg-paper text-ink-950 hover:bg-bark-700 hover:text-white rounded-[3px] h-auto py-[13px] px-[22px] transition-transform hover:-translate-y-0.5"
+              className="bg-paper text-ink-950 hover:bg-bark-700 hover:text-white rounded-[3px] h-auto py-3.25 px-5.5 transition-transform hover:-translate-y-0.5"
             >
               Demander un devis gratuit
             </Button>
@@ -33,13 +33,13 @@ export function HeroSection() {
               nativeButton={false}
               variant="outline"
               size="lg"
-              className="border-white/15 text-paper bg-transparent hover:bg-transparent hover:border-sage-300 hover:text-paper rounded-[3px] h-auto py-[13px] px-[22px] transition-transform hover:-translate-y-0.5"
+              className="border-white/15 text-paper bg-transparent hover:bg-transparent hover:border-sage-300 hover:text-paper rounded-[3px] h-auto py-3.25 px-5.5 transition-transform hover:-translate-y-0.5"
             >
               Voir les services
             </Button>
           </div>
 
-          <div className="rise-in d5 flex gap-[30px] mt-12 pt-6 border-t border-white/10 flex-wrap">
+          <div className="rise-in d5 flex gap-7.5 mt-12 pt-6 border-t border-white/10 flex-wrap">
             {heroStats.map((stat) => (
               <div key={stat.label}>
                 <b className="block font-heading text-[1.4rem]">{stat.value}</b>
@@ -49,8 +49,8 @@ export function HeroSection() {
           </div>
         </div>
 
-        <div className="relative flex items-center justify-center py-[10px] pb-[30px]" aria-hidden="true">
-          <svg viewBox="0 0 200 200" className="w-full h-auto max-w-[400px]">
+        <div className="relative flex items-center justify-center py-2.5 pb-7.5" aria-hidden="true">
+          <svg viewBox="0 0 200 200" className="w-full h-auto max-w-100">
             <defs>
               <radialGradient id="logoGlow" cx="50%" cy="50%" r="50%">
                 <stop offset="0%" stopColor="#B98B4E" stopOpacity="0.28" />
@@ -59,7 +59,7 @@ export function HeroSection() {
             </defs>
             <circle className="glow-pulse" cx="100" cy="100" r="100" fill="url(#logoGlow)" />
           </svg>
-          <LogoIcon onDark className="absolute inset-0 m-auto w-full h-auto max-w-[400px]" />
+          <LogoIcon onDark className="absolute inset-0 m-auto w-full h-auto max-w-100" />
         </div>
       </div>
 

@@ -11,7 +11,7 @@ export function SiteHeader() {
 
   return (
     <header className="sticky top-0 z-50 bg-ink-950 text-paper border-b border-white/10">
-      <nav className="mx-auto max-w-[1160px] px-7 py-3.5 flex items-center justify-between">
+      <nav className="mx-auto max-w-290 px-7 py-3.5 flex items-center justify-between">
         <a href="#top" className="flex items-center text-paper no-underline">
           <LogoLockup onDark className="h-10 w-auto" />
         </a>
@@ -31,7 +31,7 @@ export function SiteHeader() {
             "md:flex md:static md:flex-row md:gap-7 md:bg-transparent md:p-0 md:border-0",
             "list-none m-0 gap-4",
             open
-              ? "flex flex-col absolute top-full left-0 right-0 bg-ink-950 px-7 py-[18px] border-b border-white/10"
+              ? "flex flex-col absolute top-full left-0 right-0 bg-ink-950 px-7 py-4.5 border-b border-white/10"
               : "hidden"
           )}
         >
@@ -40,7 +40,7 @@ export function SiteHeader() {
               <a
                 href={item.href}
                 onClick={() => setOpen(false)}
-                className="text-[0.9rem] no-underline text-paper opacity-85 pb-[3px] border-b border-transparent transition-[opacity,border-color] duration-150 hover:opacity-100 hover:border-gold-600"
+                className="text-[0.9rem] no-underline text-paper opacity-85 pb-0.75 border-b border-transparent transition-[opacity,border-color] duration-150 hover:opacity-100 hover:border-gold-600"
               >
                 {item.label}
               </a>

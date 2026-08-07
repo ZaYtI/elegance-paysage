@@ -2,8 +2,8 @@ import { zoneInfo } from "@/lib/site-data";
 
 export function ZoneSection() {
   return (
-    <section id="zone" className="py-[70px] bg-paper">
-      <div className="mx-auto max-w-[1160px] px-7 grid gap-12 items-center md:grid-cols-2">
+    <section id="zone" className="py-17.5 bg-paper">
+      <div className="mx-auto max-w-290 px-7 grid gap-12 items-center md:grid-cols-2">
         <div>
           <span className="inline-flex items-center gap-2 mb-2.5 text-bark-700 font-heading font-semibold tracking-[0.09em] uppercase text-[0.72rem]">
             <span className="h-px w-5 bg-bark-700" aria-hidden="true" />
@@ -17,7 +17,7 @@ export function ZoneSection() {
             selon le chantier — n&apos;hésitez pas à demander.
           </p>
         </div>
-        <div className="mx-auto w-full max-w-[340px]" aria-hidden="true">
+        <div className="mx-auto w-full max-w-85" aria-hidden="true">
           <svg viewBox="0 0 300 300" className="w-full h-auto">
             <circle cx="150" cy="150" r="120" fill="none" stroke="#6c5d4f" strokeWidth="1" strokeDasharray="4 6" />
             <circle cx="150" cy="150" r="80" fill="none" stroke="#6c5d4f" strokeWidth="1" strokeDasharray="4 6" />

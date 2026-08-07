@@ -1,6 +1,5 @@
 "use client";
 
-import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -19,11 +18,9 @@ const fieldClasses =
   "bg-ink-800 border-white/15 text-paper placeholder:text-paper/40 focus-visible:ring-gold-600/50 focus-visible:border-gold-600";
 
 export function ContactSection() {
-  const [submitted, setSubmitted] = useState(false);
-
   return (
-    <section id="contact" className="bg-ink-950 text-paper pt-20 pb-[60px]">
-      <div className="mx-auto max-w-[1160px] px-7 grid gap-14 md:grid-cols-[1fr_1.1fr]">
+    <section id="contact" className="bg-ink-950 text-paper pt-20 pb-15">
+      <div className="mx-auto max-w-290 px-7 grid gap-14 md:grid-cols-[1fr_1.1fr]">
         <div>
           <span className="inline-flex items-center gap-2 mb-2.5 text-sage-300 font-heading font-semibold tracking-[0.09em] uppercase text-[0.72rem]">
             <span className="h-px w-5 bg-sage-300" aria-hidden="true" />
@@ -36,7 +33,7 @@ export function ContactSection() {
             Décrivez votre chantier ou envoyez quelques photos : nous revenons vers vous avec une
             première estimation.
           </p>
-          <div className="flex gap-3 items-center mt-[22px] text-[0.96rem]">
+          <div className="flex gap-3 items-center mt-5.5 text-[0.96rem]">
             <PhoneIcon className="w-5 h-5 text-gold-600 shrink-0" />
             <a href={contactInfo.phoneHref}>{contactInfo.phone}</a>
           </div>
@@ -50,7 +47,6 @@ export function ContactSection() {
           className="flex flex-col gap-3.5"
           onSubmit={(e) => {
             e.preventDefault();
-            setSubmitted(true);
           }}
         >
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
@@ -93,21 +89,16 @@ export function ContactSection() {
             <Textarea
               id="msg"
               placeholder="Décrivez votre projet, l'adresse, et si possible la taille approximative des arbres..."
-              className={`min-h-[90px] ${fieldClasses}`}
+              className={`min-h-22.5 ${fieldClasses}`}
             />
           </div>
 
           <Button
             type="submit"
-            className="self-start mt-1.5 bg-paper text-ink-950 hover:bg-bark-700 hover:text-white rounded-[3px] h-auto py-[13px] px-[22px]"
+            className="self-start mt-1.5 bg-paper text-ink-950 hover:bg-bark-700 hover:text-white rounded-[3px] h-auto py-3.25 px-5.5"
           >
             Envoyer la demande
           </Button>
-          <span className="text-[0.78rem] opacity-60 mt-0.5">
-            {submitted
-              ? "Merci, message noté ✓ (formulaire de démonstration — à connecter à une adresse e-mail ou un service comme Formspree)."
-              : ""}
-          </span>
         </form>
       </div>
     </section>

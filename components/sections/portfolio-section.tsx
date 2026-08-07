@@ -8,8 +8,8 @@ const frames = [
 
 export function PortfolioSection() {
   return (
-    <section id="realisations" className="py-[70px] pb-[90px] bg-sand-100">
-      <div className="mx-auto max-w-[1160px] px-7">
+    <section id="realisations" className="py-17.5 pb-22.5 bg-sand-100">
+      <div className="mx-auto max-w-290 px-7">
         <SectionHeading eyebrow="Réalisations" title="Le book de chantiers se construit en ce moment." />
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
           {frames.map((frame) => (
@@ -17,7 +17,7 @@ export function PortfolioSection() {
               key={frame.tag}
               className="aspect-4/3 border-2 border-dashed border-bark-500 rounded-lg flex flex-col items-center justify-center gap-2.5 text-bark-700 bg-bark-700/5 text-center p-5"
             >
-              <FrameIcon className="w-[38px] h-[38px]" />
+              <FrameIcon className="w-9.5 h-9.5" />
               <span className="text-bark-700 font-heading font-semibold tracking-[0.09em] uppercase text-[0.72rem]">
                 {frame.tag}
               </span>

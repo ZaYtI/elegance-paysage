@@ -11,20 +11,20 @@ const accentStyles: Record<Engagement["accent"], { border: string; icon: string 
 
 export function EngagementsSection() {
   return (
-    <section className="py-[70px] bg-paper">
-      <div className="mx-auto max-w-[1160px] px-7">
+    <section className="py-17.5 bg-paper">
+      <div className="mx-auto max-w-290 px-7">
         <SectionHeading
           eyebrow="Nos engagements"
           title="Une jeune entreprise, des standards professionnels dès le premier chantier."
         />
-        <div className="relative grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 pt-2 before:content-[''] before:absolute before:left-0 before:right-0 before:top-[37px] before:border-t before:border-dashed before:border-bark-500 before:opacity-45 before:z-0 max-lg:before:hidden">
+        <div className="relative grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 pt-2 before:content-[''] before:absolute before:left-0 before:right-0 before:top-9.25 before:border-t before:border-dashed before:border-bark-500 before:opacity-45 before:z-0 max-lg:before:hidden">
           {engagements.map((item) => {
             const accent = accentStyles[item.accent];
             return (
               <div key={item.label} className="relative z-10 flex flex-col items-center text-center gap-2.5 group">
                 <div
                   className={cn(
-                    "relative z-10 w-[58px] h-[58px] rounded-full bg-paper border-2 border-dashed flex items-center justify-center transition-transform duration-250 ease-out group-hover:scale-[1.06] group-hover:border-solid",
+                    "relative z-10 w-14.5 h-14.5 rounded-full bg-paper border-2 border-dashed flex items-center justify-center transition-transform duration-250 ease-out group-hover:scale-[1.06] group-hover:border-solid",
                     accent.border
                   )}
                 >

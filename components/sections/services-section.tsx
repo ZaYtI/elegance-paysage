@@ -41,9 +41,9 @@ function ServiceCard({ service, offset }: { service: Service; offset?: boolean }
   return (
     <Card
       className={cn(
-        "relative overflow-hidden py-0 gap-3.5 px-6 pt-[30px] pb-[26px] rounded-[4px] border-t-[3px] flex flex-col transition-transform duration-250 ease-out hover:-translate-y-[5px] hover:shadow-[0_16px_30px_-18px_rgba(30,27,22,0.35)] group",
+        "relative overflow-hidden py-0 gap-3.5 px-6 pt-7.5 pb-6.5 rounded-lg border-t-[3px] flex flex-col transition-transform duration-250 ease-out hover:-translate-y-1.25 hover:shadow-[0_16px_30px_-18px_rgba(30,27,22,0.35)] group",
         accent.border,
-        offset && "md:mt-[22px]"
+        offset && "md:mt-5.5"
       )}
     >
       <span
@@ -57,7 +57,7 @@ function ServiceCard({ service, offset }: { service: Service; offset?: boolean }
       </span>
       <div
         className={cn(
-          "relative z-10 w-[52px] h-[52px] rounded-full flex items-center justify-center transition-transform duration-250 ease-out group-hover:scale-[1.08]",
+          "relative z-10 w-13 h-13 rounded-full flex items-center justify-center transition-transform duration-250 ease-out group-hover:scale-[1.08]",
           accent.badge
         )}
       >
@@ -77,8 +77,8 @@ function ServiceCard({ service, offset }: { service: Service; offset?: boolean }
 
 export function ServicesSection() {
   return (
-    <section id="services" className="py-[70px] pb-[90px] bg-paper">
-      <div className="mx-auto max-w-[1160px] px-7">
+    <section id="services" className="py-17.5 pb-22.5 bg-paper">
+      <div className="mx-auto max-w-290 px-7">
         <SectionHeading
           eyebrow="Nos métiers"
           title="Quatre savoir-faire, un seul objectif : des extérieurs sains et soignés."

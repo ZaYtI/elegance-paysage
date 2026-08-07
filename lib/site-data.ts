@@ -121,7 +121,7 @@ export const serviceOptions = [
   "Abattage",
   "Taille de haie",
   "Autre",
-];
+] as const;
 
 export const contactInfo = {
   phone: "+33 0 00 00 00 00",

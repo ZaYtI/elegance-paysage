@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -12,10 +12,24 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { MailIcon, PhoneIcon } from "@/components/section-icons";
+import { ImageUploadIcon, MailIcon, PhoneIcon, TrashIcon } from "@/components/section-icons";
 import { contactInfo, serviceOptions } from "@/lib/site-data";
 import { cn } from "@/lib/utils";
 import { z } from "zod";
+
+const MAX_PHOTO_SIZE = 5 * 1024 * 1024;
+const MAX_PHOTOS = 5;
+const ACCEPTED_PHOTO_TYPES = [
+  "image/jpeg",
+  "image/png",
+  "image/webp"
+];
+
+type PhotoAttachment = {
+  id: string;
+  file: File;
+  preview: string
+};
 
 const fieldClasses =
   "bg-ink-800 border-white/15 text-paper placeholder:text-paper/40 focus-visible:ring-gold-600/50 focus-visible:border-gold-600";
@@ -68,6 +82,56 @@ export function ContactSection() {
   const [values, setValues] = useState<ContactFormValues>(initialValues);
   const [errors, setErrors] = useState<ContactFormErrors>({});
   const [submitted, setSubmitted] = useState(false);
+  const [photos, setPhotos] = useState<PhotoAttachment[]>([]);
+  const [photoError, setPhotoError] = useState("");
+  const photoInputRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    return () => {
+      for (const photo of photos) URL.revokeObjectURL(photo.preview);
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  function handlePhotoChange(e: React.ChangeEvent<HTMLInputElement>) {
+    const files = Array.from(e.target.files ?? []);
+    e.target.value = "";
+    if (files.length === 0) return;
+
+    const remainingSlots = MAX_PHOTOS - photos.length;
+    const accepted: PhotoAttachment[] = [];
+    let error = "";
+
+    for (const file of files) {
+      if (accepted.length >= remainingSlots) {
+        error = `${MAX_PHOTOS} photos maximum`;
+        break;
+      }
+      if (!ACCEPTED_PHOTO_TYPES.includes(file.type)) {
+        error = "Formats acceptés : JPEG, PNG, WebP";
+        continue;
+      }
+      if (file.size > MAX_PHOTO_SIZE) {
+        error = "Chaque image doit faire 5 Mo maximum";
+        continue;
+      }
+      accepted.push({ id: `${file.name}-${file.size}-${file.lastModified}`, file, preview: URL.createObjectURL(file) });
+    }
+
+    setPhotoError(error);
+    if (accepted.length > 0) {
+      setPhotos((prev) => [...prev, ...accepted]);
+    }
+  }
+
+  function removePhoto(id: string) {
+    setPhotos((prev) => {
+      const target = prev.find((p) => p.id === id);
+      if (target) URL.revokeObjectURL(target.preview);
+      return prev.filter((p) => p.id !== id);
+    });
+    setPhotoError("");
+  }
 
   function setField<K extends keyof ContactFormValues>(field: K, value: ContactFormValues[K]) {
     setValues((v) => ({ ...v, [field]: value }));
@@ -245,6 +309,62 @@ export function ContactSection() {
               className={`min-h-22.5 ${fieldClasses}`}
             />
             {errors.msg && <p className="mt-1 text-[0.78rem] text-destructive">{errors.msg}</p>}
+          </div>
+
+          <div>
+            <Label htmlFor="photo" className="text-[0.78rem] opacity-80 mb-1.5">
+              Photos (optionnel)
+            </Label>
+            <input
+              ref={photoInputRef}
+              id="photo"
+              name="photo"
+              type="file"
+              multiple
+              accept={ACCEPTED_PHOTO_TYPES.join(",")}
+              onChange={handlePhotoChange}
+              className="sr-only"
+              aria-invalid={Boolean(photoError)}
+            />
+            <div className="flex flex-wrap gap-3">
+              {photos.map((photo) => (
+                <div key={photo.id} className="relative w-16 h-16 shrink-0 group">
+                  <img
+                    src={photo.preview}
+                    alt={`Photo jointe : ${photo.file.name}`}
+                    className="w-full h-full object-cover rounded-lg border border-white/15"
+                  />
+                  <button
+                    type="button"
+                    onClick={() => removePhoto(photo.id)}
+                    aria-label={`Retirer ${photo.file.name}`}
+                    className="absolute -top-1.5 -right-1.5 flex items-center justify-center w-5.5 h-5.5 rounded-full bg-ink-950 border border-white/20 text-paper/80 hover:text-destructive hover:border-destructive transition-colors"
+                  >
+                    <TrashIcon className="w-3 h-3" />
+                  </button>
+                </div>
+              ))}
+              {photos.length < MAX_PHOTOS && (
+                <button
+                  type="button"
+                  onClick={() => photoInputRef.current?.click()}
+                  className={cn(
+                    "flex flex-col items-center justify-center gap-1 w-16 h-16 shrink-0 rounded-lg border border-dashed text-[0.68rem] opacity-80 hover:opacity-100 transition-colors",
+                    photoError ? "border-destructive" : "border-white/25 hover:border-gold-600"
+                  )}
+                >
+                  <ImageUploadIcon className="w-5 h-5" />
+                  Ajouter
+                </button>
+              )}
+            </div>
+            {photoError ? (
+              <p className="mt-1.5 text-[0.78rem] text-destructive">{photoError}</p>
+            ) : (
+              <p className="mt-1.5 text-[0.72rem] opacity-50">
+                JPEG, PNG ou WebP — 5 Mo par image, {MAX_PHOTOS} photos maximum
+              </p>
+            )}
           </div>
 
           <Button

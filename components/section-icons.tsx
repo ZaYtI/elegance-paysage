@@ -130,6 +130,24 @@ export function MailIcon(props: SVGProps<SVGSVGElement>) {
   );
 }
 
+export function ImageUploadIcon(props: SVGProps<SVGSVGElement>) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.6} {...props}>
+      <rect x="3" y="4" width="18" height="16" rx="2" />
+      <circle cx="9" cy="10" r="1.8" />
+      <path d="M3 17l5.5-5.5a2 2 0 0 1 2.8 0L15 15l1.2-1.2a2 2 0 0 1 2.8 0L21 16" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+  );
+}
+
+export function TrashIcon(props: SVGProps<SVGSVGElement>) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.6} {...props}>
+      <path d="M4 7h16M9 7V5a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2m-8 0 1 12a2 2 0 0 0 2 2h4a2 2 0 0 0 2-2l1-12" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+  );
+}
+
 export function FrameIcon(props: SVGProps<SVGSVGElement>) {
   return (
     <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" strokeWidth={1.5} {...props}>

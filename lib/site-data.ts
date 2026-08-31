@@ -124,10 +124,10 @@ export const serviceOptions = [
 ] as const;
 
 export const contactInfo = {
-  phone: "+33 0 00 00 00 00",
-  phoneHref: "tel:+330000000000",
-  email: "contact@elegancepaysages.fr",
-  emailHref: "mailto:contact@elegancepaysages.fr",
+  phone: "+33 6 28 73 25 88",
+  phoneHref: "tel:+330628732588",
+  email: "contact@elegancepaysage62.com",
+  emailHref: "mailto:contact@elegancepaysage62.com",
 };
 
 export const zoneInfo = {

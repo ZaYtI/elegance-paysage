@@ -137,6 +137,34 @@ export const zoneInfo = {
   radiusKm: 80,
 };
 
+export const legalInfo = {
+  // Éditeur
+  companyName: "Élégance Paysage",
+  legalForm: "Société à responsabilité limitée (SARL)",
+  capital: "5 700 €",
+  address: "164 Grand Rue, 62150 La Comté",
+  rcsCity: "Arras",
+  siren: "108 765 629",
+  // Société assujettie à la TVA, numéro en cours d'attribution.
+  // Quand il est reçu, le renseigner ici (valeur probable : "FR 54 108765629").
+  // Tant que "", la page affiche « En cours d'attribution ».
+  vatNumber: "",
+  // Représentant(s) légal(aux) — directeur de la publication.
+  publicationDirector: "Paul Robillard et Auxence Prévost, cogérants",
+  // Hébergeur (déploiement Vercel)
+  host: {
+    name: "Vercel Inc.",
+    address: "340 S Lemon Avenue #4133, Walnut, CA 91789, États-Unis",
+    url: "https://vercel.com",
+  },
+  // Optionnel — médiateur de la consommation (obligatoire pour la vente aux particuliers)
+  mediator: {
+    name: "",
+    url: "",
+  },
+  lastUpdated: "2026-09-01",
+};
+
 export const brand = {
   name: "ÉLÉGANCE PAYSAGES",
   tagline: "Robillard & Prévost",

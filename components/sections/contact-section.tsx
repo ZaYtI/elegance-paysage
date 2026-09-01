@@ -14,16 +14,19 @@ import {
 } from "@/components/ui/select";
 import { ImageUploadIcon, MailIcon, PhoneIcon, TrashIcon } from "@/components/section-icons";
 import { contactInfo, serviceOptions } from "@/lib/site-data";
+import {
+  contactFormSchema,
+  phoneCountries,
+  PHOTO_LIMITS,
+  type ContactFormErrors,
+  type ContactFormValues,
+  type PhoneCountryCode,
+} from "@/lib/contact-schema";
 import { cn } from "@/lib/utils";
-import { z } from "zod";
 
-const MAX_PHOTO_SIZE = 5 * 1024 * 1024;
-const MAX_PHOTOS = 5;
-const ACCEPTED_PHOTO_TYPES = [
-  "image/jpeg",
-  "image/png",
-  "image/webp"
-];
+const MAX_PHOTO_SIZE = PHOTO_LIMITS.maxSize;
+const MAX_PHOTOS = PHOTO_LIMITS.maxCount;
+const ACCEPTED_PHOTO_TYPES = PHOTO_LIMITS.acceptedTypes;
 
 type PhotoAttachment = {
   id: string;
@@ -31,43 +34,10 @@ type PhotoAttachment = {
   preview: string
 };
 
+type SubmitStatus = "idle" | "sending" | "success" | "error";
+
 const fieldClasses =
   "bg-ink-800 border-white/15 text-paper placeholder:text-paper/40 focus-visible:ring-gold-600/50 focus-visible:border-gold-600";
-
-const phoneCountries = [
-  { code: "+33", label: "France", flag: "FR", pattern: /^[1-9]\d{8}$/, placeholder: "6 12 34 56 78" },
-  { code: "+32", label: "Belgique", flag: "BE", pattern: /^[1-9]\d{7,8}$/, placeholder: "470 12 34 56" },
-] as const;
-
-type PhoneCountryCode = (typeof phoneCountries)[number]["code"];
-
-const contactFormSchema = z
-  .object({
-    nom: z.string().trim().min(2, "Le nom doit contenir au moins 2 caractères").max(100, "100 caractères maximum"),
-    email: z
-      .string()
-      .trim()
-      .min(1, "L'email est requis")
-      .pipe(z.email("Adresse email invalide")),
-    telCountry: z.enum(["+33", "+32"]),
-    tel: z.string().trim(),
-    service: z.enum(serviceOptions),
-    msg: z.string().trim().max(500, "500 caractères maximum").optional(),
-  })
-  .superRefine((data, ctx) => {
-    if (data.tel === "") return;
-    const country = phoneCountries.find((c) => c.code === data.telCountry);
-    if (country && !country.pattern.test(data.tel)) {
-      ctx.addIssue({
-        code: "custom",
-        path: ["tel"],
-        message: `Numéro invalide pour ${country.label} (+${country.code.slice(1)})`,
-      });
-    }
-  });
-
-type ContactFormValues = z.infer<typeof contactFormSchema>;
-type ContactFormErrors = Partial<Record<keyof ContactFormValues, string>>;
 
 const initialValues: ContactFormValues = {
   nom: "",
@@ -81,7 +51,8 @@ const initialValues: ContactFormValues = {
 export function ContactSection() {
   const [values, setValues] = useState<ContactFormValues>(initialValues);
   const [errors, setErrors] = useState<ContactFormErrors>({});
-  const [submitted, setSubmitted] = useState(false);
+  const [status, setStatus] = useState<SubmitStatus>("idle");
+  const [feedback, setFeedback] = useState("");
   const [photos, setPhotos] = useState<PhotoAttachment[]>([]);
   const [photoError, setPhotoError] = useState("");
   const photoInputRef = useRef<HTMLInputElement>(null);
@@ -107,7 +78,7 @@ export function ContactSection() {
         error = `${MAX_PHOTOS} photos maximum`;
         break;
       }
-      if (!ACCEPTED_PHOTO_TYPES.includes(file.type)) {
+      if (!ACCEPTED_PHOTO_TYPES.includes(file.type as (typeof ACCEPTED_PHOTO_TYPES)[number])) {
         error = "Formats acceptés : JPEG, PNG, WebP";
         continue;
       }
@@ -138,14 +109,19 @@ export function ContactSection() {
     if (errors[field]) {
       setErrors((e) => ({ ...e, [field]: undefined }));
     }
+    if (status === "error" || status === "success") {
+      setStatus("idle");
+      setFeedback("");
+    }
   }
 
   const activeCountry = phoneCountries.find((c) => c.code === values.telCountry) ?? phoneCountries[0];
 
-  function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    const result = contactFormSchema.safeParse(values);
+    if (status === "sending") return;
 
+    const result = contactFormSchema.safeParse(values);
     if (!result.success) {
       const fieldErrors: ContactFormErrors = {};
       for (const issue of result.error.issues) {
@@ -155,12 +131,41 @@ export function ContactSection() {
         }
       }
       setErrors(fieldErrors);
-      setSubmitted(false);
+      setStatus("idle");
+      setFeedback("");
       return;
     }
 
     setErrors({});
-    setSubmitted(true);
+    setStatus("sending");
+    setFeedback("");
+
+    try {
+      const body = new FormData();
+      body.set("nom", result.data.nom);
+      body.set("email", result.data.email);
+      body.set("telCountry", result.data.telCountry);
+      body.set("tel", result.data.tel);
+      body.set("service", result.data.service);
+      body.set("msg", result.data.msg ?? "");
+      for (const photo of photos) body.append("photos", photo.file);
+
+      const response = await fetch("/api/contact", { method: "POST", body });
+      if (!response.ok) {
+        const data = (await response.json().catch(() => null)) as { error?: string } | null;
+        throw new Error(data?.error ?? "L'envoi a échoué.");
+      }
+
+      for (const photo of photos) URL.revokeObjectURL(photo.preview);
+      setPhotos([]);
+      setPhotoError("");
+      setValues(initialValues);
+      setStatus("success");
+      setFeedback("Merci, votre demande a bien été envoyée. Nous revenons vers vous rapidement.");
+    } catch (err) {
+      setStatus("error");
+      setFeedback(err instanceof Error ? err.message : "L'envoi a échoué. Réessayez plus tard.");
+    }
   }
 
   return (
@@ -180,7 +185,11 @@ export function ContactSection() {
           </p>
           <div className="flex gap-3 items-center mt-5.5 text-[0.96rem]">
             <PhoneIcon className="w-5 h-5 text-gold-600 shrink-0" />
-            <a href={contactInfo.phoneHref}>{contactInfo.phone}</a>
+            <span>
+              <a href={contactInfo.phoneHref}>{contactInfo.phone}</a>
+              {" | "}
+              <a href={contactInfo.phoneSecondaryHref}>{contactInfo.phoneSecondary}</a>
+            </span>
           </div>
           <div className="flex gap-3 items-center mt-3 text-[0.96rem]">
             <MailIcon className="w-5 h-5 text-gold-600 shrink-0" />
@@ -367,17 +376,34 @@ export function ContactSection() {
             )}
           </div>
 
+          {/* Honeypot anti-spam — masqué aux humains, ignoré par le serveur si rempli. */}
+          <input
+            type="text"
+            name="website"
+            tabIndex={-1}
+            autoComplete="off"
+            aria-hidden="true"
+            className="hidden"
+          />
+
           <Button
             type="submit"
-            className="self-start mt-1.5 bg-paper text-ink-950 hover:bg-bark-700 hover:text-white rounded-[3px] h-auto py-3.25 px-5.5"
+            disabled={status === "sending"}
+            className="self-start mt-1.5 bg-paper text-ink-950 hover:bg-bark-700 hover:text-white rounded-[3px] h-auto py-3.25 px-5.5 disabled:opacity-60"
           >
-            Envoyer la demande
+            {status === "sending" ? "Envoi en cours…" : "Envoyer la demande"}
           </Button>
-          <span className="text-[0.78rem] opacity-60 mt-0.5">
-            {submitted
-              ? "Merci, message noté ✓ (formulaire de démonstration — à connecter à une adresse e-mail ou un service comme Formspree)."
-              : ""}
-          </span>
+          {feedback && (
+            <span
+              className={cn(
+                "text-[0.78rem] mt-0.5",
+                status === "error" ? "text-destructive" : "opacity-70"
+              )}
+              role="status"
+            >
+              {feedback}
+            </span>
+          )}
         </form>
       </div>
     </section>

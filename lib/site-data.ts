@@ -126,6 +126,8 @@ export const serviceOptions = [
 export const contactInfo = {
   phone: "+33 6 28 73 25 88",
   phoneHref: "tel:+330628732588",
+  phoneSecondary: "+33 6 65 38 71 22",
+  phoneSecondaryHref: "tel:+330665387122",
   email: "contact@elegancepaysage62.com",
   emailHref: "mailto:contact@elegancepaysage62.com",
 };

@@ -5,7 +5,7 @@ import { contactInfo } from "@/lib/site-data";
 
 export const runtime = "nodejs";
 
-const { SMTP_USER, SMTP_PASS, CONTACT_TO } = process.env;
+const { SMTP_USER, GMAIL_CLIENT_ID, GMAIL_CLIENT_SECRET, GMAIL_REFRESH_TOKEN, CONTACT_TO } = process.env;
 
 function escapeHtml(value: string) {
   return value
@@ -16,8 +16,8 @@ function escapeHtml(value: string) {
 }
 
 export async function POST(request: Request) {
-  if (!SMTP_USER || !SMTP_PASS) {
-    console.error("Contact form: SMTP_USER / SMTP_PASS are not configured.");
+  if (!SMTP_USER || !GMAIL_CLIENT_ID || !GMAIL_CLIENT_SECRET || !GMAIL_REFRESH_TOKEN) {
+    console.error("Contact form: Gmail OAuth2 env vars are not configured.");
     return NextResponse.json({ error: "Service d'envoi indisponible." }, { status: 500 });
   }
 
@@ -71,10 +71,14 @@ export async function POST(request: Request) {
   const message = msg?.trim() ? msg.trim() : "Aucun message.";
 
   const transporter = nodemailer.createTransport({
-    host: "smtp.gmail.com",
-    port: 465,
-    secure: true,
-    auth: { user: SMTP_USER, pass: SMTP_PASS },
+    service: "gmail",
+    auth: {
+      type: "OAuth2",
+      user: SMTP_USER,
+      clientId: GMAIL_CLIENT_ID,
+      clientSecret: GMAIL_CLIENT_SECRET,
+      refreshToken: GMAIL_REFRESH_TOKEN,
+    },
   });
 
   try {

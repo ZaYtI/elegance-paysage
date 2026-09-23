@@ -166,6 +166,12 @@ export const legalInfo = {
 };
 
 export const brand = {
-  name: "ÉLÉGANCE PAYSAGES",
+  name: "ÉLÉGANCE PAYSAGE",
   tagline: "Robillard & Prévost",
+};
+
+export const siteInfo = {
+  url: "https://elegancepaysage62.com",
+  name: "Elegance Paysage",
+  googleBusinessUrl: "https://share.google/Q01tcPKPWumN05809",
 };

@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Poppins, Work_Sans } from "next/font/google";
+import { Analytics } from "@vercel/analytics/next"
 import "./globals.css";
 
 const poppins = Poppins({
@@ -32,6 +33,7 @@ export default function RootLayout({
     >
       <body className="min-h-full flex flex-col bg-paper text-ink-900 font-sans">
         {children}
+        <Analytics />
       </body>
     </html>
   );

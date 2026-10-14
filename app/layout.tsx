@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { DM_Sans, Manrope } from "next/font/google";
 import { Analytics } from "@vercel/analytics/next"
+import { RevealOnScroll } from "@/components/layout/reveal-on-scroll";
 import { LocalBusinessJsonLd } from "@/components/local-business-jsonld";
 import { siteInfo } from "@/lib/site-data";
 import "./globals.css";
@@ -43,6 +44,7 @@ export default function RootLayout({
     >
       <body>
         <LocalBusinessJsonLd />
+        <RevealOnScroll />
         {children}
         <Analytics />
       </body>

@@ -13,16 +13,18 @@ type ProcessStepCardProps = {
 
 export function ProcessStepCard({ step }: ProcessStepCardProps) {
   return (
-    <li className={`reveal ${styles.card}`}>
-      <span className={styles.watermark} aria-hidden="true">
-        {step.num}
-      </span>
-      <div className={styles.head}>
-        <ProcessStepIcon stepNumber={step.num} className={styles.icon} />
-        <span className={styles.label}>Étape {step.num}</span>
+    <li className="reveal">
+      <div className={styles.card}>
+        <span className={styles.watermark} aria-hidden="true">
+          {step.num}
+        </span>
+        <div className={styles.head}>
+          <ProcessStepIcon stepNumber={step.num} className={styles.icon} />
+          <span className={styles.label}>Étape {step.num}</span>
+        </div>
+        <h3 className={styles.title}>{step.title}</h3>
+        <p className={styles.description}>{step.description}</p>
       </div>
-      <h3 className={styles.title}>{step.title}</h3>
-      <p className={styles.description}>{step.description}</p>
     </li>
   );
 }

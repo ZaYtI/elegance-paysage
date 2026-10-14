@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import { GalleryBrowser } from "@/components/gallery-page/gallery-browser";
 import { GalleryContactBand } from "@/components/gallery-page/gallery-contact-band";
 import { GalleryHero } from "@/components/gallery-page/gallery-hero";
-import { ScrollProgress } from "@/components/layout/scroll-progress";
 import { SiteFooter } from "@/components/layout/site-footer";
 import { SiteHeader } from "@/components/layout/site-header";
 import { galleryNav } from "@/lib/site-data";
@@ -17,7 +16,6 @@ export const metadata: Metadata = {
 export default function GalleryPage() {
   return (
     <>
-      <ScrollProgress />
       <SiteHeader links={galleryNav} homeHref="/" />
       <main>
         <div className="bg-paper text-[#1e1b16]">

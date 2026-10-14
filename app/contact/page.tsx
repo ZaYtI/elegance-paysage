@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { ContactForm } from "@/components/contact-form/contact-form";
 import { ContactIntro } from "@/components/contact-page/contact-intro";
-import { ScrollProgress } from "@/components/layout/scroll-progress";
 import { SiteFooter } from "@/components/layout/site-footer";
 import { SiteHeader } from "@/components/layout/site-header";
 import { RoundedPanel } from "@/components/ui/rounded-panel";
@@ -17,7 +16,6 @@ export const metadata: Metadata = {
 export default function ContactPage() {
   return (
     <>
-      <ScrollProgress />
       <SiteHeader links={pageNav} homeHref="/" />
       <main className="bg-sand-100 pt-[110px]">
         <RoundedPanel surround="sand" className="grid grid-cols-1 items-start gap-14 min-[951px]:grid-cols-[1fr_1.15fr]">

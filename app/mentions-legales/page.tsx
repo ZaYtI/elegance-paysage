@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { Eyebrow } from "@/components/ui/eyebrow";
 import { SiteHeader } from "@/components/layout/site-header";
 import { SiteFooter } from "@/components/layout/site-footer";
-import { contactInfo, legalInfo, pageNav } from "@/lib/site-data";
+import { contactInfo, legalInfo } from "@/lib/site-data";
 
 export const metadata: Metadata = {
   title: "Mentions légales — Élégance Paysage",
@@ -27,7 +27,7 @@ export default function MentionsLegalesPage() {
 
   return (
     <div className="flex flex-col flex-1">
-      <SiteHeader links={pageNav} homeHref="/" />
+      <SiteHeader />
 
       <main className="flex flex-col flex-1 bg-ink-950 text-paper">
         <div className="mx-auto w-full max-w-3xl px-7 pt-32 pb-14 md:pt-40 md:pb-20">

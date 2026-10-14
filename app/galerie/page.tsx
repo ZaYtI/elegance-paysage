@@ -4,7 +4,6 @@ import { GalleryContactBand } from "@/components/gallery-page/gallery-contact-ba
 import { GalleryHero } from "@/components/gallery-page/gallery-hero";
 import { SiteFooter } from "@/components/layout/site-footer";
 import { SiteHeader } from "@/components/layout/site-header";
-import { galleryNav } from "@/lib/site-data";
 
 export const metadata: Metadata = {
   title: "Galerie — Élégance Paysage",
@@ -16,7 +15,7 @@ export const metadata: Metadata = {
 export default function GalleryPage() {
   return (
     <>
-      <SiteHeader links={galleryNav} homeHref="/" />
+      <SiteHeader />
       <main>
         <div className="bg-paper text-[#1e1b16]">
           <GalleryHero />

@@ -7,12 +7,11 @@ import { ApproachSection } from "@/components/home/approach/approach-section";
 import { GalleryPreviewSection } from "@/components/home/gallery-preview/gallery-preview-section";
 import { ZoneSection } from "@/components/home/zone-section";
 import { ContactSection } from "@/components/home/contact/contact-section";
-import { homeNav } from "@/lib/site-data";
 
 export default function Home() {
   return (
     <>
-      <SiteHeader links={homeNav} homeHref="#top" />
+      <SiteHeader />
       <main>
         <HeroSection />
         <VisionSection />

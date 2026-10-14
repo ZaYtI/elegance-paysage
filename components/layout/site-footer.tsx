@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { LogoIcon } from "@/components/logo-icon";
-import { contactInfo, footerNav, zoneInfo } from "@/lib/site-data";
+import { contactInfo, homeSectionsNav, mainNav, zoneInfo } from "@/lib/site-data";
 import { FooterColumn } from "./footer-column";
 import { FooterWordmark } from "./footer-wordmark";
 import styles from "./site-footer.module.css";
@@ -26,7 +26,8 @@ export function SiteFooter() {
             Paysagiste &amp; élagueur, dans un rayon de {zoneInfo.radiusKm} km autour d’{zoneInfo.city}.
           </p>
         </div>
-        <FooterColumn title="Navigation" links={footerNav} />
+        <FooterColumn title="Pages" links={mainNav} />
+        <FooterColumn title="Sur l’accueil" links={homeSectionsNav} />
         <FooterColumn title="Contact" links={contactLinks} />
       </div>
 

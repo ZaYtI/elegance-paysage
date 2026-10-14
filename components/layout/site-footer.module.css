@@ -7,7 +7,7 @@
 
 .top {
   display: grid;
-  grid-template-columns: 1.6fr 1fr 1fr;
+  grid-template-columns: 1.6fr 1fr 1fr 1.2fr;
   gap: 60px;
 }
 
@@ -117,7 +117,7 @@
 
 @media (max-width: 950px) {
   .top {
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr 1fr 1fr;
     gap: 44px;
   }
 

@@ -1,31 +1,16 @@
 export type NavLink = { label: string; href: string };
 
-export const homeNav: NavLink[] = [
-  { label: "Notre vision", href: "#vision" },
-  { label: "Savoir-faire", href: "#expertises" },
-  { label: "Approche", href: "#approche" },
-  { label: "Galerie", href: "/galerie" },
-  { label: "Secteur", href: "#secteur" },
-];
-
-export const pageNav: NavLink[] = [
+export const mainNav: NavLink[] = [
   { label: "Accueil", href: "/" },
   { label: "Galerie", href: "/galerie" },
   { label: "Contact", href: "/contact" },
 ];
 
-export const footerNav: NavLink[] = [
-  { label: "Accueil", href: "/" },
+export const homeSectionsNav: NavLink[] = [
+  { label: "Notre vision", href: "/#vision" },
   { label: "Savoir-faire", href: "/#expertises" },
   { label: "Approche", href: "/#approche" },
-  { label: "Galerie", href: "/galerie" },
-  { label: "Contact", href: "/contact" },
-];
-
-export const galleryNav: NavLink[] = [
-  { label: "Accueil", href: "/" },
-  { label: "Galerie", href: "#galerie" },
-  { label: "Contact", href: "/contact" },
+  { label: "Secteur", href: "/#secteur" },
 ];
 
 export const heroStats = [

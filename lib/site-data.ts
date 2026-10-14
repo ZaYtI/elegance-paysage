@@ -13,7 +13,7 @@ export const homeSectionsNav: NavLink[] = [
   { label: "Secteur", href: "/#secteur" },
 ];
 
-export const heroStats = [
+export const keyFacts = [
   { value: "Gratuit", label: "Devis personnalisé" },
   { value: "100%", label: "Assuré & équipé" },
   { value: "4", label: "Métiers du végétal" },

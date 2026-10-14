@@ -1,6 +1,7 @@
 import { SiteHeader } from "@/components/layout/site-header";
 import { SiteFooter } from "@/components/layout/site-footer";
 import { HeroSection } from "@/components/home/hero/hero-section";
+import { KeyFactsBand } from "@/components/home/key-facts-band";
 import { VisionSection } from "@/components/home/vision-section";
 import { ExpertisesSection } from "@/components/home/expertises/expertises-section";
 import { ApproachSection } from "@/components/home/approach/approach-section";
@@ -14,6 +15,7 @@ export default function Home() {
       <SiteHeader />
       <main>
         <HeroSection />
+        <KeyFactsBand />
         <VisionSection />
         <ExpertisesSection />
         <ApproachSection />

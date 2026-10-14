@@ -1,0 +1,116 @@
+.header {
+  position: sticky;
+  top: 14px;
+  z-index: 50;
+  height: 0;
+}
+
+.nav {
+  margin: 0 auto;
+  width: calc(100% - 32px);
+  max-width: 1180px;
+  height: 62px;
+  padding: 0 11px 0 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  border-radius: 999px;
+  background: rgba(23, 20, 15, 0.86);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(250, 248, 242, 0.14);
+  color: var(--paper);
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+}
+
+.logo {
+  width: 34px;
+  flex: none;
+}
+
+.wordmark {
+  display: flex;
+  flex-direction: column;
+  line-height: 1;
+}
+
+.name {
+  font-family: var(--font-display);
+  font-size: 17px;
+  font-weight: 700;
+  letter-spacing: -0.8px;
+  white-space: nowrap;
+}
+
+.signature {
+  margin-top: 5px;
+  font-size: 8px;
+  letter-spacing: 1.8px;
+  text-transform: uppercase;
+  color: var(--stone-400);
+  white-space: nowrap;
+}
+
+.links {
+  display: flex;
+  gap: 30px;
+  font-size: 14px;
+}
+
+.link {
+  position: relative;
+}
+
+.link::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -5px;
+  height: 1px;
+  background: currentColor;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.link:hover::after {
+  transform: scaleX(1);
+}
+
+.cta {
+  display: inline-flex;
+  align-items: center;
+  height: 40px;
+  padding: 0 20px;
+  border-radius: 999px;
+  background: var(--paper);
+  color: var(--ink-950);
+  font-size: 14px;
+  font-weight: 600;
+  white-space: nowrap;
+  transition: background 0.3s var(--ease-out-soft);
+}
+
+.cta:hover {
+  background: var(--accent-color);
+}
+
+@media (max-width: 950px) {
+  .links {
+    display: none;
+  }
+}
+
+@media (max-width: 650px) {
+  .cta {
+    display: none;
+  }
+}

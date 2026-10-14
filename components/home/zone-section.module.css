@@ -1,0 +1,105 @@
+.zone {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+  gap: 60px;
+  overflow: hidden;
+  padding: 125px 6%;
+  background: var(--sand-100);
+  color: #1e1b16;
+}
+
+@media (min-width: 1700px) {
+  .zone {
+    padding-inline: max(6%, calc(50vw - 750px));
+  }
+}
+
+.lead + .lead {
+  margin-top: 16px;
+}
+
+.sphere {
+  position: relative;
+  width: 400px;
+  height: 400px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: auto;
+  perspective: 900px;
+}
+
+.rings {
+  position: absolute;
+  inset: 0;
+  transform-style: preserve-3d;
+  transform: rotateX(60deg) rotateZ(-20deg);
+  animation: zone-orbit 30s linear infinite;
+}
+
+.ring {
+  position: absolute;
+  inset: calc(var(--i) * 18px);
+  border: 1px solid rgb(108 93 79 / 0.31);
+  border-radius: 50%;
+  transform: translateZ(calc(var(--i) * 18px));
+}
+
+.figure {
+  position: relative;
+  text-align: center;
+  font-size: 14px;
+}
+
+.figureNumber {
+  display: block;
+  font-family: var(--font-display);
+  font-size: 115px;
+  font-weight: 700;
+  letter-spacing: -8px;
+  line-height: 1;
+}
+
+.unit {
+  font-size: 30px;
+  font-style: normal;
+  letter-spacing: -1px;
+}
+
+.figureCaption {
+  display: block;
+  margin-top: 15px;
+}
+
+@keyframes zone-orbit {
+  to {
+    transform: rotateX(60deg) rotateZ(340deg);
+  }
+}
+
+@media (max-width: 950px) {
+  .sphere {
+    width: 310px;
+    height: 310px;
+  }
+}
+
+@media (max-width: 650px) {
+  .zone {
+    grid-template-columns: 1fr;
+    gap: 6px;
+    padding: 70px 22px;
+  }
+
+  .sphere {
+    width: 270px;
+    height: 270px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .rings {
+    animation: none;
+  }
+}

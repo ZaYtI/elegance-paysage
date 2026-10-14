@@ -1,20 +1,20 @@
 import type { Metadata } from "next";
-import { Poppins, Work_Sans } from "next/font/google";
+import { DM_Sans, Manrope } from "next/font/google";
 import { Analytics } from "@vercel/analytics/next"
 import { LocalBusinessJsonLd } from "@/components/local-business-jsonld";
 import { siteInfo } from "@/lib/site-data";
 import "./globals.css";
 
-const poppins = Poppins({
-  variable: "--font-poppins",
+const dmSans = DM_Sans({
+  variable: "--font-dm-sans",
   subsets: ["latin"],
-  weight: ["500", "600", "700", "800"],
+  weight: ["400", "500", "600", "700"],
 });
 
-const workSans = Work_Sans({
-  variable: "--font-sans",
+const manrope = Manrope({
+  variable: "--font-manrope",
   subsets: ["latin"],
-  weight: ["400", "500", "600"],
+  weight: ["400", "500", "600", "700", "800"],
 });
 
 export const metadata: Metadata = {
@@ -39,9 +39,9 @@ export default function RootLayout({
   return (
     <html
       lang="fr"
-      className={`${poppins.variable} ${workSans.variable} h-full antialiased`}
+      className={`${dmSans.variable} ${manrope.variable} antialiased`}
     >
-      <body className="min-h-full flex flex-col bg-paper text-ink-900 font-sans">
+      <body>
         <LocalBusinessJsonLd />
         {children}
         <Analytics />

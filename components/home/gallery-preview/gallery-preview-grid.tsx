@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { GardenSnapshot } from "@/components/garden-scene/garden-snapshot";
-import { Lightbox } from "@/components/ui/lightbox";
+import { Lightbox } from "@/components/ui/lightbox/lightbox";
 import { cn } from "@/lib/utils";
 import { galleryPreviewItems } from "./gallery-preview-items";
 import styles from "./gallery-preview-grid.module.css";
@@ -37,8 +37,10 @@ export function GalleryPreviewGrid() {
       </div>
       {openItem && openIndex !== null && (
         <Lightbox
+          eyebrow={openItem.subtitle}
           title={openItem.title}
-          indexLabel={`${openIndex + 1} / ${itemCount}`}
+          current={openIndex + 1}
+          total={itemCount}
           onClose={() => setOpenIndex(null)}
           onPrevious={showPrevious}
           onNext={showNext}

@@ -1,0 +1,123 @@
+.section {
+  position: relative;
+  background: #faf8f2;
+  color: #17140f;
+}
+
+.sticky {
+  padding: 110px 6% 90px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.head {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  margin-bottom: 45px;
+  gap: 35px;
+}
+
+.counter {
+  font-size: 14px;
+  letter-spacing: 2px;
+  white-space: nowrap;
+}
+
+.trackWrap {
+  overflow-x: auto;
+  margin: 0 -6.8%;
+  padding: 0 6.8% 16px;
+  scroll-snap-type: x mandatory;
+  scroll-padding: 0 6.8%;
+  scrollbar-width: none;
+}
+
+.trackWrap::-webkit-scrollbar {
+  display: none;
+}
+
+.track {
+  display: flex;
+  gap: 24px;
+  width: max-content;
+  will-change: transform;
+}
+
+.track > * {
+  scroll-snap-align: start;
+}
+
+.progress {
+  height: 2px;
+  background: rgba(108, 93, 79, 0.13);
+  margin-top: 32px;
+}
+
+.progressBar {
+  display: block;
+  height: 100%;
+  width: 25%;
+  background: #6c5d4f;
+  transform-origin: left center;
+}
+
+.counter,
+.progress {
+  display: none;
+}
+
+@media (min-width: 651px) and (prefers-reduced-motion: no-preference) {
+  .section {
+    height: calc(clamp(600px, 100vh, 1100px) * 2.8);
+  }
+
+  .sticky {
+    position: sticky;
+    top: 0;
+    height: clamp(600px, 100vh, 1100px);
+    min-height: 680px;
+    padding: 75px 6% 50px;
+  }
+
+  .trackWrap {
+    overflow: visible;
+    margin: 0;
+    padding: 0;
+    scroll-snap-type: none;
+  }
+
+  .counter {
+    display: inline;
+  }
+
+  .progress {
+    display: block;
+  }
+}
+
+@media (max-width: 650px) {
+  .sticky {
+    padding: 66px 0 70px;
+    overflow: visible;
+  }
+
+  .head {
+    display: block;
+    margin: 0 22px 26px;
+  }
+
+  .trackWrap {
+    margin: 0;
+    padding: 0 22px 4px;
+    scroll-padding: 0 22px;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .track {
+    gap: 12px;
+    transform: none !important;
+  }
+}

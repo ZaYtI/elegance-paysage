@@ -1,0 +1,31 @@
+.media {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  padding: 0 0 12px;
+  background: var(--ink-950);
+}
+
+.frame {
+  position: relative;
+  display: flex;
+  flex: 1;
+  align-items: flex-end;
+  min-height: 0;
+  padding: 20px;
+  overflow: hidden;
+  border-radius: 8px;
+}
+
+.texture {
+  position: absolute;
+  inset: 0;
+}
+
+.label {
+  position: relative;
+  padding: 8px 14px;
+  border-radius: 999px;
+  background: rgba(23, 20, 15, 0.55);
+  font-size: 12px;
+}

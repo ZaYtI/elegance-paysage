@@ -1,0 +1,57 @@
+.head > * {
+  animation: rise 0.9s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+
+.head > :nth-child(2) {
+  animation-delay: 0.15s;
+}
+
+.title {
+  font-size: clamp(64px, 11vw, 176px);
+  letter-spacing: -0.07em;
+  line-height: 0.9;
+}
+
+.title em {
+  font-family: Georgia, serif;
+  font-style: italic;
+  font-weight: 400;
+  color: var(--bark-700);
+  letter-spacing: -0.04em;
+}
+
+.stats {
+  display: flex;
+  gap: 34px;
+  padding-top: 22px;
+  border-top: 1px solid rgba(108, 93, 79, 0.25);
+}
+
+.stats strong {
+  display: block;
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: 34px;
+  letter-spacing: -1.5px;
+  line-height: 1;
+}
+
+.stats span {
+  font-size: 12px;
+  color: var(--bark-700);
+}
+
+@keyframes rise {
+  from { opacity: 0; transform: translateY(34px); }
+  to { opacity: 1; transform: none; }
+}
+
+@media (max-width: 650px) {
+  .title { font-size: 72px; }
+  .stats { gap: 22px; }
+  .stats strong { font-size: 28px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .head > * { animation: none; }
+}

@@ -50,35 +50,20 @@
   scroll-snap-align: start;
 }
 
-.progress {
-  height: 2px;
-  background: rgba(108, 93, 79, 0.13);
-  margin-top: 32px;
-}
-
-.progressBar {
-  display: block;
-  height: 100%;
-  width: 25%;
-  background: #6c5d4f;
-  transform-origin: left center;
-}
-
-.counter,
-.progress {
+.counter {
   display: none;
 }
 
 @media (min-width: 651px) and (prefers-reduced-motion: no-preference) {
   .section {
-    height: calc(clamp(600px, 100vh, 1100px) * 2.8);
+    height: 280vh;
+    view-timeline-name: --expertises;
   }
 
   .sticky {
     position: sticky;
     top: 0;
-    height: clamp(600px, 100vh, 1100px);
-    min-height: 680px;
+    height: 100vh;
     padding: 75px 6% 50px;
   }
 
@@ -93,8 +78,18 @@
     display: inline;
   }
 
-  .progress {
-    display: block;
+  @supports (animation-timeline: view()) {
+    .track {
+      animation: slide-track linear both;
+      animation-timeline: --expertises;
+      animation-range: contain 0% contain 100%;
+    }
+  }
+}
+
+@keyframes slide-track {
+  to {
+    transform: translateX(calc(var(--track-travel, 0px) * -1));
   }
 }
 

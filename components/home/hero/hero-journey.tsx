@@ -14,11 +14,13 @@ type HeroJourneyProps = {
 
 export function HeroJourney({ children }: HeroJourneyProps) {
   const journeyRef = useRef<HTMLDivElement>(null);
-  const progress = useScrollProgress(journeyRef);
+  const heroRef = useRef<HTMLElement>(null);
+  const progress = useScrollProgress(journeyRef, heroRef);
 
   return (
     <div ref={journeyRef} className={styles.journey}>
       <section
+        ref={heroRef}
         id="top"
         className={styles.hero}
         style={{ "--hero-progress": progress } as CSSProperties}

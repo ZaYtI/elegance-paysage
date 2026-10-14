@@ -1,0 +1,9 @@
+.word {
+  color: rgba(250, 248, 242, 0.26);
+  transition: color 0.45s;
+}
+
+.lit {
+  composes: word;
+  color: var(--paper);
+}

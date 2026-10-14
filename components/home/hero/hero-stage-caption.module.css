@@ -1,0 +1,83 @@
+.caption {
+  position: absolute;
+  z-index: 2;
+  bottom: 82px;
+  left: 50%;
+  right: 5%;
+  text-align: center;
+  pointer-events: none;
+  text-shadow: 0 1px 14px rgba(23, 20, 15, 0.9);
+}
+
+.eyebrow {
+  display: block;
+  font-size: 10px;
+  color: var(--stone-400);
+}
+
+.stageName {
+  display: block;
+  margin: 10px 0 17px;
+  font-family: var(--font-display);
+  font-size: 20px;
+  font-weight: 400;
+  letter-spacing: -0.5px;
+}
+
+.steps {
+  display: flex;
+  justify-content: center;
+  gap: 6px;
+  margin-bottom: 14px;
+}
+
+.steps span {
+  width: 30px;
+  height: 2px;
+  background: rgba(250, 248, 242, 0.15);
+  transition: background 0.3s;
+}
+
+.steps .lit {
+  background: var(--accent-color);
+}
+
+.note {
+  font-size: 9px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--stone-400);
+}
+
+@media (max-width: 650px) {
+  .caption {
+    top: 92px;
+    bottom: auto;
+    left: 22px;
+    right: 22px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    text-align: left;
+  }
+
+  .eyebrow,
+  .note {
+    display: none;
+  }
+
+  .stageName {
+    order: 2;
+    margin: 0;
+    font-size: 14px;
+  }
+
+  .steps {
+    margin: 0;
+    gap: 4px;
+  }
+
+  .steps span {
+    width: 20px;
+  }
+}

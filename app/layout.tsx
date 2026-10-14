@@ -3,6 +3,7 @@ import { DM_Sans, Manrope } from "next/font/google";
 import { Analytics } from "@vercel/analytics/next"
 import { RevealOnScroll } from "@/components/layout/reveal-on-scroll";
 import { LocalBusinessJsonLd } from "@/components/local-business-jsonld";
+import { isProductionSite } from "@/lib/environment";
 import { siteInfo } from "@/lib/site-data";
 import "./globals.css";
 
@@ -30,6 +31,7 @@ export const metadata: Metadata = {
     url: "/",
     siteName: siteInfo.name,
   },
+  robots: isProductionSite() ? undefined : { index: false, follow: false },
 };
 
 export default function RootLayout({

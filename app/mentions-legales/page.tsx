@@ -8,7 +8,7 @@ export const metadata: Metadata = {
   title: "Mentions légales — Élégance Paysage",
   description:
     "Mentions légales du site Élégance Paysage : éditeur, hébergeur, propriété intellectuelle et données personnelles.",
-  robots: { index: true, follow: true },
+  alternates: { canonical: "/mentions-legales" },
 };
 
 function Row({ label, children }: { label: string; children: React.ReactNode }) {

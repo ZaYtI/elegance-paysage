@@ -1,5 +1,6 @@
 import { createHeroCamera } from "./camera";
 import { createGardenWorld } from "./garden-world";
+import { shareGardenWorld } from "./shared-garden-world";
 
 const MAX_PIXEL_RATIO = 1.5;
 const MAX_FRAME_SECONDS = 0.05;
@@ -68,6 +69,8 @@ export function createHeroSceneController({
     if (visible) draw();
   };
 
+  const stopSharing = shareGardenWorld(world, draw);
+
   if (reducedMotion) draw();
   else frameHandle = requestAnimationFrame(onFrame);
 
@@ -87,6 +90,7 @@ export function createHeroSceneController({
     },
     dispose: () => {
       cancelAnimationFrame(frameHandle);
+      stopSharing();
       world.dispose();
     },
   };

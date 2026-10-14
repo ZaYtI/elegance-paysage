@@ -1,10 +1,11 @@
 import { stillShots } from "./camera";
 import { createGardenWorld, type GardenWorld } from "./garden-world";
 import type { GardenView } from "./garden-views";
+import { waitForSharedGardenWorld } from "./shared-garden-world";
 
 const STILL_TIME = 2.2;
-const FIRST_RENDER_DELAY_MS = 400;
-const WORLD_IDLE_DISPOSE_MS = 4000;
+const HERO_WORLD_WAIT_MS = 4000;
+const OWN_WORLD_IDLE_DISPOSE_MS = 4000;
 
 type QueuedStill = {
   view: GardenView;
@@ -12,14 +13,26 @@ type QueuedStill = {
   reject: (error: unknown) => void;
 };
 
+type StillWorld = {
+  world: GardenWorld;
+  restore: () => void;
+};
+
 const cache = new Map<GardenView, Promise<HTMLCanvasElement>>();
 const queue: QueuedStill[] = [];
-let world: GardenWorld | null = null;
+let ownWorld: GardenWorld | null = null;
 let isProcessing = false;
 let disposeTimer: ReturnType<typeof setTimeout> | undefined;
 
-function renderStill(view: GardenView): HTMLCanvasElement {
-  world ??= createGardenWorld(document.createElement("canvas"));
+async function acquireWorld(): Promise<StillWorld> {
+  const heroWorld = await waitForSharedGardenWorld(HERO_WORLD_WAIT_MS);
+  if (heroWorld) return { world: heroWorld.world, restore: heroWorld.redraw };
+
+  ownWorld ??= createGardenWorld(document.createElement("canvas"));
+  return { world: ownWorld, restore: () => {} };
+}
+
+function renderStill(view: GardenView, { world, restore }: StillWorld): HTMLCanvasElement {
   const shot = stillShots[view];
   world.render({
     width: shot.width,
@@ -36,16 +49,17 @@ function renderStill(view: GardenView): HTMLCanvasElement {
   const context = still.getContext("2d");
   if (!context) throw new Error("2D canvas context unavailable");
   context.drawImage(world.canvas, 0, 0, shot.width, shot.height);
+  restore();
   return still;
 }
 
-function releaseWorldWhenIdle() {
+function releaseOwnWorldWhenIdle() {
   clearTimeout(disposeTimer);
   disposeTimer = setTimeout(() => {
     if (queue.length > 0) return;
-    world?.dispose();
-    world = null;
-  }, WORLD_IDLE_DISPOSE_MS);
+    ownWorld?.dispose();
+    ownWorld = null;
+  }, OWN_WORLD_IDLE_DISPOSE_MS);
 }
 
 function scheduleWhenIdle(task: () => void) {
@@ -53,18 +67,18 @@ function scheduleWhenIdle(task: () => void) {
   else setTimeout(task, 120);
 }
 
-function processNext() {
+async function processNext() {
   const next = queue.shift();
   if (!next) {
     isProcessing = false;
-    releaseWorldWhenIdle();
+    releaseOwnWorldWhenIdle();
     return;
   }
   try {
-    next.resolve(renderStill(next.view));
+    next.resolve(renderStill(next.view, await acquireWorld()));
   } catch (error) {
-    world?.dispose();
-    world = null;
+    ownWorld?.dispose();
+    ownWorld = null;
     next.reject(error);
   }
   scheduleWhenIdle(processNext);
@@ -74,7 +88,7 @@ function startProcessing() {
   if (isProcessing) return;
   isProcessing = true;
   clearTimeout(disposeTimer);
-  setTimeout(() => scheduleWhenIdle(processNext), world ? 0 : FIRST_RENDER_DELAY_MS);
+  scheduleWhenIdle(processNext);
 }
 
 export function requestGardenStill(view: GardenView): Promise<HTMLCanvasElement> {

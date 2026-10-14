@@ -50,6 +50,13 @@
   scroll-snap-align: start;
 }
 
+.divider {
+  height: 1px;
+  margin: 40px 0 0;
+  border: none;
+  background: rgba(108, 93, 79, 0.25);
+}
+
 .counter {
   display: none;
 }
@@ -97,6 +104,10 @@
   .sticky {
     padding: 66px 0 70px;
     overflow: visible;
+  }
+
+  .divider {
+    margin: 32px 22px 0;
   }
 
   .head {

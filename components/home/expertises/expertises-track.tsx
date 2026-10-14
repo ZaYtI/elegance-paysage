@@ -52,6 +52,7 @@ export function ExpertisesTrack({ heading, children }: ExpertisesTrackProps) {
             {children}
           </div>
         </div>
+        <hr className={styles.divider} />
       </div>
     </section>
   );

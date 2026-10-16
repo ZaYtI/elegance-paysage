@@ -1,16 +1,15 @@
 "use client";
 
 import { useCallback, useEffect, useState } from "react";
-import { isIntroSkipped, markIntroDone } from "./intro-storage";
+import { EXIT_MS } from "./intro-timing";
+import { hasIntroPlayedInThisDocument, isIntroSkipped, markIntroDone } from "./intro-storage";
 import { useIntroReadiness } from "./use-intro-readiness";
 import { useScrollLock } from "./use-scroll-lock";
-
-const EXIT_MS = 600;
 
 export type IntroPhase = "visible" | "leaving" | "gone";
 
 export function useIntroPhase() {
-  const [phase, setPhase] = useState<IntroPhase>("visible");
+  const [phase, setPhase] = useState<IntroPhase>(() => (hasIntroPlayedInThisDocument() ? "gone" : "visible"));
   const leave = useCallback(() => {
     markIntroDone();
     setPhase((current) => (current === "visible" ? "leaving" : current));

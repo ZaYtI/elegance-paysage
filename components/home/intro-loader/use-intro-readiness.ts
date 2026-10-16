@@ -3,7 +3,7 @@
 import { useEffect } from "react";
 import { whenHeroReady } from "@/components/garden-scene/hero-ready";
 
-const MIN_DISPLAY_MS = 1400;
+const MIN_DISPLAY_MS = 1700;
 const MAX_WAIT_MS = 2500;
 
 function wait(ms: number) {

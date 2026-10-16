@@ -1,0 +1,21 @@
+.layer {
+  position: absolute;
+  inset: -24px;
+  will-change: transform;
+  animation: sway var(--sway-seconds) ease-in-out infinite alternate;
+}
+
+.definitions {
+  position: absolute;
+  width: 0;
+  height: 0;
+}
+
+@keyframes sway {
+  from {
+    transform: translate3d(calc(var(--sway) * -1), calc(var(--sway) * -0.5), 0);
+  }
+  to {
+    transform: translate3d(var(--sway), calc(var(--sway) * 0.5), 0);
+  }
+}

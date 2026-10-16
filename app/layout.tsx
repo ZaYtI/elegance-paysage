@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { DM_Sans, Manrope } from "next/font/google";
+import Script from "next/script";
 import { Analytics } from "@vercel/analytics/next"
+import { INTRO_SKIP_SCRIPT } from "@/components/home/intro-loader/intro-storage";
 import { RevealOnScroll } from "@/components/layout/reveal-on-scroll";
 import { SmoothScroll } from "@/components/layout/smooth-scroll";
 import { LocalBusinessJsonLd } from "@/components/local-business-jsonld";
@@ -47,6 +49,9 @@ export default function RootLayout({
       className={`${dmSans.variable} ${manrope.variable} antialiased`}
     >
       <body>
+        <Script id="intro-skip" strategy="beforeInteractive">
+          {INTRO_SKIP_SCRIPT}
+        </Script>
         <LocalBusinessJsonLd />
         <RevealOnScroll />
         <SmoothScroll />

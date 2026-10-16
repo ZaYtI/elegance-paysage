@@ -1,0 +1,79 @@
+.brand {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 18px;
+  color: var(--paper);
+}
+
+:global([data-phase="leaving"]) .brand {
+  animation: brand-out var(--cut-ms) ease both;
+}
+
+.emblem {
+  width: 128px;
+  margin-bottom: 6px;
+}
+
+.name {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: 36px;
+  font-weight: 700;
+  letter-spacing: -1.6px;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.tagline {
+  margin: 0;
+  font-size: 12px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--stone-400);
+}
+
+.pulse {
+  width: 28px;
+  height: 1px;
+  background: var(--sage-500);
+  transform-origin: center;
+  margin-top: 10px;
+  animation: pulse 1.6s ease-in-out 0.6s infinite both;
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 0.25;
+    transform: scaleX(0.3);
+  }
+  50% {
+    opacity: 1;
+    transform: scaleX(1);
+  }
+}
+
+@keyframes brand-out {
+  to {
+    opacity: 0;
+  }
+}
+
+@media (max-width: 650px) {
+  .emblem {
+    width: 96px;
+  }
+
+  .name {
+    font-size: 28px;
+  }
+
+  .tagline {
+    font-size: 11px;
+  }
+}

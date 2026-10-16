@@ -31,32 +31,13 @@
 }
 
 .logo {
-  width: 34px;
+  height: 40px;
+  width: auto;
   flex: none;
 }
 
-.wordmark {
-  display: flex;
-  flex-direction: column;
-  line-height: 1;
-}
 
-.name {
-  font-family: var(--font-display);
-  font-size: 17px;
-  font-weight: 700;
-  letter-spacing: -0.8px;
-  white-space: nowrap;
-}
 
-.signature {
-  margin-top: 5px;
-  font-size: 8px;
-  letter-spacing: 1.8px;
-  text-transform: uppercase;
-  color: var(--stone-400);
-  white-space: nowrap;
-}
 
 .links {
   display: flex;

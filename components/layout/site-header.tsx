@@ -1,4 +1,4 @@
-import { LogoIcon } from "@/components/logo-icon";
+import { LogoLockup } from "@/components/logo-lockup";
 import { mainNav } from "@/lib/site-data";
 import { BrandLink } from "./brand-link";
 import { HeaderMenu } from "./header-menu";
@@ -10,11 +10,7 @@ export function SiteHeader() {
     <header className={styles.header}>
       <nav aria-label="Navigation principale" className={styles.nav}>
         <BrandLink className={styles.brand}>
-          <LogoIcon onDark className={styles.logo} />
-          <span className={styles.wordmark}>
-            <span className={styles.name}>élégance paysage</span>
-            <span className={styles.signature}>Robillard &amp; Prévost</span>
-          </span>
+          <LogoLockup onDark className={styles.logo} />
         </BrandLink>
         <div className={styles.links}>
           {mainNav.map((link) => (

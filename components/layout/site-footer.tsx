@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { LogoIcon } from "@/components/logo-icon";
+import { LogoLockup } from "@/components/logo-lockup";
 import { contactInfo, homeSectionsNav, mainNav, zoneInfo } from "@/lib/site-data";
 import { FooterColumn } from "./footer-column";
 import { FooterWordmark } from "./footer-wordmark";
@@ -19,8 +19,7 @@ export function SiteFooter() {
       <div className={styles.top}>
         <div className={styles.intro}>
           <Link href="/" className={styles.brand}>
-            <LogoIcon className={styles.logo} />
-            <span className={styles.name}>élégance paysage</span>
+            <LogoLockup className={styles.logo} />
           </Link>
           <p className={styles.tagline}>
             Paysagiste &amp; élagueur, dans un rayon de {zoneInfo.radiusKm} km autour d’{zoneInfo.city}.

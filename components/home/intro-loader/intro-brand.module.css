@@ -14,20 +14,11 @@
   animation: brand-out var(--cut-ms) ease both;
 }
 
-.emblem {
-  width: 128px;
+.lockup {
+  width: 360px;
   margin-bottom: 6px;
 }
 
-.name {
-  margin: 0;
-  font-family: var(--font-display);
-  font-size: 36px;
-  font-weight: 700;
-  letter-spacing: -1.6px;
-  line-height: 1;
-  white-space: nowrap;
-}
 
 .tagline {
   margin: 0;
@@ -65,12 +56,8 @@
 }
 
 @media (max-width: 650px) {
-  .emblem {
-    width: 96px;
-  }
-
-  .name {
-    font-size: 28px;
+  .lockup {
+    width: 260px;
   }
 
   .tagline {

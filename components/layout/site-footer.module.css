@@ -24,16 +24,10 @@
 }
 
 .logo {
-  width: 44px;
-  flex: none;
+  height: 64px;
+  width: auto;
 }
 
-.name {
-  font-family: var(--font-display);
-  font-size: 26px;
-  font-weight: 600;
-  letter-spacing: -1.2px;
-}
 
 .tagline {
   max-width: 320px;

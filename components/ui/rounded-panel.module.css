@@ -10,17 +10,25 @@
   background: var(--sand-100);
 }
 
+.paperToSand {
+  padding-top: 80px;
+  background: linear-gradient(to bottom, var(--paper) 50%, var(--sand-100) 50%);
+}
+
 .panel {
   position: relative;
   isolation: isolate;
   overflow: hidden;
-  max-width: 1500px;
-  margin: 0 auto;
   padding: 110px 6%;
   border-radius: 40px;
   background: linear-gradient(165deg, #211d16 0%, var(--ink-950) 55%, #120f0b 100%);
   color: var(--paper);
   box-shadow: 0 40px 90px -40px rgba(23, 20, 15, 0.55);
+}
+
+.content {
+  max-width: 1360px;
+  margin: 0 auto;
 }
 
 .panel::before,
@@ -52,6 +60,10 @@
 @media (max-width: 650px) {
   .surround {
     padding: 0 10px 10px;
+  }
+
+  .paperToSand {
+    padding-top: 48px;
   }
 
   .panel {

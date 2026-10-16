@@ -12,12 +12,19 @@ export type OrbitCamera = {
 };
 
 const FIELD_OF_VIEW = 20;
+const DEFAULT_ELEVATION = 0.56;
+const MIN_ELEVATION = 0.3;
+const MAX_ELEVATION = 1.0;
 
-export function createHeroCamera(progress: number, aspect: number, pointerYaw: number): OrbitCamera {
+export function clampElevationOffset(offset: number) {
+  return Math.min(MAX_ELEVATION - DEFAULT_ELEVATION, Math.max(MIN_ELEVATION - DEFAULT_ELEVATION, offset));
+}
+
+export function createHeroCamera(progress: number, aspect: number, viewYaw: number, elevationOffset = 0): OrbitCamera {
   return {
-    yaw: 0.82 + progress * 0.22 + pointerYaw,
-    elevation: 0.56,
-    width: aspect < 1.2 ? 14.2 : 15.4,
+    yaw: 0.82 + progress * 0.22 + viewYaw,
+    elevation: DEFAULT_ELEVATION + clampElevationOffset(elevationOffset),
+    width: aspect < 1.2 ? 12.2 : 12.8,
     offsetX: 0,
     offsetY: 0.02,
     targetX: 0,

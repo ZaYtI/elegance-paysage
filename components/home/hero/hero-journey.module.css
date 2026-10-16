@@ -33,7 +33,7 @@
   height: 100%;
 }
 
-@media (prefers-reduced-motion: no-preference) {
+@media (prefers-reduced-motion: no-preference) and (pointer: fine) {
   .journey {
     height: calc(100svh * 2.8);
   }
@@ -63,11 +63,17 @@
   }
 }
 
-@media (max-width: 650px) and (prefers-reduced-motion: no-preference) {
+@media (max-width: 650px) and (prefers-reduced-motion: no-preference) and (pointer: fine) {
   .journey {
     height: calc(100svh * 2.3);
   }
 
+  .hero {
+    height: 100svh;
+  }
+}
+
+@media (pointer: coarse) {
   .hero {
     height: 100svh;
   }

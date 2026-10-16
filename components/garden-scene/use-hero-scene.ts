@@ -3,8 +3,10 @@
 import { useEffect, useState, type RefObject } from "react";
 import { markHeroReady } from "./hero-ready";
 import type { ProgressSource } from "./progress-source";
+import { observeDragRotation } from "./observe-drag-rotation";
 import { observePointerYaw } from "./observe-pointer-yaw";
 import { observeVisibility } from "./observe-visibility";
+import { createRotationInertia } from "./rotation-inertia";
 
 export function useHeroScene(
   hostRef: RefObject<HTMLDivElement | null>,
@@ -36,12 +38,22 @@ export function useHeroScene(
         const stopProgress = progressSource.subscribe(controller.setTargetProgress);
         const stopVisibility = observeVisibility(host, controller.setVisible);
         const stopPointer = observePointerYaw(host, controller.setTargetYaw);
+        const inertia = createRotationInertia((yaw) => controller.addUserRotation(yaw, 0));
+        const stopDrag = observeDragRotation(host, {
+          onDragStart: inertia.stop,
+          onRotate: controller.addUserRotation,
+          onDragEnd: (yawSpeed) => {
+            if (!reducedMotion) inertia.start(yawSpeed);
+          },
+        });
         const resizeObserver = new ResizeObserver(controller.renderOnce);
         resizeObserver.observe(host);
         stopObserving = () => {
           stopProgress();
           stopVisibility();
           stopPointer();
+          stopDrag();
+          inertia.stop();
           resizeObserver.disconnect();
           controller.dispose();
         };

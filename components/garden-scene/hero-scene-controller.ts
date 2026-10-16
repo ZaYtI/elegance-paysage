@@ -1,5 +1,5 @@
 import { buildAutoplayProgress } from "./build-autoplay";
-import { createHeroCamera } from "./camera";
+import { clampElevationOffset, createHeroCamera } from "./camera";
 import { createGardenWorld } from "./garden-world";
 import { markHeroReady } from "./hero-ready";
 import { limitProgressRise } from "./limit-progress-rise";
@@ -20,6 +20,7 @@ function easeToward(current: number, target: number, smoothingPerSecond: number,
 export type HeroSceneController = {
   setTargetProgress: (progress: number) => void;
   setTargetYaw: (yaw: number) => void;
+  addUserRotation: (yaw: number, elevation: number) => void;
   setVisible: (visible: boolean) => void;
   renderOnce: () => void;
   dispose: () => void;
@@ -48,6 +49,9 @@ export function createHeroSceneController({
   let autoplaySeconds: number | null = null;
   let targetYaw = 0;
   let yaw = 0;
+  let userYaw = 0;
+  let userElevation = 0;
+  let userRotated = false;
   let time = 0;
   let lastTimestamp = 0;
   let secondsSinceDraw = 0;
@@ -64,7 +68,7 @@ export function createHeroSceneController({
       height: Math.round(height * pixelRatio),
       progress,
       time,
-      camera: createHeroCamera(progress, width / height, yaw),
+      camera: createHeroCamera(progress, width / height, yaw + userYaw, userElevation),
     });
     markHeroReady();
   };
@@ -87,9 +91,10 @@ export function createHeroSceneController({
     if (progress !== previousProgress) onDisplayedProgress(progress);
     yaw = easeToward(yaw, targetYaw, YAW_SMOOTHING_PER_SECOND, elapsed);
     secondsSinceDraw += elapsed;
-    const isEasing = progress !== targetProgress || yaw !== targetYaw;
+    const isEasing = progress !== targetProgress || yaw !== targetYaw || userRotated;
     if (visible && (isEasing || secondsSinceDraw >= quality.idleFrameSeconds)) {
       secondsSinceDraw = 0;
+      userRotated = false;
       draw();
     }
   };
@@ -111,6 +116,12 @@ export function createHeroSceneController({
     },
     setTargetYaw: (value) => {
       if (!reducedMotion) targetYaw = value;
+    },
+    addUserRotation: (deltaYaw, deltaElevation) => {
+      userYaw += deltaYaw;
+      userElevation = clampElevationOffset(userElevation + deltaElevation);
+      userRotated = true;
+      if (reducedMotion && visible) draw();
     },
     setVisible: (value) => {
       visible = value;

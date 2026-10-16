@@ -15,7 +15,7 @@ export function HeroScene({ progressSource, onDisplayedProgress }: HeroSceneProp
   const failed = useHeroScene(hostRef, canvasRef, progressSource, onDisplayedProgress);
 
   return (
-    <div ref={hostRef} className="absolute inset-0 h-full w-full touch-pan-y">
+    <div ref={hostRef} className="absolute inset-0 h-full w-full touch-pan-y [@media(pointer:fine)]:cursor-grab">
       {failed ? (
         <div className="absolute inset-0 flex flex-col justify-center rounded-[15px] border border-sage-500/30 text-center">
           <p className="text-[30px]">Imaginez votre prochain jardin.</p>

@@ -96,12 +96,12 @@ export function createGardenWorld(canvas: HTMLCanvasElement, quality: QualityPro
   plantTree(3.4, 2.45, 0.88, 0.69);
   const shrubs = createShrubPlanter(builder, foliage);
   shrubs.plantBorderBeds();
-  addHorizonBands(builder);
+  const horizonBands = addHorizonBands(builder);
   const surroundings = shrubs.plantSurroundings();
   buildHedge(builder, foliage);
   const rocks = createRocks(builder);
 
-  discardScenery([meadow, ...surroundings]);
+  discardScenery([meadow, ...horizonBands, ...surroundings]);
   const buildAnimation = createBuildAnimation({
     terrain,
     rocks,

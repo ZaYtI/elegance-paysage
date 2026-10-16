@@ -47,16 +47,18 @@
 
 @media (max-width: 650px) {
   .hero {
-    align-items: flex-end;
+    --scene-top: 134px;
+    --scene-height: min(34svh, 340px);
+    align-items: flex-start;
     height: 800px;
   }
 
   .scene {
     left: 16px;
     right: 16px;
-    top: 134px;
+    top: var(--scene-top);
     bottom: auto;
-    height: min(34%, 340px);
+    height: var(--scene-height);
     border-radius: 16px;
   }
 }

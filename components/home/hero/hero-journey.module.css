@@ -16,15 +16,17 @@
 .scene {
   position: absolute;
   z-index: 1;
-  left: 50%;
-  right: 5%;
-  top: 15%;
-  bottom: 27%;
-  overflow: hidden;
-  border: 1px solid rgba(160, 167, 148, 0.28);
-  border-radius: 20px;
-  background: radial-gradient(at 50% 42%, #514b40 0%, #2e2921 58%, #1f1b15 100%);
+  left: 46%;
+  right: 0;
+  top: 5%;
+  bottom: 20%;
   touch-action: pan-y;
+  --edge-fade: linear-gradient(to right, transparent, #000 8%, #000 92%, transparent),
+    linear-gradient(to bottom, transparent, #000 8%, #000 92%, transparent);
+  -webkit-mask-image: var(--edge-fade);
+  -webkit-mask-composite: source-in;
+  mask-image: var(--edge-fade);
+  mask-composite: intersect;
 }
 
 .scene canvas {
@@ -47,19 +49,18 @@
 
 @media (max-width: 650px) {
   .hero {
-    --scene-top: 134px;
-    --scene-height: min(34svh, 340px);
+    --scene-top: 104px;
+    --scene-height: min(40svh, 380px);
     align-items: flex-start;
     height: 800px;
   }
 
   .scene {
-    left: 16px;
-    right: 16px;
+    left: 0;
+    right: 0;
     top: var(--scene-top);
     bottom: auto;
     height: var(--scene-height);
-    border-radius: 16px;
   }
 }
 

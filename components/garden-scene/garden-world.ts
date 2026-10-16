@@ -1,5 +1,6 @@
 import {
   ACESFilmicToneMapping,
+  Group,
   Mesh,
   Object3D,
   PCFShadowMap,
@@ -12,6 +13,7 @@ import {
 } from "three";
 import { createBuildAnimation } from "./build-animation";
 import { placeCamera, type OrbitCamera } from "./camera";
+import { discardScenery } from "./discard-scenery";
 import { buildFurniture } from "./furniture";
 import { GardenBuilder } from "./garden-builder";
 import { buildGrass } from "./grass";
@@ -19,18 +21,15 @@ import { buildHardscape } from "./hardscape";
 import { buildHedge } from "./hedge";
 import { addHorizonBands } from "./horizon-bands";
 import { createFoliage } from "./foliage";
+import { addLights } from "./lights-and-environment";
 import { createBuildMaterials } from "./materials";
 import { createRandom } from "./noise";
 import { buildPergola } from "./pergola";
-import { DepthOfFieldPass } from "./post-processing";
 import type { QualityProfile } from "./quality";
 import { createShrubPlanter } from "./shrubs";
-import { addSkyAndLights } from "./sky-and-lights";
 import { createRocks, createTerrain } from "./terrain";
 import { createGardenTextures } from "./textures";
 import { createTreePlanter } from "./trees";
-
-export type RenderMode = "hero" | "still";
 
 export type GardenRenderRequest = {
   width: number;
@@ -38,7 +37,6 @@ export type GardenRenderRequest = {
   progress: number;
   time: number;
   camera: OrbitCamera;
-  mode: RenderMode;
 };
 
 export type GardenWorld = {
@@ -48,7 +46,6 @@ export type GardenWorld = {
 };
 
 const RANDOM_SEED = 6241;
-const MAX_FACING_DOT_FOR_STILLS = 0.8;
 
 function disposeMaterial(material: Material) {
   Object.values(material).forEach((value) => {
@@ -80,7 +77,7 @@ export function createGardenWorld(canvas: HTMLCanvasElement, quality: QualityPro
 
   const scene = new Scene();
   const camera = new PerspectiveCamera(20, 1.25, 0.3, 260);
-  const { sky, fog } = addSkyAndLights(renderer, scene, quality.shadowMapSize);
+  addLights(renderer, scene, quality.shadowMapSize);
 
   const random = createRandom(RANDOM_SEED);
   const textures = createGardenTextures(random);
@@ -100,15 +97,15 @@ export function createGardenWorld(canvas: HTMLCanvasElement, quality: QualityPro
   const shrubs = createShrubPlanter(builder, foliage);
   shrubs.plantBorderBeds();
   addHorizonBands(builder);
-  shrubs.plantSurroundings();
+  const surroundings = shrubs.plantSurroundings();
   buildHedge(builder, foliage);
   const rocks = createRocks(builder);
 
-  const surroundings = builder.animated.filter((element) => element.start < 0).map((element) => element.object);
+  discardScenery([meadow, ...surroundings]);
   const buildAnimation = createBuildAnimation({
     terrain,
     rocks,
-    animated: builder.animated,
+    animated: builder.animated.filter((element) => !surroundings.includes(element.object as Group)),
     gateLeaves: hardscape.gateLeaves,
     lamps: furniture.lamps,
     bulbMaterial: furniture.bulbMaterial,
@@ -116,58 +113,28 @@ export function createGardenWorld(canvas: HTMLCanvasElement, quality: QualityPro
     canopies,
   });
 
-  let depthOfField: DepthOfFieldPass | null = null;
-  let depthOfFieldFailed = false;
   let sizeKey = "";
   let shadowProgress = -1;
 
-  const render = ({ width, height, progress, time, camera: orbit, mode }: GardenRenderRequest) => {
-    const isStill = mode === "still";
-    terrain.apron.visible = isStill;
-    meadow.visible = isStill;
-    sky.visible = isStill;
-    terrain.shadowPlate.visible = !isStill;
-    terrain.walls.visible = !isStill;
-    scene.fog = isStill ? fog : null;
-
+  const render = ({ width, height, progress, time, camera: orbit }: GardenRenderRequest) => {
     const key = `${width}x${height}`;
     if (key !== sizeKey) {
       sizeKey = key;
       renderer.setSize(width, height, false);
     }
 
-    const placement = placeCamera(camera, orbit, width / height);
-    sky.position.copy(camera.position);
+    placeCamera(camera, orbit, width / height);
     buildAnimation.apply(progress, time);
-    if (isStill || progress !== shadowProgress) {
+    if (progress !== shadowProgress) {
       shadowProgress = progress;
       renderer.shadowMap.needsUpdate = true;
     }
 
-    const [targetX, , targetZ] = placement.target;
-    const [directionX, , directionZ] = placement.direction;
-    surroundings.forEach((object) => {
-      const facing = ((object.position.x - targetX) * directionX + (object.position.z - targetZ) * directionZ) / placement.distance;
-      object.visible = isStill && facing < MAX_FACING_DOT_FOR_STILLS;
-    });
-
-    if (isStill && !depthOfFieldFailed) {
-      try {
-        depthOfField ??= new DepthOfFieldPass(renderer);
-        depthOfField.render(scene, camera, width, height, placement.distance);
-        return;
-      } catch (error) {
-        console.error(error);
-        depthOfFieldFailed = true;
-        renderer.setRenderTarget(null);
-      }
-    }
     renderer.setRenderTarget(null);
     renderer.render(scene, camera);
   };
 
   const dispose = () => {
-    depthOfField?.dispose();
     disposeScene(scene);
     renderer.dispose();
     renderer.forceContextLoss();

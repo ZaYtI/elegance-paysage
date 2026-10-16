@@ -1,8 +1,7 @@
 const SAFETY_TIMEOUT_MS = 4000;
 
 function isIntroFinished() {
-  const { intro } = document.documentElement.dataset;
-  return intro === "done" || intro === "skip";
+  return document.documentElement.dataset.intro === "done";
 }
 
 export function waitForIntro(onFinished: () => void) {

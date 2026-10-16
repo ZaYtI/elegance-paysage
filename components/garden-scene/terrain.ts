@@ -7,7 +7,6 @@ import {
   Mesh,
   MeshBasicMaterial,
   PlaneGeometry,
-  type MeshStandardMaterial,
 } from "three";
 import { hexToLinearRgb } from "./color-utils";
 import { createStandardMaterial, enableShadows, type GardenBuilder } from "./garden-builder";
@@ -29,8 +28,6 @@ const VERTEX_COUNT = VERTICES_X * VERTICES_Z;
 const SLAB_BOTTOM = -0.85;
 
 export const terrainPalette = {
-  apronRough: hexToLinearRgb(0x67704d),
-  apronLevelled: hexToLinearRgb(0x62714f),
   rough: hexToLinearRgb(0x8a7a66),
   weed: hexToLinearRgb(0x7b7c58),
   level: hexToLinearRgb(0x6c5d4f),
@@ -63,8 +60,6 @@ export type Terrain = {
   wallPositions: Float32Array;
   sideEdges: SideEdgeVertex[];
   shadowPlate: Mesh;
-  apron: Mesh;
-  apronMaterial: MeshStandardMaterial;
 };
 
 function createGround(builder: GardenBuilder) {
@@ -182,18 +177,6 @@ function createShadowPlate(builder: GardenBuilder): Mesh {
   return plate;
 }
 
-function createApron(builder: GardenBuilder) {
-  const texture = builder.textures.grain.clone();
-  texture.repeat.set(80, 80);
-  texture.needsUpdate = true;
-  const material = createStandardMaterial({ map: texture, roughness: 1 });
-  const apron = new Mesh(new PlaneGeometry(400, 400), material);
-  apron.rotation.x = -Math.PI / 2;
-  apron.receiveShadow = true;
-  builder.world.add(apron);
-  return { apron, material };
-}
-
 const ROCKS: [number, number, number][] = [
   [-2.6, -1.6, 0.3],
   [2.4, 1.2, 0.24],
@@ -231,7 +214,6 @@ export function createTerrain(builder: GardenBuilder): Terrain {
   const ground = createGround(builder);
   const walls = createWalls(builder, ground.positions);
   const shadowPlate = createShadowPlate(builder);
-  const apron = createApron(builder);
   return {
     ground: ground.ground,
     groundGeometry: ground.geometry,
@@ -248,8 +230,6 @@ export function createTerrain(builder: GardenBuilder): Terrain {
     wallPositions: walls.wallPositions,
     sideEdges: walls.sideEdges,
     shadowPlate,
-    apron: apron.apron,
-    apronMaterial: apron.material,
   };
 }
 

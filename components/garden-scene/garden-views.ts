@@ -1,4 +1,4 @@
-export type GardenView = "creation" | "finished" | "bare" | "terrace" | "planting" | "hedge";
+export type GardenView = "creation" | "terrace" | "planting" | "hedge";
 
 export const gardenStages = [
   "Le terrain",

@@ -1,6 +1,6 @@
 import { ClampToEdgeWrapping, Color, CylinderGeometry, DoubleSide, Mesh, MeshBasicMaterial, RepeatWrapping } from "three";
 import type { GardenBuilder } from "./garden-builder";
-import { HORIZON_COLOR } from "./sky-and-lights";
+import { HORIZON_COLOR } from "./lights-and-environment";
 import { createCanvasTexture, type DrawTexture } from "./textures";
 
 type BandSpec = {

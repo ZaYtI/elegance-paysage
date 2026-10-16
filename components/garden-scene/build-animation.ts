@@ -92,16 +92,6 @@ function updateAnimatedElements(elements: AnimatedElement[], progress: number) {
   }
 }
 
-function updateApronColor(terrain: Terrain, progress: number) {
-  const amount = smoothstep(clamp01((progress - 0.03) / 0.12));
-  const { apronRough, apronLevelled } = terrainPalette;
-  terrain.apronMaterial.color.setRGB(
-    apronRough[0] + (apronLevelled[0] - apronRough[0]) * amount,
-    apronRough[1] + (apronLevelled[1] - apronRough[1]) * amount,
-    apronRough[2] + (apronLevelled[2] - apronRough[2]) * amount,
-  );
-}
-
 export function createBuildAnimation(parts: BuildAnimationParts) {
   let lastProgress = -1;
 
@@ -119,7 +109,6 @@ export function createBuildAnimation(parts: BuildAnimationParts) {
       parts.gateLeaves.forEach((leaf) => {
         leaf.rotation.y = leaf.userData.direction * gateOpening;
       });
-      updateApronColor(parts.terrain, progress);
       const glow = smoothstep(clamp01((progress - 0.9) / 0.08));
       parts.bulbMaterial.emissiveIntensity = glow * 1.8;
       parts.lamps.forEach((lamp) => {

@@ -12,9 +12,6 @@
   pointer-events: none;
 }
 
-:global(html[data-intro="skip"]) .root {
-  display: none;
-}
 
 @keyframes failsafe {
   to {

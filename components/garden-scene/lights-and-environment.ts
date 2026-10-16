@@ -3,7 +3,6 @@ import {
   Color,
   DirectionalLight,
   Float32BufferAttribute,
-  Fog,
   HemisphereLight,
   Mesh,
   MeshBasicMaterial,
@@ -14,46 +13,6 @@ import {
 } from "three";
 
 export const HORIZON_COLOR = 0xdfe2cf;
-const ZENITH_COLOR = 0x8db8d6;
-const SUNSET_GLOW_COLOR = 0xf4dfb4;
-const SKY_RADIUS = 200;
-
-export type SkyAndLights = {
-  sky: Mesh;
-  fog: Fog;
-};
-
-function createSky(): Mesh {
-  const geometry = new SphereGeometry(SKY_RADIUS, 40, 24);
-  const positions = geometry.attributes.position;
-  const horizon = new Color(HORIZON_COLOR);
-  const zenith = new Color(ZENITH_COLOR);
-  const glow = new Color(SUNSET_GLOW_COLOR);
-  const color = new Color();
-  const colors: number[] = [];
-
-  for (let k = 0; k < positions.count; k++) {
-    const x = positions.getX(k);
-    const y = positions.getY(k);
-    const z = positions.getZ(k);
-    const height = Math.max(0, y / SKY_RADIUS);
-    const t = Math.min(1, height / 0.28);
-    const zenithBlend = t * t * (3 - 2 * t);
-    const horizontalLength = Math.hypot(x, z) || 1;
-    const sunSide = Math.pow(Math.max(0, (-x * 0.7 + z * 0.7) / horizontalLength), 5);
-    const glowBlend = sunSide * (1 - zenithBlend) * 0.55;
-    color.copy(horizon).lerp(zenith, zenithBlend).lerp(glow, glowBlend);
-    colors.push(color.r, color.g, color.b);
-  }
-
-  geometry.setAttribute("color", new Float32BufferAttribute(colors, 3));
-  const sky = new Mesh(
-    geometry,
-    new MeshBasicMaterial({ vertexColors: true, side: BackSide, fog: false, depthWrite: false }),
-  );
-  sky.renderOrder = -10;
-  return sky;
-}
 
 function createSun(shadowMapSize: number): DirectionalLight {
   const sun = new DirectionalLight(0xffe2ba, 4.0);
@@ -106,10 +65,7 @@ function applyEnvironment(renderer: WebGLRenderer, scene: Scene) {
   (environmentSphere.material as MeshBasicMaterial).dispose();
 }
 
-export function addSkyAndLights(renderer: WebGLRenderer, scene: Scene, shadowMapSize: number): SkyAndLights {
-  const sky = createSky();
-  scene.add(sky);
-
+export function addLights(renderer: WebGLRenderer, scene: Scene, shadowMapSize: number) {
   scene.add(new HemisphereLight(0xeef3f5, 0x8a8066, 0.95));
   scene.add(createSun(shadowMapSize));
 
@@ -122,6 +78,4 @@ export function addSkyAndLights(renderer: WebGLRenderer, scene: Scene, shadowMap
   const fill = new DirectionalLight(0xc8d2dc, 0.45);
   fill.position.set(8, 5, -6);
   scene.add(fill);
-
-  return { sky, fog: new Fog(HORIZON_COLOR, 26, 95) };
 }

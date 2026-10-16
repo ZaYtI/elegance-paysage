@@ -5,7 +5,6 @@ import { markHeroReady } from "./hero-ready";
 import { limitProgressRise } from "./limit-progress-rise";
 import { isTouchDevice } from "./is-touch-device";
 import { chooseQualityProfile } from "./quality";
-import { shareGardenWorld } from "./shared-garden-world";
 import { waitForIntro } from "./wait-for-intro";
 
 const MAX_FRAME_SECONDS = 0.05;
@@ -66,7 +65,6 @@ export function createHeroSceneController({
       progress,
       time,
       camera: createHeroCamera(progress, width / height, yaw),
-      mode: "hero",
     });
     markHeroReady();
   };
@@ -96,8 +94,6 @@ export function createHeroSceneController({
     }
   };
 
-  const stopSharing = shareGardenWorld(world, draw);
-
   onDisplayedProgress(progress);
   const stopWaitingForIntro = !autoplays
     ? () => {}
@@ -126,7 +122,6 @@ export function createHeroSceneController({
     dispose: () => {
       cancelAnimationFrame(frameHandle);
       stopWaitingForIntro();
-      stopSharing();
       world.dispose();
     },
   };

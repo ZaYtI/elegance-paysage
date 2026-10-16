@@ -63,7 +63,7 @@
 
 @media (min-width: 651px) and (prefers-reduced-motion: no-preference) {
   .section {
-    height: 280vh;
+    height: 340vh;
     view-timeline-name: --expertises;
   }
 
@@ -87,9 +87,9 @@
 
   @supports (animation-timeline: view()) {
     .track {
-      animation: slide-track linear both;
+      animation: slide-track cubic-bezier(0.3, 0.25, 0.35, 1) both;
       animation-timeline: --expertises;
-      animation-range: contain 0% contain 100%;
+      animation-range: contain 0% contain 90%;
     }
   }
 }

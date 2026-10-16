@@ -6,12 +6,13 @@ import { useHeroScene } from "./use-hero-scene";
 
 type HeroSceneProps = {
   progressSource: ProgressSource;
+  onDisplayedProgress: (progress: number) => void;
 };
 
-export function HeroScene({ progressSource }: HeroSceneProps) {
+export function HeroScene({ progressSource, onDisplayedProgress }: HeroSceneProps) {
   const hostRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const failed = useHeroScene(hostRef, canvasRef, progressSource);
+  const failed = useHeroScene(hostRef, canvasRef, progressSource, onDisplayedProgress);
 
   return (
     <div ref={hostRef} className="absolute inset-0 h-full w-full touch-pan-y">

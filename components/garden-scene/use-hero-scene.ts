@@ -10,6 +10,7 @@ export function useHeroScene(
   hostRef: RefObject<HTMLDivElement | null>,
   canvasRef: RefObject<HTMLCanvasElement | null>,
   progressSource: ProgressSource,
+  onDisplayedProgress: (progress: number) => void,
 ) {
   const [failed, setFailed] = useState(false);
   useEffect(() => {
@@ -29,6 +30,7 @@ export function useHeroScene(
           host,
           initialProgress: progressSource.current,
           reducedMotion,
+          onDisplayedProgress,
         });
 
         const stopProgress = progressSource.subscribe(controller.setTargetProgress);
@@ -54,7 +56,7 @@ export function useHeroScene(
       cancelled = true;
       stopObserving?.();
     };
-  }, [hostRef, canvasRef, progressSource]);
+  }, [hostRef, canvasRef, progressSource, onDisplayedProgress]);
 
   return failed;
 }

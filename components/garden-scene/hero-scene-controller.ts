@@ -1,8 +1,12 @@
+import { buildAutoplayProgress } from "./build-autoplay";
 import { createHeroCamera } from "./camera";
 import { createGardenWorld } from "./garden-world";
 import { markHeroReady } from "./hero-ready";
+import { limitProgressRise } from "./limit-progress-rise";
+import { isTouchDevice } from "./is-touch-device";
 import { chooseQualityProfile } from "./quality";
 import { shareGardenWorld } from "./shared-garden-world";
+import { waitForIntro } from "./wait-for-intro";
 
 const MAX_FRAME_SECONDS = 0.05;
 const PROGRESS_SMOOTHING_PER_SECOND = 5.5;
@@ -27,6 +31,7 @@ type HeroSceneOptions = {
   host: HTMLElement;
   initialProgress: number;
   reducedMotion: boolean;
+  onDisplayedProgress: (progress: number) => void;
 };
 
 export function createHeroSceneController({
@@ -34,11 +39,14 @@ export function createHeroSceneController({
   host,
   initialProgress,
   reducedMotion,
+  onDisplayedProgress,
 }: HeroSceneOptions): HeroSceneController {
   const quality = chooseQualityProfile();
   const world = createGardenWorld(canvas, quality);
+  const autoplays = !reducedMotion && isTouchDevice();
   let targetProgress = reducedMotion ? 1 : initialProgress;
   let progress = targetProgress;
+  let autoplaySeconds: number | null = null;
   let targetYaw = 0;
   let yaw = 0;
   let time = 0;
@@ -68,7 +76,17 @@ export function createHeroSceneController({
     const elapsed = lastTimestamp ? Math.min(MAX_FRAME_SECONDS, (timestamp - lastTimestamp) / 1000) : 0;
     lastTimestamp = timestamp;
     time += elapsed;
-    progress = easeToward(progress, targetProgress, PROGRESS_SMOOTHING_PER_SECOND, elapsed);
+    if (autoplaySeconds !== null) {
+      autoplaySeconds += elapsed;
+      targetProgress = Math.max(targetProgress, buildAutoplayProgress(autoplaySeconds));
+    }
+    const previousProgress = progress;
+    progress = limitProgressRise(
+      progress,
+      easeToward(progress, targetProgress, PROGRESS_SMOOTHING_PER_SECOND, elapsed),
+      elapsed,
+    );
+    if (progress !== previousProgress) onDisplayedProgress(progress);
     yaw = easeToward(yaw, targetYaw, YAW_SMOOTHING_PER_SECOND, elapsed);
     secondsSinceDraw += elapsed;
     const isEasing = progress !== targetProgress || yaw !== targetYaw;
@@ -80,12 +98,20 @@ export function createHeroSceneController({
 
   const stopSharing = shareGardenWorld(world, draw);
 
+  onDisplayedProgress(progress);
+  const stopWaitingForIntro = !autoplays
+    ? () => {}
+    : waitForIntro(() => {
+        autoplaySeconds = 0;
+      });
+
   if (reducedMotion) draw();
   else frameHandle = requestAnimationFrame(onFrame);
 
   return {
     setTargetProgress: (value) => {
-      if (!reducedMotion) targetProgress = value;
+      if (reducedMotion) return;
+      targetProgress = autoplays ? Math.max(targetProgress, value) : value;
     },
     setTargetYaw: (value) => {
       if (!reducedMotion) targetYaw = value;
@@ -99,6 +125,7 @@ export function createHeroSceneController({
     },
     dispose: () => {
       cancelAnimationFrame(frameHandle);
+      stopWaitingForIntro();
       stopSharing();
       world.dispose();
     },

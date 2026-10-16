@@ -15,6 +15,36 @@
   bottom: 0;
 }
 
+.half[data-depth="0"]::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 2px;
+  z-index: 1;
+  background: rgba(226, 232, 200, 0.85);
+  opacity: 0;
+}
+
+:global([data-phase="leaving"]) .half[data-depth="0"]::before {
+  opacity: 1;
+  transition: opacity 120ms ease var(--cut-ms);
+}
+
+.half[data-depth="0"][data-half="top"]::before {
+  bottom: 0;
+  box-shadow:
+    0 0 6px 1px rgba(214, 226, 180, 0.55),
+    0 14px 22px 4px rgba(6, 5, 3, 0.6);
+}
+
+.half[data-depth="0"][data-half="bottom"]::before {
+  top: 0;
+  box-shadow:
+    0 0 6px 1px rgba(214, 226, 180, 0.55),
+    0 -14px 22px 4px rgba(6, 5, 3, 0.6);
+}
+
 .foliage {
   position: absolute;
   left: 0;

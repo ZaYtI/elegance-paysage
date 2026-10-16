@@ -2,10 +2,12 @@
 
 import { useCallback, useRef, useState, type CSSProperties, type ReactNode } from "react";
 import { HeroScene } from "@/components/garden-scene/hero-scene";
+import { setDisplayedBuildProgress } from "@/components/garden-scene/hero-build-state";
 import { createProgressSource } from "@/components/garden-scene/progress-source";
 import { getStageIndex } from "./get-stage-index";
 import { HeroGrain } from "./hero-grain";
 import { HeroStageCaption } from "./hero-stage-caption";
+import { useRegisterJourneyGeometry } from "./use-register-journey-geometry";
 import { useScrollProgress } from "./use-scroll-progress";
 import styles from "./hero-journey.module.css";
 
@@ -23,11 +25,15 @@ export function HeroJourney({ children }: HeroJourneyProps) {
     (progress: number) => {
       progressSource.set(progress);
       heroRef.current?.style.setProperty("--hero-progress", String(progress));
-      setStageIndex(getStageIndex(progress));
     },
     [progressSource],
   );
+  const handleDisplayedProgress = useCallback((progress: number) => {
+    setDisplayedBuildProgress(progress);
+    setStageIndex(getStageIndex(progress));
+  }, []);
   useScrollProgress(journeyRef, heroRef, handleProgress);
+  useRegisterJourneyGeometry(journeyRef, heroRef);
 
   return (
     <div ref={journeyRef} className={styles.journey}>
@@ -42,7 +48,7 @@ export function HeroJourney({ children }: HeroJourneyProps) {
           aria-label="Maquette 3D d’un jardin qui se construit au défilement : terrasse, portail, clôture, pergola, arbres et mobilier."
           className={styles.scene}
         >
-          <HeroScene progressSource={progressSource} />
+          <HeroScene progressSource={progressSource} onDisplayedProgress={handleDisplayedProgress} />
         </div>
         <HeroGrain />
         <HeroStageCaption stageIndex={stageIndex} />

@@ -6,6 +6,17 @@ import { useSectionScrollProgress } from "./use-section-scroll-progress";
 import { useTrackTravel } from "./use-track-travel";
 
 const SLIDE_COUNT = 4;
+const SLIDE_START = 0;
+const SLIDE_END = 0.9;
+
+function easeOut(t: number) {
+  return 1 - Math.pow(1 - t, 1.6);
+}
+
+function toSlideProgress(sectionProgress: number) {
+  const t = Math.min(1, Math.max(0, (sectionProgress - SLIDE_START) / (SLIDE_END - SLIDE_START)));
+  return easeOut(t);
+}
 
 type ExpertisesTrackProps = {
   heading: React.ReactNode;
@@ -30,7 +41,7 @@ export function ExpertisesTrack({ heading, children }: ExpertisesTrackProps) {
 
       const track = trackRef.current;
       if (track && !supportsScrollTimeline()) {
-        track.style.transform = `translateX(${-progress * travel.current}px)`;
+        track.style.transform = `translateX(${-toSlideProgress(progress) * travel.current}px)`;
       }
     },
     [travel],

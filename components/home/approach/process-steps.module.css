@@ -1,0 +1,15 @@
+.steps {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+@media (max-width: 950px) {
+  .steps {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+}

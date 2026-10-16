@@ -1,0 +1,48 @@
+.burger {
+  display: none;
+  position: relative;
+  flex: none;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  border-radius: 50%;
+  border: 1px solid rgba(250, 248, 242, 0.28);
+  background: transparent;
+  color: var(--paper);
+  cursor: pointer;
+}
+
+.bar {
+  position: absolute;
+  left: 13px;
+  right: 13px;
+  height: 1.5px;
+  background: currentColor;
+  transition:
+    transform 0.35s cubic-bezier(0.2, 0.8, 0.2, 1),
+    top 0.35s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.bar:first-child {
+  top: 17px;
+}
+
+.bar:last-child {
+  top: 25px;
+}
+
+.burger[aria-expanded="true"] .bar:first-child {
+  top: 21px;
+  transform: rotate(45deg);
+}
+
+.burger[aria-expanded="true"] .bar:last-child {
+  top: 21px;
+  transform: rotate(-45deg);
+}
+
+@media (max-width: 650px) {
+  .burger {
+    display: block;
+  }
+}

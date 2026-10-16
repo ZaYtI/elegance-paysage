@@ -1,0 +1,44 @@
+.texture {
+  display: block;
+}
+
+.creation {
+  background:
+    radial-gradient(70% 60% at 72% 24%, #9aa57e 0%, rgba(154, 165, 126, 0) 70%),
+    radial-gradient(60% 60% at 18% 88%, #5c6a46 0%, rgba(92, 106, 70, 0) 70%),
+    linear-gradient(160deg, #4a4a38, #2a2820);
+}
+
+.terrasses {
+  background:
+    repeating-linear-gradient(90deg, rgba(23, 20, 15, 0.22) 0 2px, rgba(23, 20, 15, 0) 2px 52px),
+    repeating-linear-gradient(0deg, rgba(255, 255, 255, 0.05) 0 1px, rgba(255, 255, 255, 0) 1px 9px),
+    linear-gradient(170deg, #a48d6f, #6c5d4f 70%);
+}
+
+.plantations {
+  background:
+    radial-gradient(28% 34% at 25% 30%, #9aa57e 0%, rgba(154, 165, 126, 0) 100%),
+    radial-gradient(32% 30% at 70% 44%, #7f8c62 0%, rgba(127, 140, 98, 0) 100%),
+    radial-gradient(30% 36% at 44% 78%, #c7d3ba 0%, rgba(199, 211, 186, 0) 100%),
+    radial-gradient(18% 20% at 84% 82%, #e9e3d3 0%, rgba(233, 227, 211, 0) 100%),
+    linear-gradient(160deg, #4f5a3c, #2e3324);
+}
+
+.haies {
+  background:
+    linear-gradient(180deg, rgba(23, 20, 15, 0) 60%, rgba(23, 20, 15, 0.35)),
+    repeating-linear-gradient(90deg, #3a4630 0 18px, #435238 18px 30px, #38432d 30px 44px),
+    #3a4630;
+}
+
+.arbres {
+  background:
+    repeating-linear-gradient(115deg, rgba(250, 248, 242, 0.06) 0 1px, rgba(250, 248, 242, 0) 1px 16px),
+    radial-gradient(60% 70% at 65% 25%, #6c5d4f 0%, rgba(108, 93, 79, 0) 75%),
+    linear-gradient(200deg, #3c342b, #1e1b16);
+}
+
+.entretien {
+  background: repeating-linear-gradient(118deg, #7b8760 0 70px, #8b976d 70px 140px);
+}

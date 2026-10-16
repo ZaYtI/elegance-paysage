@@ -1,0 +1,129 @@
+.half {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 50%;
+  overflow: hidden;
+  will-change: transform;
+}
+
+.half[data-half="top"] {
+  top: 0;
+}
+
+.half[data-half="bottom"] {
+  bottom: 0;
+}
+
+.half[data-depth="0"]::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 2px;
+  z-index: 1;
+  background: rgba(226, 232, 200, 0.85);
+  opacity: 0;
+}
+
+:global([data-phase="leaving"]) .half[data-depth="0"]::before {
+  opacity: 1;
+  transition: opacity 120ms ease var(--cut-ms);
+}
+
+.half[data-depth="0"][data-half="top"]::before {
+  bottom: 0;
+  box-shadow:
+    0 0 6px 1px rgba(214, 226, 180, 0.55),
+    0 14px 22px 4px rgba(6, 5, 3, 0.6);
+}
+
+.half[data-depth="0"][data-half="bottom"]::before {
+  top: 0;
+  box-shadow:
+    0 0 6px 1px rgba(214, 226, 180, 0.55),
+    0 -14px 22px 4px rgba(6, 5, 3, 0.6);
+}
+
+.foliage {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: 200%;
+}
+
+.half[data-half="top"] .foliage {
+  top: 0;
+}
+
+.half[data-half="bottom"] .foliage {
+  bottom: 0;
+}
+
+.half[data-depth="3"] .foliage {
+  filter: blur(3px);
+}
+
+.half[data-depth="2"] .foliage {
+  filter: blur(1.6px) drop-shadow(0 8px 14px rgba(8, 6, 4, 0.5));
+}
+
+.half[data-depth="1"] .foliage {
+  filter: blur(0.6px) drop-shadow(0 12px 20px rgba(8, 6, 4, 0.55));
+}
+
+.half[data-depth="0"] .foliage {
+  filter: drop-shadow(0 16px 26px rgba(6, 5, 3, 0.65));
+}
+
+:global([data-phase="leaving"]) .half {
+  animation-duration: calc(var(--layer-split-ms) + var(--order) * var(--depth-lag-ms));
+  animation-delay: var(--cut-ms);
+  animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+  animation-fill-mode: both;
+}
+
+:global([data-phase="leaving"]) .half[data-half="top"] {
+  animation-name: split-up;
+}
+
+:global([data-phase="leaving"]) .half[data-half="bottom"] {
+  animation-name: split-down;
+}
+
+@keyframes split-up {
+  to {
+    transform: translate3d(0, -112%, 0);
+  }
+}
+
+@keyframes split-down {
+  to {
+    transform: translate3d(0, 112%, 0);
+  }
+}
+
+@media (max-width: 650px) {
+  .half .foliage {
+    filter: none;
+  }
+
+  .half::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: rgba(12, 10, 7, var(--mobile-tint, 0));
+  }
+
+  .half[data-depth="3"] {
+    --mobile-tint: 0.35;
+  }
+
+  .half[data-depth="2"] {
+    --mobile-tint: 0.22;
+  }
+
+  .half[data-depth="1"] {
+    --mobile-tint: 0.1;
+  }
+}

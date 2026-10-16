@@ -1,0 +1,31 @@
+.line {
+  display: block;
+  position: relative;
+  width: 1px;
+  height: 45px;
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.25);
+}
+
+.line::after {
+  content: "";
+  position: absolute;
+  top: -20px;
+  left: 0;
+  width: 1px;
+  height: 20px;
+  background: var(--accent-color);
+  animation: slide 2s ease infinite;
+}
+
+@keyframes slide {
+  to {
+    transform: translateY(70px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .line::after {
+    animation: none;
+  }
+}

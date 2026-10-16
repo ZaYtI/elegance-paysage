@@ -1,0 +1,80 @@
+.journey {
+  position: relative;
+  background: var(--ink-950);
+}
+
+.hero {
+  position: relative;
+  isolation: isolate;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  height: 860px;
+  background: radial-gradient(at 73% 48%, #514b40 0%, #2e2921 37%, #17140f 72%);
+}
+
+.scene {
+  position: absolute;
+  z-index: 1;
+  left: 50%;
+  right: 5%;
+  top: 15%;
+  bottom: 27%;
+  overflow: hidden;
+  border: 1px solid rgba(160, 167, 148, 0.28);
+  border-radius: 20px;
+  background: radial-gradient(at 50% 42%, #514b40 0%, #2e2921 58%, #1f1b15 100%);
+  touch-action: pan-y;
+}
+
+.scene canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+@media (prefers-reduced-motion: no-preference) and (pointer: fine) {
+  .journey {
+    height: calc(100svh * 2.8);
+  }
+
+  .hero {
+    position: sticky;
+    top: 0;
+    height: 100svh;
+  }
+}
+
+@media (max-width: 650px) {
+  .hero {
+    --scene-top: 134px;
+    --scene-height: min(34svh, 340px);
+    align-items: flex-start;
+    height: 800px;
+  }
+
+  .scene {
+    left: 16px;
+    right: 16px;
+    top: var(--scene-top);
+    bottom: auto;
+    height: var(--scene-height);
+    border-radius: 16px;
+  }
+}
+
+@media (max-width: 650px) and (prefers-reduced-motion: no-preference) and (pointer: fine) {
+  .journey {
+    height: calc(100svh * 2.3);
+  }
+
+  .hero {
+    height: 100svh;
+  }
+}
+
+@media (pointer: coarse) {
+  .hero {
+    height: 100svh;
+  }
+}

@@ -1,27 +1,31 @@
-import { SiteHeader } from "@/components/site-header";
-import { SiteFooter } from "@/components/site-footer";
-import { HeroSection } from "@/components/sections/hero-section";
-import { ServicesSection } from "@/components/sections/services-section";
-import { ProcessSection } from "@/components/sections/process-section";
-import { EngagementsSection } from "@/components/sections/engagements-section";
-import { PortfolioSection } from "@/components/sections/portfolio-section";
-import { ZoneSection } from "@/components/sections/zone-section";
-import { ContactSection } from "@/components/sections/contact-section";
+import { IntroLoader } from "@/components/home/intro-loader/intro-loader";
+import { SiteHeader } from "@/components/layout/site-header";
+import { SiteFooter } from "@/components/layout/site-footer";
+import { HeroSection } from "@/components/home/hero/hero-section";
+import { KeyFactsBand } from "@/components/home/key-facts-band";
+import { VisionSection } from "@/components/home/vision-section";
+import { ExpertisesSection } from "@/components/home/expertises/expertises-section";
+import { ApproachSection } from "@/components/home/approach/approach-section";
+import { GalleryPreviewSection } from "@/components/home/gallery-preview/gallery-preview-section";
+import { ZoneSection } from "@/components/home/zone-section";
+import { ContactSection } from "@/components/home/contact/contact-section";
 
 export default function Home() {
   return (
-    <div className="flex flex-col flex-1">
+    <>
+      <IntroLoader />
       <SiteHeader />
-      <main className="flex flex-col flex-1">
+      <main>
         <HeroSection />
-        <ServicesSection />
-        <ProcessSection />
-        <EngagementsSection />
-        <PortfolioSection />
+        <KeyFactsBand />
+        <VisionSection />
+        <ExpertisesSection />
+        <ApproachSection />
+        <GalleryPreviewSection />
         <ZoneSection />
         <ContactSection />
       </main>
       <SiteFooter />
-    </div>
+    </>
   );
 }

@@ -1,0 +1,67 @@
+.toolbar {
+  position: sticky;
+  top: 84px;
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin: 0 6%;
+  padding: 10px;
+  overflow-x: auto;
+  border: 1px solid rgba(108, 93, 79, 0.18);
+  border-radius: 999px;
+  background: rgba(250, 248, 242, 0.82);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  scrollbar-width: none;
+}
+
+.toolbar::-webkit-scrollbar {
+  display: none;
+}
+
+.chip {
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 44px;
+  padding: 0 18px;
+  border: 0;
+  border-radius: 999px;
+  background: transparent;
+  font-size: 14px;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: background 0.3s, color 0.3s;
+}
+
+.chip sup {
+  font-size: 10px;
+  opacity: 0.65;
+}
+
+.chip:hover {
+  background: rgba(160, 167, 148, 0.25);
+}
+
+.chip[aria-pressed="true"] {
+  background: var(--ink-950);
+  color: var(--paper);
+}
+
+.count {
+  flex: none;
+  margin-left: auto;
+  padding: 0 14px 0 10px;
+  font-size: 12px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--bark-700);
+  white-space: nowrap;
+}
+
+@media (max-width: 650px) {
+  .toolbar { margin: 0 12px; padding: 6px; }
+  .count { display: none; }
+}

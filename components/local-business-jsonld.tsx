@@ -10,7 +10,7 @@ export function LocalBusinessJsonLd() {
     url: siteInfo.url,
     logo: `${siteInfo.url}/icon.svg`,
     image: `${siteInfo.url}/icon.svg`,
-    telephone: contactInfo.phone,
+    telephone: contactInfo.phoneInternational,
     email: contactInfo.email,
     description:
       "Création et aménagement paysager, élagage, abattage et taille de haies pour particuliers et professionnels.",

@@ -1,0 +1,129 @@
+.section {
+  position: relative;
+  background: #faf8f2;
+  color: #17140f;
+}
+
+.sticky {
+  padding: 110px 6% 90px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.head {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  margin-bottom: 45px;
+  gap: 35px;
+}
+
+.counter {
+  font-size: 14px;
+  letter-spacing: 2px;
+  white-space: nowrap;
+}
+
+.trackWrap {
+  overflow-x: auto;
+  margin: 0 -6.8%;
+  padding: 0 6.8% 16px;
+  scroll-snap-type: x mandatory;
+  scroll-padding: 0 6.8%;
+  scrollbar-width: none;
+}
+
+.trackWrap::-webkit-scrollbar {
+  display: none;
+}
+
+.track {
+  display: flex;
+  gap: 24px;
+  width: max-content;
+  will-change: transform;
+}
+
+.track > * {
+  scroll-snap-align: start;
+}
+
+.divider {
+  height: 1px;
+  margin: 40px 0 0;
+  border: none;
+  background: rgba(108, 93, 79, 0.25);
+}
+
+.counter {
+  display: none;
+}
+
+@media (min-width: 651px) and (prefers-reduced-motion: no-preference) {
+  .section {
+    height: 340vh;
+    view-timeline-name: --expertises;
+  }
+
+  .sticky {
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    padding: 75px 6% 50px;
+  }
+
+  .trackWrap {
+    overflow: visible;
+    margin: 0;
+    padding: 0;
+    scroll-snap-type: none;
+  }
+
+  .counter {
+    display: inline;
+  }
+
+  @supports (animation-timeline: view()) {
+    .track {
+      animation: slide-track cubic-bezier(0.3, 0.25, 0.35, 1) both;
+      animation-timeline: --expertises;
+      animation-range: contain 0% contain 90%;
+    }
+  }
+}
+
+@keyframes slide-track {
+  to {
+    transform: translateX(calc(var(--track-travel, 0px) * -1));
+  }
+}
+
+@media (max-width: 650px) {
+  .sticky {
+    padding: 66px 0 70px;
+    overflow: visible;
+  }
+
+  .divider {
+    margin: 32px 22px 0;
+  }
+
+  .head {
+    display: block;
+    margin: 0 22px 26px;
+  }
+
+  .trackWrap {
+    margin: 0;
+    padding: 0 22px 4px;
+    scroll-padding: 0 22px;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .track {
+    gap: 12px;
+    transform: none !important;
+  }
+}

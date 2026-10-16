@@ -1,0 +1,56 @@
+.section {
+  display: grid;
+  grid-template-columns: 0.6fr 1.6fr;
+  gap: 60px;
+  padding: 125px 6%;
+}
+
+.bottom {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 40px;
+  margin-top: 45px;
+}
+
+.pitch {
+  max-width: 420px;
+  font-size: 16px;
+  line-height: 1.8;
+  color: var(--stone-400);
+}
+
+.signature {
+  margin-top: 25px;
+  font-family: Georgia, serif;
+  font-size: 22px;
+  font-style: italic;
+  white-space: nowrap;
+  color: var(--accent-color);
+}
+
+@media (min-width: 1700px) {
+  .section {
+    padding-left: max(6%, calc(50vw - 750px));
+    padding-right: max(6%, calc(50vw - 750px));
+  }
+}
+
+@media (max-width: 950px) {
+  .section {
+    grid-template-columns: 1fr;
+    gap: 30px;
+    padding: 90px 6%;
+  }
+}
+
+@media (max-width: 650px) {
+  .section {
+    padding: 70px 22px;
+  }
+
+  .bottom {
+    display: block;
+    margin-top: 24px;
+  }
+}

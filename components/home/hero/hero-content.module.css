@@ -1,0 +1,144 @@
+.content {
+  position: relative;
+  z-index: 2;
+  width: 49%;
+  padding: 140px 0 160px 6%;
+  pointer-events: none;
+  will-change: transform;
+}
+
+.content a {
+  pointer-events: auto;
+}
+
+.content > * {
+  animation: enter 1s ease both;
+}
+
+:global(html:not([data-intro])) .content > * {
+  animation-play-state: paused;
+}
+
+.content > :nth-child(2) {
+  animation-delay: 0.1s;
+}
+
+.content > :nth-child(3) {
+  animation-delay: 0.25s;
+}
+
+.eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  font-size: 11px;
+  letter-spacing: 1.4px;
+}
+
+.eyebrowRule {
+  flex: none;
+  width: 38px;
+  height: 1px;
+  background: var(--accent-color);
+}
+
+.title {
+  margin: 28px 0;
+  font-size: clamp(35px, 4.05vw, 62px);
+  line-height: 1.08;
+  letter-spacing: -0.055em;
+}
+
+.title span {
+  display: block;
+}
+
+.copy {
+  max-width: 390px;
+  margin-bottom: 25px;
+  font-size: 14px;
+  line-height: 1.65;
+  color: var(--stone-200);
+}
+
+.ctas {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+}
+
+
+
+@keyframes enter {
+  from {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .content > * {
+    animation: none;
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) and (min-width: 651px) {
+  .content {
+    transform: translateY(calc(var(--hero-progress, 0) * -55px));
+  }
+}
+
+@media (max-width: 950px) {
+  .content {
+    width: 45%;
+    padding-left: 5%;
+  }
+}
+
+@media (max-width: 650px) {
+  .content {
+    width: 100%;
+    padding: calc(var(--scene-top) + var(--scene-height) + 28px) 22px 30px;
+  }
+
+  .eyebrow {
+    gap: 12px;
+    font-size: 10px;
+    letter-spacing: 1.2px;
+  }
+
+  .eyebrowRule {
+    width: 22px;
+  }
+
+  .title {
+    margin: 14px 0;
+    font-size: clamp(31px, 9vw, 36px);
+    line-height: 1.06;
+  }
+
+  .title span {
+    display: inline;
+  }
+
+  .copy {
+    margin-bottom: 20px;
+    font-size: 14.5px;
+  }
+
+
+  .ctas {
+    gap: 10px 14px;
+  }
+
+  .pill {
+    padding: 14px 16px;
+    font-size: 14px;
+  }
+
+}

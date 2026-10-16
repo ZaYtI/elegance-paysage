@@ -1,12 +1,19 @@
-export const nav = [
-  { label: "Services", href: "#services" },
-  { label: "Déroulé", href: "#process" },
-  { label: "Réalisations", href: "#realisations" },
-  { label: "Zone d'intervention", href: "#zone" },
-  { label: "Contact", href: "#contact" },
+export type NavLink = { label: string; href: string };
+
+export const mainNav: NavLink[] = [
+  { label: "Accueil", href: "/" },
+  { label: "Galerie", href: "/galerie" },
+  { label: "Contact", href: "/contact" },
 ];
 
-export const heroStats = [
+export const homeSectionsNav: NavLink[] = [
+  { label: "Notre vision", href: "/#vision" },
+  { label: "Savoir-faire", href: "/#expertises" },
+  { label: "Approche", href: "/#approche" },
+  { label: "Secteur", href: "/#secteur" },
+];
+
+export const keyFacts = [
   { value: "Gratuit", label: "Devis personnalisé" },
   { value: "100%", label: "Assuré & équipé" },
   { value: "4", label: "Métiers du végétal" },
@@ -124,10 +131,11 @@ export const serviceOptions = [
 ] as const;
 
 export const contactInfo = {
-  phone: "+33 6 28 73 25 88",
-  phoneHref: "tel:+330628732588",
-  phoneSecondary: "+33 6 65 38 71 22",
-  phoneSecondaryHref: "tel:+330665387122",
+  phone: "06 28 73 25 88",
+  phoneInternational: "+33 6 28 73 25 88",
+  phoneHref: "tel:+33628732588",
+  phoneSecondary: "06 65 38 71 22",
+  phoneSecondaryHref: "tel:+33665387122",
   email: "contact@elegancepaysage62.com",
   emailHref: "mailto:contact@elegancepaysage62.com",
 };

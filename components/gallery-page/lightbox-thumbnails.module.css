@@ -1,0 +1,41 @@
+.strip {
+  display: flex;
+  gap: 10px;
+  max-width: 100%;
+  padding: 4px;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.strip::-webkit-scrollbar {
+  display: none;
+}
+
+.thumbnail {
+  position: relative;
+  flex: none;
+  width: 58px;
+  height: 40px;
+  padding: 0;
+  overflow: hidden;
+  border: none;
+  border-radius: 10px;
+  opacity: 0.4;
+  cursor: pointer;
+  transition: opacity 0.25s, transform 0.25s var(--ease-out-soft), box-shadow 0.25s;
+}
+
+.thumbnail:hover {
+  opacity: 0.8;
+}
+
+.thumbnail[aria-current="true"] {
+  opacity: 1;
+  transform: translateY(-3px);
+  box-shadow: 0 0 0 2px var(--accent-color);
+}
+
+.texture {
+  position: absolute;
+  inset: 0;
+}

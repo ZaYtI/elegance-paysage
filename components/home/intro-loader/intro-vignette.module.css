@@ -1,0 +1,23 @@
+.vignette {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background: radial-gradient(
+    ellipse 46% 40% at 50% 50%,
+    rgba(23, 20, 15, 0.98) 0%,
+    rgba(23, 20, 15, 0.92) 45%,
+    rgba(23, 20, 15, 0.55) 72%,
+    rgba(23, 20, 15, 0) 100%
+  );
+}
+
+:global([data-phase="leaving"]) .vignette {
+  animation: vignette-out var(--cut-ms) ease both;
+}
+
+@keyframes vignette-out {
+  to {
+    opacity: 0;
+  }
+}

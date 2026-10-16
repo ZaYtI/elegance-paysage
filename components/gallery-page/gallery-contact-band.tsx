@@ -5,7 +5,7 @@ import { contactInfo } from "@/lib/site-data";
 
 export function GalleryContactBand() {
   return (
-    <RoundedPanel id="contact" surround="sand" className="text-center">
+    <RoundedPanel id="contact" surround="paperToSand" className="text-center">
       <Eyebrow className="reveal text-stone-400">Votre jardin pourrait être le prochain.</Eyebrow>
       <h2 className="reveal mx-auto mt-[26px] mb-10 max-w-[1100px] text-[clamp(46px,7.5vw,112px)] leading-none tracking-[-0.06em]">
         Un projet ?

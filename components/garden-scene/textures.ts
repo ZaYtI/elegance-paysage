@@ -194,8 +194,8 @@ function drawLeaves(random: RandomSource): DrawTexture {
 
 const drawShadowBlob: DrawTexture = (context, width, height) => {
   const gradient = context.createRadialGradient(width / 2, height / 2, 0, width / 2, height / 2, width / 2);
-  gradient.addColorStop(0, "rgba(0,0,0,0.7)");
-  gradient.addColorStop(0.55, "rgba(0,0,0,0.38)");
+  gradient.addColorStop(0, "rgba(0,0,0,0.55)");
+  gradient.addColorStop(0.55, "rgba(0,0,0,0.26)");
   gradient.addColorStop(1, "rgba(0,0,0,0)");
   context.fillStyle = gradient;
   context.fillRect(0, 0, width, height);

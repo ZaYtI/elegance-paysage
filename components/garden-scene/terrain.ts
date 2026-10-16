@@ -168,7 +168,7 @@ function createWalls(builder: GardenBuilder, groundPositions: Float32Array) {
 
 function createShadowPlate(builder: GardenBuilder): Mesh {
   const plate = new Mesh(
-    new PlaneGeometry(17, 15),
+    new PlaneGeometry(12, 10.5),
     new MeshBasicMaterial({ map: builder.textures.shadowBlob, transparent: true, depthWrite: false, toneMapped: false }),
   );
   plate.rotation.x = -Math.PI / 2;

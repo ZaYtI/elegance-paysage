@@ -24,7 +24,7 @@ export function createHeroCamera(progress: number, aspect: number, viewYaw: numb
   return {
     yaw: 0.82 + progress * 0.22 + viewYaw,
     elevation: DEFAULT_ELEVATION + clampElevationOffset(elevationOffset),
-    width: aspect < 1.2 ? 12.2 : 12.8,
+    width: aspect < 1.2 ? 13 : 14.8,
     offsetX: 0,
     offsetY: 0.02,
     targetX: 0,

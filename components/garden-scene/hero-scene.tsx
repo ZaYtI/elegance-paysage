@@ -1,16 +1,17 @@
 "use client";
 
 import { useRef } from "react";
+import type { ProgressSource } from "./progress-source";
 import { useHeroScene } from "./use-hero-scene";
 
 type HeroSceneProps = {
-  progress: number;
+  progressSource: ProgressSource;
 };
 
-export function HeroScene({ progress }: HeroSceneProps) {
+export function HeroScene({ progressSource }: HeroSceneProps) {
   const hostRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const failed = useHeroScene(hostRef, canvasRef, progress);
+  const failed = useHeroScene(hostRef, canvasRef, progressSource);
 
   return (
     <div ref={hostRef} className="absolute inset-0 h-full w-full touch-pan-y">

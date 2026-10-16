@@ -55,11 +55,11 @@ function createSky(): Mesh {
   return sky;
 }
 
-function createSun(): DirectionalLight {
+function createSun(shadowMapSize: number): DirectionalLight {
   const sun = new DirectionalLight(0xffe2ba, 4.0);
   sun.position.set(-8, 14, 8);
   sun.castShadow = true;
-  sun.shadow.mapSize.set(2048, 2048);
+  sun.shadow.mapSize.set(shadowMapSize, shadowMapSize);
   const shadowCamera = sun.shadow.camera;
   shadowCamera.left = -8.5;
   shadowCamera.right = 8.5;
@@ -106,12 +106,12 @@ function applyEnvironment(renderer: WebGLRenderer, scene: Scene) {
   (environmentSphere.material as MeshBasicMaterial).dispose();
 }
 
-export function addSkyAndLights(renderer: WebGLRenderer, scene: Scene): SkyAndLights {
+export function addSkyAndLights(renderer: WebGLRenderer, scene: Scene, shadowMapSize: number): SkyAndLights {
   const sky = createSky();
   scene.add(sky);
 
   scene.add(new HemisphereLight(0xeef3f5, 0x8a8066, 0.95));
-  scene.add(createSun());
+  scene.add(createSun(shadowMapSize));
 
   try {
     applyEnvironment(renderer, scene);

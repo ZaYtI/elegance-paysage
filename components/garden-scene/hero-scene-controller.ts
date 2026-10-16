@@ -1,8 +1,8 @@
 import { createHeroCamera } from "./camera";
 import { createGardenWorld } from "./garden-world";
+import { chooseQualityProfile } from "./quality";
 import { shareGardenWorld } from "./shared-garden-world";
 
-const MAX_PIXEL_RATIO = 1.5;
 const MAX_FRAME_SECONDS = 0.05;
 const PROGRESS_SMOOTHING = 0.12;
 const YAW_SMOOTHING = 0.1;
@@ -34,13 +34,15 @@ export function createHeroSceneController({
   initialProgress,
   reducedMotion,
 }: HeroSceneOptions): HeroSceneController {
-  const world = createGardenWorld(canvas);
+  const quality = chooseQualityProfile();
+  const world = createGardenWorld(canvas, quality);
   let targetProgress = reducedMotion ? 1 : initialProgress;
   let progress = targetProgress;
   let targetYaw = 0;
   let yaw = 0;
   let time = 0;
   let lastTimestamp = 0;
+  let secondsSinceDraw = 0;
   let visible = true;
   let frameHandle = 0;
 
@@ -48,7 +50,7 @@ export function createHeroSceneController({
     const width = host.clientWidth;
     const height = host.clientHeight;
     if (!width || !height) return;
-    const pixelRatio = Math.min(MAX_PIXEL_RATIO, window.devicePixelRatio || 1);
+    const pixelRatio = Math.min(quality.maxPixelRatio, window.devicePixelRatio || 1);
     world.render({
       width: Math.round(width * pixelRatio),
       height: Math.round(height * pixelRatio),
@@ -66,7 +68,12 @@ export function createHeroSceneController({
     time += elapsed;
     progress = easeToward(progress, targetProgress, PROGRESS_SMOOTHING);
     yaw = easeToward(yaw, targetYaw, YAW_SMOOTHING);
-    if (visible) draw();
+    secondsSinceDraw += elapsed;
+    const isEasing = progress !== targetProgress || yaw !== targetYaw;
+    if (visible && (isEasing || secondsSinceDraw >= quality.idleFrameSeconds)) {
+      secondsSinceDraw = 0;
+      draw();
+    }
   };
 
   const stopSharing = shareGardenWorld(world, draw);

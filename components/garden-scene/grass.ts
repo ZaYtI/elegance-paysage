@@ -150,8 +150,9 @@ function isOnSteppingStone(stones: SteppingStone[], x: number, z: number): boole
   });
 }
 
-export function buildGrass(builder: GardenBuilder, steppingStones: SteppingStone[]) {
+export function buildGrass(builder: GardenBuilder, steppingStones: SteppingStone[], density: number) {
   const { random } = builder;
+  const scaled = (count: number) => Math.round(count * density);
   const uniforms: GrassUniforms = { progress: { value: 0 }, time: { value: 0 } };
 
   const lawnLight = hexToLinearRgb(0x6f8260);
@@ -163,7 +164,7 @@ export function buildGrass(builder: GardenBuilder, steppingStones: SteppingStone
   const meadowLight = hexToLinearRgb(0x808859);
 
   scatterGrass(builder, uniforms, {
-    count: 52000,
+    count: scaled(52000),
     withering: false,
     pick: (x, z) => {
       if (groundZone(x, z) !== 1 || isOnSteppingStone(steppingStones, x, z)) return null;
@@ -186,7 +187,7 @@ export function buildGrass(builder: GardenBuilder, steppingStones: SteppingStone
   });
 
   scatterGrass(builder, uniforms, {
-    count: 3000,
+    count: scaled(3000),
     withering: true,
     pick: (x, z) => {
       if (random() > 0.2 + valueNoise(x * 0.8 + 7, z * 0.8 + 1) * 0.95) return null;
@@ -203,7 +204,7 @@ export function buildGrass(builder: GardenBuilder, steppingStones: SteppingStone
   });
 
   const meadow = scatterGrass(builder, uniforms, {
-    count: 28000,
+    count: scaled(28000),
     withering: false,
     halfWidth: 8.8,
     halfDepth: 7.8,

@@ -23,6 +23,7 @@ import { createBuildMaterials } from "./materials";
 import { createRandom } from "./noise";
 import { buildPergola } from "./pergola";
 import { DepthOfFieldPass } from "./post-processing";
+import type { QualityProfile } from "./quality";
 import { createShrubPlanter } from "./shrubs";
 import { addSkyAndLights } from "./sky-and-lights";
 import { createRocks, createTerrain } from "./terrain";
@@ -66,8 +67,8 @@ function disposeScene(scene: Scene) {
   scene.environment?.dispose();
 }
 
-export function createGardenWorld(canvas: HTMLCanvasElement): GardenWorld {
-  const renderer = new WebGLRenderer({ canvas, antialias: true, alpha: true });
+export function createGardenWorld(canvas: HTMLCanvasElement, quality: QualityProfile): GardenWorld {
+  const renderer = new WebGLRenderer({ canvas, antialias: quality.antialias, alpha: true });
   renderer.setPixelRatio(1);
   renderer.setClearColor(0x000000, 0);
   renderer.outputColorSpace = SRGBColorSpace;
@@ -79,7 +80,7 @@ export function createGardenWorld(canvas: HTMLCanvasElement): GardenWorld {
 
   const scene = new Scene();
   const camera = new PerspectiveCamera(20, 1.25, 0.3, 260);
-  const { sky, fog } = addSkyAndLights(renderer, scene);
+  const { sky, fog } = addSkyAndLights(renderer, scene, quality.shadowMapSize);
 
   const random = createRandom(RANDOM_SEED);
   const textures = createGardenTextures(random);
@@ -90,7 +91,7 @@ export function createGardenWorld(canvas: HTMLCanvasElement): GardenWorld {
   const hardscape = buildHardscape(builder, materials);
   buildPergola(builder, materials);
   const furniture = buildFurniture(builder, materials);
-  const { uniforms: grassUniforms, meadow } = buildGrass(builder, hardscape.steppingStones);
+  const { uniforms: grassUniforms, meadow } = buildGrass(builder, hardscape.steppingStones, quality.grassDensity);
 
   const foliage = createFoliage(builder);
   const { plantTree, canopies } = createTreePlanter(builder, foliage);

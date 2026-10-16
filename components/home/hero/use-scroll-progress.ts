@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState, type RefObject } from "react";
+import { useEffect, type RefObject } from "react";
 
 const REDUCED_MOTION_QUERY = "(prefers-reduced-motion: reduce)";
 
@@ -11,9 +11,8 @@ function clamp01(value: number) {
 export function useScrollProgress(
   ref: RefObject<HTMLElement | null>,
   stickyRef: RefObject<HTMLElement | null>,
+  onProgress: (progress: number) => void,
 ) {
-  const [progress, setProgress] = useState(0);
-
   useEffect(() => {
     const element = ref.current;
     const sticky = stickyRef.current;
@@ -28,7 +27,7 @@ export function useScrollProgress(
     let frameId = 0;
     const scheduleMeasure = () => {
       cancelAnimationFrame(frameId);
-      frameId = requestAnimationFrame(() => setProgress(measure()));
+      frameId = requestAnimationFrame(() => onProgress(measure()));
     };
 
     scheduleMeasure();
@@ -39,7 +38,5 @@ export function useScrollProgress(
       window.removeEventListener("scroll", scheduleMeasure);
       window.removeEventListener("resize", scheduleMeasure);
     };
-  }, [ref, stickyRef]);
-
-  return progress;
+  }, [ref, stickyRef, onProgress]);
 }

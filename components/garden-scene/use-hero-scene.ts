@@ -1,24 +1,16 @@
 "use client";
 
-import { useEffect, useRef, useState, type RefObject } from "react";
-import type { HeroSceneController } from "./hero-scene-controller";
+import { useEffect, useState, type RefObject } from "react";
+import type { ProgressSource } from "./progress-source";
 import { observePointerYaw } from "./observe-pointer-yaw";
 import { observeVisibility } from "./observe-visibility";
 
 export function useHeroScene(
   hostRef: RefObject<HTMLDivElement | null>,
   canvasRef: RefObject<HTMLCanvasElement | null>,
-  progress: number,
+  progressSource: ProgressSource,
 ) {
   const [failed, setFailed] = useState(false);
-  const controllerRef = useRef<HeroSceneController | null>(null);
-  const progressRef = useRef(progress);
-
-  useEffect(() => {
-    progressRef.current = progress;
-    controllerRef.current?.setTargetProgress(progress);
-  }, [progress]);
-
   useEffect(() => {
     const host = hostRef.current;
     const canvas = canvasRef.current;
@@ -34,16 +26,17 @@ export function useHeroScene(
         const controller = createHeroSceneController({
           canvas,
           host,
-          initialProgress: progressRef.current,
+          initialProgress: progressSource.current,
           reducedMotion,
         });
-        controllerRef.current = controller;
 
+        const stopProgress = progressSource.subscribe(controller.setTargetProgress);
         const stopVisibility = observeVisibility(host, controller.setVisible);
         const stopPointer = observePointerYaw(host, controller.setTargetYaw);
         const resizeObserver = new ResizeObserver(controller.renderOnce);
         resizeObserver.observe(host);
         stopObserving = () => {
+          stopProgress();
           stopVisibility();
           stopPointer();
           resizeObserver.disconnect();
@@ -57,10 +50,9 @@ export function useHeroScene(
 
     return () => {
       cancelled = true;
-      controllerRef.current = null;
       stopObserving?.();
     };
-  }, [hostRef, canvasRef]);
+  }, [hostRef, canvasRef, progressSource]);
 
   return failed;
 }

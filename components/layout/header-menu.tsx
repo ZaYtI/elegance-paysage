@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { createPortal } from "react-dom";
 import type { NavLink } from "@/lib/site-data";
 import { BurgerButton } from "./burger-button";
 import { MobileMenu } from "./mobile-menu";
@@ -15,7 +16,9 @@ export function HeaderMenu({ links }: HeaderMenuProps) {
   return (
     <>
       <BurgerButton isOpen={isOpen} onToggle={() => setIsOpen((open) => !open)} />
-      {isOpen ? <MobileMenu links={links} onClose={() => setIsOpen(false)} /> : null}
+      {isOpen
+        ? createPortal(<MobileMenu links={links} onClose={() => setIsOpen(false)} />, document.body)
+        : null}
     </>
   );
 }

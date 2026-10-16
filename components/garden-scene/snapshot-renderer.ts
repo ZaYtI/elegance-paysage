@@ -1,6 +1,7 @@
 import { stillShots } from "./camera";
 import { createGardenWorld, type GardenWorld } from "./garden-world";
 import type { GardenView } from "./garden-views";
+import { FULL_QUALITY } from "./quality";
 import { waitForSharedGardenWorld } from "./shared-garden-world";
 
 const STILL_TIME = 2.2;
@@ -28,7 +29,7 @@ async function acquireWorld(): Promise<StillWorld> {
   const heroWorld = await waitForSharedGardenWorld(HERO_WORLD_WAIT_MS);
   if (heroWorld) return { world: heroWorld.world, restore: heroWorld.redraw };
 
-  ownWorld ??= createGardenWorld(document.createElement("canvas"));
+  ownWorld ??= createGardenWorld(document.createElement("canvas"), FULL_QUALITY);
   return { world: ownWorld, restore: () => {} };
 }
 

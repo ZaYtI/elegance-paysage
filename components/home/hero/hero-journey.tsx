@@ -1,7 +1,8 @@
 "use client";
 
-import { useRef, type CSSProperties, type ReactNode } from "react";
+import { useCallback, useRef, useState, type CSSProperties, type ReactNode } from "react";
 import { HeroScene } from "@/components/garden-scene/hero-scene";
+import { createProgressSource } from "@/components/garden-scene/progress-source";
 import { getStageIndex } from "./get-stage-index";
 import { HeroGrain } from "./hero-grain";
 import { HeroStageCaption } from "./hero-stage-caption";
@@ -15,7 +16,18 @@ type HeroJourneyProps = {
 export function HeroJourney({ children }: HeroJourneyProps) {
   const journeyRef = useRef<HTMLDivElement>(null);
   const heroRef = useRef<HTMLElement>(null);
-  const progress = useScrollProgress(journeyRef, heroRef);
+  const [progressSource] = useState(createProgressSource);
+  const [stageIndex, setStageIndex] = useState(0);
+
+  const handleProgress = useCallback(
+    (progress: number) => {
+      progressSource.set(progress);
+      heroRef.current?.style.setProperty("--hero-progress", String(progress));
+      setStageIndex(getStageIndex(progress));
+    },
+    [progressSource],
+  );
+  useScrollProgress(journeyRef, heroRef, handleProgress);
 
   return (
     <div ref={journeyRef} className={styles.journey}>
@@ -23,17 +35,17 @@ export function HeroJourney({ children }: HeroJourneyProps) {
         ref={heroRef}
         id="top"
         className={styles.hero}
-        style={{ "--hero-progress": progress } as CSSProperties}
+        style={{ "--hero-progress": 0 } as CSSProperties}
       >
         <div
           role="img"
           aria-label="Maquette 3D d’un jardin qui se construit au défilement : terrasse, portail, clôture, pergola, arbres et mobilier."
           className={styles.scene}
         >
-          <HeroScene progress={progress} />
+          <HeroScene progressSource={progressSource} />
         </div>
         <HeroGrain />
-        <HeroStageCaption stageIndex={getStageIndex(progress)} />
+        <HeroStageCaption stageIndex={stageIndex} />
         {children}
       </section>
     </div>

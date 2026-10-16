@@ -1,3 +1,5 @@
+import { IntroLoader } from "@/components/home/intro-loader/intro-loader";
+import { IntroSkipScript } from "@/components/home/intro-loader/intro-skip-script";
 import { SiteHeader } from "@/components/layout/site-header";
 import { SiteFooter } from "@/components/layout/site-footer";
 import { HeroSection } from "@/components/home/hero/hero-section";
@@ -12,6 +14,8 @@ import { ContactSection } from "@/components/home/contact/contact-section";
 export default function Home() {
   return (
     <>
+      <IntroSkipScript />
+      <IntroLoader />
       <SiteHeader />
       <main>
         <HeroSection />

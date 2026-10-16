@@ -107,7 +107,6 @@
   }
 
   html {
-    scroll-behavior: smooth;
     scroll-padding-top: 90px;
   }
 
@@ -169,10 +168,6 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  html {
-    scroll-behavior: auto;
-  }
-
   .reveal-ready .reveal {
     opacity: 1;
     translate: 0 0;

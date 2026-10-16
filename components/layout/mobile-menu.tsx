@@ -19,7 +19,7 @@ export function MobileMenu({ links, onClose }: MobileMenuProps) {
   useMobileMenuDismissal(onClose);
 
   return (
-    <div className={styles.menu}>
+    <div className={styles.menu} data-lenis-prevent>
       <nav aria-label="Menu mobile" className={styles.links}>
         {links.map((link, index) => (
           <NavItemLink

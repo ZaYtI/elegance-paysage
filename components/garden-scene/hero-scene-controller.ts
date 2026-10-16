@@ -1,15 +1,16 @@
 import { createHeroCamera } from "./camera";
 import { createGardenWorld } from "./garden-world";
+import { markHeroReady } from "./hero-ready";
 import { chooseQualityProfile } from "./quality";
 import { shareGardenWorld } from "./shared-garden-world";
 
 const MAX_FRAME_SECONDS = 0.05;
-const PROGRESS_SMOOTHING = 0.12;
-const YAW_SMOOTHING = 0.1;
+const PROGRESS_SMOOTHING_PER_SECOND = 5.5;
+const YAW_SMOOTHING_PER_SECOND = 7;
 const SETTLE_THRESHOLD = 0.0005;
 
-function easeToward(current: number, target: number, smoothing: number) {
-  const next = current + (target - current) * smoothing;
+function easeToward(current: number, target: number, smoothingPerSecond: number, seconds: number) {
+  const next = current + (target - current) * (1 - Math.exp(-smoothingPerSecond * seconds));
   return Math.abs(target - next) < SETTLE_THRESHOLD ? target : next;
 }
 
@@ -59,6 +60,7 @@ export function createHeroSceneController({
       camera: createHeroCamera(progress, width / height, yaw),
       mode: "hero",
     });
+    markHeroReady();
   };
 
   const onFrame = (timestamp: number) => {
@@ -66,8 +68,8 @@ export function createHeroSceneController({
     const elapsed = lastTimestamp ? Math.min(MAX_FRAME_SECONDS, (timestamp - lastTimestamp) / 1000) : 0;
     lastTimestamp = timestamp;
     time += elapsed;
-    progress = easeToward(progress, targetProgress, PROGRESS_SMOOTHING);
-    yaw = easeToward(yaw, targetYaw, YAW_SMOOTHING);
+    progress = easeToward(progress, targetProgress, PROGRESS_SMOOTHING_PER_SECOND, elapsed);
+    yaw = easeToward(yaw, targetYaw, YAW_SMOOTHING_PER_SECOND, elapsed);
     secondsSinceDraw += elapsed;
     const isEasing = progress !== targetProgress || yaw !== targetYaw;
     if (visible && (isEasing || secondsSinceDraw >= quality.idleFrameSeconds)) {

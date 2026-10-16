@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState, type RefObject } from "react";
+import { markHeroReady } from "./hero-ready";
 import type { ProgressSource } from "./progress-source";
 import { observePointerYaw } from "./observe-pointer-yaw";
 import { observeVisibility } from "./observe-visibility";
@@ -45,6 +46,7 @@ export function useHeroScene(
       })
       .catch((error) => {
         console.error(error);
+        markHeroReady();
         if (!cancelled) setFailed(true);
       });
 

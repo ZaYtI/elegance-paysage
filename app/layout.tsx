@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { DM_Sans, Manrope } from "next/font/google";
 import { Analytics } from "@vercel/analytics/next"
 import { RevealOnScroll } from "@/components/layout/reveal-on-scroll";
+import { SmoothScroll } from "@/components/layout/smooth-scroll";
 import { LocalBusinessJsonLd } from "@/components/local-business-jsonld";
 import { isPreviewDeployment } from "@/lib/environment";
 import { siteInfo } from "@/lib/site-data";
@@ -42,11 +43,13 @@ export default function RootLayout({
   return (
     <html
       lang="fr"
+      suppressHydrationWarning
       className={`${dmSans.variable} ${manrope.variable} antialiased`}
     >
       <body>
         <LocalBusinessJsonLd />
         <RevealOnScroll />
+        <SmoothScroll />
         {children}
         <Analytics />
       </body>

@@ -5,7 +5,6 @@ import type { GardenTextures } from "./textures";
 export type BuildMaterials = {
   wood: MeshStandardMaterial;
   woodPost: MeshStandardMaterial;
-  woodBeam: MeshStandardMaterial;
   stone: MeshStandardMaterial;
   darkMetal: MeshStandardMaterial;
   edging: MeshStandardMaterial;
@@ -16,7 +15,6 @@ export function createBuildMaterials(textures: GardenTextures): BuildMaterials {
   return {
     wood: createStandardMaterial({ map: textures.wood, color: 0xa8957f, roughness: 0.82 }),
     woodPost: createStandardMaterial({ map: textures.woodVertical, color: 0x7f6e5e, roughness: 0.85 }),
-    woodBeam: createStandardMaterial({ map: textures.wood, color: 0x84735f, roughness: 0.85 }),
     stone: createStandardMaterial({
       map: textures.stone,
       bumpMap: textures.stone,

@@ -34,8 +34,3 @@
   transform: translateY(-3px);
   box-shadow: 0 0 0 2px var(--accent-color);
 }
-
-.texture {
-  position: absolute;
-  inset: 0;
-}

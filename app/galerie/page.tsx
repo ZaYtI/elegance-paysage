@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { GalleryBrowser } from "@/components/gallery-page/gallery-browser";
+import { getGalleryData } from "@/components/gallery-page/gallery-data";
 import { GalleryContactBand } from "@/components/gallery-page/gallery-contact-band";
 import { GalleryHero } from "@/components/gallery-page/gallery-hero";
 import { SiteFooter } from "@/components/layout/site-footer";
@@ -12,14 +13,16 @@ export const metadata: Metadata = {
   alternates: { canonical: "/galerie" },
 };
 
-export default function GalleryPage() {
+export default async function GalleryPage() {
+  const galleryData = await getGalleryData();
+
   return (
     <>
       <SiteHeader />
       <main>
         <div className="bg-paper text-[#1e1b16]">
-          <GalleryHero />
-          <GalleryBrowser />
+          <GalleryHero data={galleryData} />
+          <GalleryBrowser data={galleryData} />
         </div>
         <GalleryContactBand />
       </main>

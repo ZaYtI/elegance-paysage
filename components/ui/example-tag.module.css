@@ -1,0 +1,16 @@
+.tag {
+  display: inline-block;
+  padding: 7px 12px;
+  border-radius: 999px;
+  background: rgba(250, 248, 242, 0.16);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  color: var(--paper);
+  font-size: 11px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+@media (max-width: 650px) {
+  .tag { padding: 5px 9px; font-size: 9px; }
+}

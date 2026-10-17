@@ -1,0 +1,30 @@
+.empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  padding: 64px 24px;
+  border: 1px dashed currentColor;
+  border-radius: 16px;
+  text-align: center;
+  color: var(--bark-700);
+}
+
+.dark {
+  color: rgba(250, 248, 242, 0.75);
+}
+
+.icon {
+  opacity: 0.7;
+}
+
+.title {
+  font-family: var(--font-display);
+  font-size: 22px;
+  letter-spacing: -0.5px;
+}
+
+.subline {
+  font-size: 14px;
+  opacity: 0.8;
+}

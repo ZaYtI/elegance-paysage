@@ -1,29 +1,27 @@
-import { GardenSnapshot } from "@/components/garden-scene/garden-snapshot";
+import type { SanityHomeCard } from "@/lib/sanity/types";
 import type { Service } from "@/lib/site-data";
 import styles from "./expertise-card.module.css";
-import { ExpertiseCardMotif } from "./expertise-card-motif";
+import { ExpertiseCardVisual } from "./expertise-card-visual";
 import { expertiseCardStyles } from "./expertise-cards";
+import { resolveExpertiseCard } from "./resolve-expertise-card";
 
 type ExpertiseCardProps = {
   service: Service;
+  override: SanityHomeCard | null;
 };
 
-export function ExpertiseCard({ service }: ExpertiseCardProps) {
-  const card = expertiseCardStyles[service.icon];
+export function ExpertiseCard({ service, override }: ExpertiseCardProps) {
+  const style = expertiseCardStyles[service.icon];
+  const card = resolveExpertiseCard(service, style, override);
 
   return (
-    <article className={styles.card} style={{ background: card.background, color: card.color }}>
-      {card.motif === "garden" && (
-        <div className={styles.shot} aria-hidden="true">
-          <GardenSnapshot view="creation" />
-        </div>
-      )}
+    <article className={styles.card} style={{ background: style.background, color: style.color }}>
+      <ExpertiseCardVisual card={style} cardImage={card.image} />
       <span className="text-sm">{service.num} /</span>
       <span className={styles.tag}>{card.tag}</span>
-      <ExpertiseCardMotif card={card} />
       <div>
-        <h3 className={styles.title}>{service.title}</h3>
-        <p className={styles.text}>{service.description}</p>
+        <h3 className={styles.title}>{card.title}</h3>
+        <p className={styles.text}>{card.description}</p>
       </div>
     </article>
   );

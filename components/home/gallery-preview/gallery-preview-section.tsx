@@ -1,8 +1,16 @@
 import { Eyebrow } from "@/components/ui/eyebrow";
 import { PillLink } from "@/components/ui/pill-link";
-import { GalleryPreviewGrid } from "./gallery-preview-grid";
+import { fetchHomePage } from "@/lib/sanity/home-content";
+import { UpcomingPhotos } from "@/components/ui/upcoming-photos";
+import { SanityGalleryPreviewGrid } from "./sanity-gallery-preview-grid";
+import { toSanityGalleryPreviewPhoto } from "./sanity-gallery-preview-photo";
 
-export function GalleryPreviewSection() {
+export async function GalleryPreviewSection() {
+  const homePage = await fetchHomePage();
+  const photos = (homePage?.galleryPreview ?? []).map(toSanityGalleryPreviewPhoto);
+  const hasPhotos = photos.length > 0;
+  const showsExamples = photos.some((photo) => photo.isExample);
+
   return (
     <section
       id="galerie"
@@ -20,10 +28,10 @@ export function GalleryPreviewSection() {
         <p className="reveal mt-[18px] max-w-[320px] text-[15px] leading-[1.7] text-bark-700 min-[651px]:mt-0">
           Terrasses, plantations, lignes végétales : quelques ambiances pour imaginer votre extérieur.
           <br />
-          <strong>Vues 3D de la maquette, et non nos réalisations.</strong>
+          {showsExamples && <strong>Vues 3D de la maquette, et non nos réalisations.</strong>}
         </p>
       </div>
-      <GalleryPreviewGrid />
+      {hasPhotos ? <SanityGalleryPreviewGrid photos={photos} /> : <UpcomingPhotos subline="Nos premières réalisations arrivent bientôt." />}
       <div className="mt-[30px] flex flex-col items-stretch gap-3.5 border-t border-bark-700/25 pt-[30px] min-[651px]:mt-10 min-[651px]:flex-row min-[651px]:items-center min-[651px]:justify-between min-[651px]:gap-[25px]">
         <PillLink href="/galerie" variant="dark">
           Voir toute la galerie

@@ -33,6 +33,14 @@ function buildChairs(builder: GardenBuilder, materials: BuildMaterials) {
   });
 }
 
+function buildBench(builder: GardenBuilder, materials: BuildMaterials) {
+  builder.box(-2.5, 0.44, -0.8, 1.6, 0.09, 0.45, materials.stone, 0.84);
+  builder.box(-2.5, 0.73, -1.03, 1.6, 0.44, 0.035, materials.wood, 0.85);
+  [-3.2, -1.8].forEach((x) => {
+    [-0.97, -0.63].forEach((z) => builder.box(x, 0.27, z, 0.045, 0.36, 0.045, materials.darkMetal, 0.83));
+  });
+}
+
 function buildLamps(builder: GardenBuilder, materials: BuildMaterials) {
   const bulbMaterial = createStandardMaterial({ color: 0xf2ede2, emissive: 0xffd9a0, emissiveIntensity: 0 });
   const bulbGeometry = new SphereGeometry(1, 18, 12);
@@ -59,5 +67,6 @@ function buildLamps(builder: GardenBuilder, materials: BuildMaterials) {
 export function buildFurniture(builder: GardenBuilder, materials: BuildMaterials): Furniture {
   buildLoungeTable(builder, materials);
   buildChairs(builder, materials);
+  buildBench(builder, materials);
   return buildLamps(builder, materials);
 }

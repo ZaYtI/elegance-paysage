@@ -45,7 +45,7 @@ export function HeroJourney({ children }: HeroJourneyProps) {
       >
         <div
           role="img"
-          aria-label="Maquette 3D d’un jardin qui se construit au défilement : terrasse, portail, clôture, pergola, arbres et mobilier."
+          aria-label="Maquette 3D d’un jardin qui se construit au défilement : terrasse, portail, clôture, arbres et mobilier."
           className={styles.scene}
         >
           <HeroScene progressSource={progressSource} onDisplayedProgress={handleDisplayedProgress} />

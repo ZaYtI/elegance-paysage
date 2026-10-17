@@ -24,7 +24,6 @@ import { createFoliage } from "./foliage";
 import { addLights } from "./lights-and-environment";
 import { createBuildMaterials } from "./materials";
 import { createRandom } from "./noise";
-import { buildPergola } from "./pergola";
 import type { QualityProfile } from "./quality";
 import { createShrubPlanter } from "./shrubs";
 import { createRocks, createTerrain } from "./terrain";
@@ -86,7 +85,6 @@ export function createGardenWorld(canvas: HTMLCanvasElement, quality: QualityPro
 
   const terrain = createTerrain(builder);
   const hardscape = buildHardscape(builder, materials);
-  buildPergola(builder, materials);
   const furniture = buildFurniture(builder, materials);
   const { uniforms: grassUniforms, meadow } = buildGrass(builder, hardscape.steppingStones, quality.grassDensity);
 

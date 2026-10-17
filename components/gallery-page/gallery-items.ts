@@ -20,7 +20,7 @@ export const galleryCategories: { id: GalleryCategoryId; label: string }[] = [
 ];
 
 export const galleryItems: GalleryItem[] = [
-  { title: "Terrasse bois sous pergola", category: "terrasses", size: "big" },
+  { title: "Terrasse bois et salon de jardin", category: "terrasses", size: "big" },
   { title: "Massif de vivaces", category: "plantations", size: "tall" },
   { title: "Haie taillée au cordeau", category: "haies", size: "regular" },
   { title: "Création d’un jardin complet", category: "creation", size: "wide" },

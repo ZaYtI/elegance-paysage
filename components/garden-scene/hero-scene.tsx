@@ -19,13 +19,13 @@ export function HeroScene({ progressSource, onDisplayedProgress }: HeroSceneProp
       {failed ? (
         <div className="absolute inset-0 flex flex-col justify-center rounded-[15px] border border-sage-500/30 text-center">
           <p className="text-[30px]">Imaginez votre prochain jardin.</p>
-          <span className="text-[14px] text-stone-400">Terrasse · Pergola · Plantations</span>
+          <span className="text-[14px] text-stone-400">Terrasse · Clôture · Plantations</span>
         </div>
       ) : (
         <canvas
           ref={canvasRef}
           role="img"
-          aria-label="Maquette 3D d’un jardin qui se construit au défilement : terrasse, portail, clôture, pergola, arbres et mobilier."
+          aria-label="Maquette 3D d’un jardin qui se construit au défilement : terrasse, portail, clôture, arbres et mobilier."
           className="block h-full w-full"
         />
       )}

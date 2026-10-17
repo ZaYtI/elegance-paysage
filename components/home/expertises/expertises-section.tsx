@@ -1,10 +1,14 @@
 import { Eyebrow } from "@/components/ui/eyebrow";
+import { fetchHomePage } from "@/lib/sanity/home-content";
 import { services } from "@/lib/site-data";
+import { serviceCardKeys } from "./service-card-keys";
 import { ExpertiseCard } from "./expertise-card";
 import { ExpertisesTrack } from "./expertises-track";
 import { SwipeHint } from "./swipe-hint";
 
-export function ExpertisesSection() {
+export async function ExpertisesSection() {
+  const homePage = await fetchHomePage();
+
   return (
     <ExpertisesTrack
       heading={
@@ -20,7 +24,11 @@ export function ExpertisesSection() {
       }
     >
       {services.map((service) => (
-        <ExpertiseCard key={service.icon} service={service} />
+        <ExpertiseCard
+          key={service.icon}
+          service={service}
+          override={homePage?.[serviceCardKeys[service.icon]] ?? null}
+        />
       ))}
     </ExpertisesTrack>
   );

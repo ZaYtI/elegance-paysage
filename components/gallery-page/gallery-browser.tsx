@@ -1,44 +1,49 @@
 "use client";
 
 import { useState } from "react";
-import { Lightbox } from "@/components/ui/lightbox/lightbox";
 import { CategoryFilters } from "./category-filters";
+import { ALL_CATEGORIES, type GalleryData } from "./gallery-entry";
+import { filterGalleryEntries } from "./gallery-filter";
 import { GalleryGrid } from "./gallery-grid";
-import { filterGalleryItems, getCategoryLabel, type GalleryFilterId } from "./gallery-items";
-import { LightboxMedia } from "./lightbox-media";
-import { LightboxThumbnails } from "./lightbox-thumbnails";
+import { UpcomingPhotos } from "@/components/ui/upcoming-photos";
+import { GalleryLightbox } from "./gallery-lightbox";
 
 const CLOSED = -1;
 
-export function GalleryBrowser() {
-  const [filter, setFilter] = useState<GalleryFilterId>("all");
+type GalleryBrowserProps = {
+  data: GalleryData;
+};
+
+export function GalleryBrowser({ data }: GalleryBrowserProps) {
+  const [filter, setFilter] = useState(ALL_CATEGORIES);
   const [openIndex, setOpenIndex] = useState(CLOSED);
 
-  const items = filterGalleryItems(filter);
-  const openItem = openIndex === CLOSED ? null : items[openIndex];
+  const entries = filterGalleryEntries(data.entries, filter);
 
-  function selectFilter(nextFilter: GalleryFilterId) {
+  function selectFilter(nextFilter: string) {
     setFilter(nextFilter);
     setOpenIndex(CLOSED);
   }
 
+  if (data.entries.length === 0) {
+    return (
+      <div className="px-[6%] pb-20 pt-10">
+        <UpcomingPhotos subline="Nos premières réalisations arrivent bientôt." />
+      </div>
+    );
+  }
+
   return (
     <>
-      <CategoryFilters selected={filter} visibleCount={items.length} onSelect={selectFilter} />
-      <GalleryGrid key={filter} items={items} onOpen={setOpenIndex} />
-      {openItem && (
-        <Lightbox
-          eyebrow={getCategoryLabel(openItem.category)}
-          title={openItem.title}
-          current={openIndex + 1}
-          total={items.length}
+      <CategoryFilters data={data} selected={filter} visibleCount={entries.length} onSelect={selectFilter} />
+      <GalleryGrid key={filter} entries={entries} onOpen={setOpenIndex} />
+      {openIndex !== CLOSED && (
+        <GalleryLightbox
+          entries={entries}
+          index={openIndex}
+          onIndexChange={setOpenIndex}
           onClose={() => setOpenIndex(CLOSED)}
-          onPrevious={() => setOpenIndex((openIndex + items.length - 1) % items.length)}
-          onNext={() => setOpenIndex((openIndex + 1) % items.length)}
-          footer={<LightboxThumbnails items={items} currentIndex={openIndex} onSelect={setOpenIndex} />}
-        >
-          <LightboxMedia item={openItem} />
-        </Lightbox>
+        />
       )}
     </>
   );

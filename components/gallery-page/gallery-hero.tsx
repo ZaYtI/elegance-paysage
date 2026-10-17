@@ -1,15 +1,24 @@
 import { Eyebrow } from "@/components/ui/eyebrow";
 import { zoneInfo } from "@/lib/site-data";
-import { galleryCategories, galleryItems } from "./gallery-items";
+import type { GalleryData } from "./gallery-entry";
 import styles from "./gallery-hero.module.css";
 
-const stats = [
-  { value: String(galleryCategories.length), label: "types d’aménagement" },
-  { value: String(galleryItems.length), label: "ambiances" },
-  { value: `${zoneInfo.radiusKm} km`, label: `autour d’${zoneInfo.city}` },
-];
+type GalleryHeroProps = {
+  data: GalleryData;
+};
 
-export function GalleryHero() {
+export function GalleryHero({ data }: GalleryHeroProps) {
+  const hasEntries = data.entries.length > 0;
+  const stats = [
+    ...(hasEntries
+      ? [
+          { value: String(data.categories.length), label: "types d’aménagement" },
+          { value: String(data.entries.length), label: "ambiances" },
+        ]
+      : []),
+    { value: `${zoneInfo.radiusKm} km`, label: `autour d’${zoneInfo.city}` },
+  ];
+
   return (
     <section
       id="top"

@@ -54,18 +54,17 @@
   text-transform: uppercase;
 }
 
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
 .title {
   max-width: 340px;
   font-size: clamp(20px, 1.8vw, 28px);
   letter-spacing: -0.8px;
   line-height: 1.1;
-}
-
-.soon {
-  display: block;
-  margin-top: 8px;
-  font-size: 12px;
-  color: rgba(250, 248, 242, 0.75);
 }
 
 .see {
@@ -101,7 +100,6 @@
   .wide, .big { grid-column: span 2; }
   .big { grid-row: span 2; }
   .title { font-size: 17px; letter-spacing: -0.4px; }
-  .soon { display: none; }
   .tag { font-size: 9px; padding: 5px 9px; }
   .see { display: none; }
 }

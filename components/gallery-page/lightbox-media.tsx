@@ -1,16 +1,25 @@
-import type { GalleryItem } from "./gallery-items";
-import { GalleryTexture } from "./gallery-texture";
-import styles from "./lightbox-media.module.css";
+import Image from "next/image";
+import { ExampleTag } from "@/components/ui/example-tag";
+import type { GalleryEntry } from "./gallery-entry";
+
+const LIGHTBOX_IMAGE_SIZES = "100vw";
 
 type LightboxMediaProps = {
-  item: GalleryItem;
+  entry: GalleryEntry;
+  photoIndex: number;
 };
 
-export function LightboxMedia({ item }: LightboxMediaProps) {
+export function LightboxMedia({ entry, photoIndex }: LightboxMediaProps) {
+  const photo = entry.photos[photoIndex];
+
   return (
-    <div className={styles.media}>
-      <GalleryTexture category={item.category} className={styles.texture} />
-      <span className={styles.label}>Photo à venir</span>
+    <div className="relative h-full w-full">
+      <Image src={photo.src} alt={photo.alt} fill sizes={LIGHTBOX_IMAGE_SIZES} className="object-contain" />
+      {entry.isExample && (
+        <span className="absolute left-4 top-4">
+          <ExampleTag />
+        </span>
+      )}
     </div>
   );
 }

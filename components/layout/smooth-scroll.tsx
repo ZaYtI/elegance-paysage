@@ -2,11 +2,13 @@
 
 import Lenis from "lenis";
 import "lenis/dist/lenis.css";
+import { usePathname } from "next/navigation";
 import { useEffect } from "react";
 import { limitDownwardDelta } from "./scroll-gate";
 
 const REDUCED_MOTION_QUERY = "(prefers-reduced-motion: reduce)";
 const HEADER_ANCHOR_OFFSET = -90;
+const STUDIO_PATH = "/studio";
 
 function isScrollLocked() {
   return (
@@ -17,8 +19,10 @@ function isScrollLocked() {
 }
 
 export function SmoothScroll() {
+  const isStudio = usePathname().startsWith(STUDIO_PATH);
+
   useEffect(() => {
-    if (window.matchMedia(REDUCED_MOTION_QUERY).matches) return;
+    if (isStudio || window.matchMedia(REDUCED_MOTION_QUERY).matches) return;
 
     const lenis = new Lenis({
       lerp: 0.1,
@@ -40,7 +44,7 @@ export function SmoothScroll() {
       cancelAnimationFrame(frameHandle);
       lenis.destroy();
     };
-  }, []);
+  }, [isStudio]);
 
   return null;
 }

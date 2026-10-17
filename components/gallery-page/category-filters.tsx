@@ -1,22 +1,23 @@
-import { galleryCategories, galleryItems, type GalleryFilterId } from "./gallery-items";
+import { ALL_CATEGORIES, type GalleryData } from "./gallery-entry";
 import styles from "./category-filters.module.css";
 
 type CategoryFiltersProps = {
-  selected: GalleryFilterId;
+  data: GalleryData;
+  selected: string;
   visibleCount: number;
-  onSelect: (filter: GalleryFilterId) => void;
+  onSelect: (filter: string) => void;
 };
 
-const filterOptions: { id: GalleryFilterId; label: string; count: number }[] = [
-  { id: "all", label: "Tous", count: galleryItems.length },
-  ...galleryCategories.map((category) => ({
-    id: category.id,
-    label: category.label,
-    count: galleryItems.filter((item) => item.category === category.id).length,
-  })),
-];
+export function CategoryFilters({ data, selected, visibleCount, onSelect }: CategoryFiltersProps) {
+  const filterOptions = [
+    { id: ALL_CATEGORIES, label: "Tous", count: data.entries.length },
+    ...data.categories.map((category) => ({
+      id: category.id,
+      label: category.label,
+      count: data.entries.filter((entry) => entry.categoryId === category.id).length,
+    })),
+  ];
 
-export function CategoryFilters({ selected, visibleCount, onSelect }: CategoryFiltersProps) {
   return (
     <div id="galerie" role="toolbar" aria-label="Filtrer la galerie" className={styles.toolbar}>
       {filterOptions.map((option) => (

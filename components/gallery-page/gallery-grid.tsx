@@ -1,21 +1,21 @@
-import type { GalleryItem } from "./gallery-items";
+import type { GalleryEntry } from "./gallery-entry";
 import { GalleryTile } from "./gallery-tile";
 import styles from "./gallery-grid.module.css";
 
 const APPEAR_STAGGER_SECONDS = 0.05;
 
 type GalleryGridProps = {
-  items: GalleryItem[];
+  entries: GalleryEntry[];
   onOpen: (index: number) => void;
 };
 
-export function GalleryGrid({ items, onOpen }: GalleryGridProps) {
+export function GalleryGrid({ entries, onOpen }: GalleryGridProps) {
   return (
     <div className={styles.grid}>
-      {items.map((item, index) => (
+      {entries.map((entry, index) => (
         <GalleryTile
-          key={item.title}
-          item={item}
+          key={entry.id}
+          entry={entry}
           appearDelaySeconds={index * APPEAR_STAGGER_SECONDS}
           onOpen={() => onOpen(index)}
         />

@@ -36,7 +36,7 @@ export function SiteFooter() {
         <span>
           © {currentYear} · Robillard &amp; Prévost · {zoneInfo.city}
         </span>
-        <Link href="/mentions-legales" className={styles.underline}>
+        <Link href="/mentions-legales" prefetch={false} className={styles.underline}>
           Mentions légales
         </Link>
       </div>

@@ -110,6 +110,12 @@
     scroll-padding-top: 90px;
   }
 
+  @media (prefers-reduced-motion: no-preference) {
+    html {
+      scroll-behavior: smooth;
+    }
+  }
+
   body {
     margin: 0;
     background: var(--ink-950);
@@ -172,5 +178,22 @@
     opacity: 1;
     translate: 0 0;
     transition: none;
+  }
+}
+
+@media print {
+  header,
+  nav,
+  footer,
+  canvas,
+  video,
+  iframe,
+  [aria-hidden="true"] {
+    display: none !important;
+  }
+
+  body {
+    background: #fff;
+    color: #000;
   }
 }

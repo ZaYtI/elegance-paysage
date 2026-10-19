@@ -1,4 +1,3 @@
-import type Lenis from "lenis";
 import { getDisplayedBuildProgress, getJourneyGeometry } from "@/components/garden-scene/hero-build-state";
 import { isTouchDevice } from "@/components/garden-scene/is-touch-device";
 
@@ -12,13 +11,13 @@ function getMaxScroll() {
   return geometry.top + (displayed + LEAD) * geometry.distance;
 }
 
-function isPastJourney(lenis: Lenis) {
+function isPastJourney(scrollY: number) {
   const geometry = getJourneyGeometry();
-  return !geometry || lenis.targetScroll > geometry.top + geometry.distance;
+  return !geometry || scrollY > geometry.top + geometry.distance;
 }
 
-export function limitDownwardDelta(lenis: Lenis, deltaY: number) {
-  if (deltaY <= 0 || isTouchDevice() || isPastJourney(lenis)) return deltaY;
-  const room = getMaxScroll() - lenis.targetScroll;
+export function limitDownwardDelta(scrollY: number, deltaY: number) {
+  if (deltaY <= 0 || isTouchDevice() || isPastJourney(scrollY)) return deltaY;
+  const room = getMaxScroll() - scrollY;
   return Math.max(0, Math.min(deltaY, room));
 }

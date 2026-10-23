@@ -42,6 +42,7 @@ type HeroSceneOptions = {
   initialProgress: number;
   reducedMotion: boolean;
   onDisplayedProgress: (progress: number) => void;
+  onReady?: () => void;
 };
 
 export function createHeroSceneController({
@@ -50,6 +51,7 @@ export function createHeroSceneController({
   initialProgress,
   reducedMotion,
   onDisplayedProgress,
+  onReady,
 }: HeroSceneOptions): HeroSceneController {
   const quality = chooseQualityProfile();
   const world = createGardenWorld(canvas, quality);
@@ -71,6 +73,7 @@ export function createHeroSceneController({
   let perfSampleSeconds = 0;
   let perfSlowSeconds = 0;
 
+  let readyReported = false;
   const draw = () => {
     const width = host.clientWidth;
     const height = host.clientHeight;
@@ -84,6 +87,10 @@ export function createHeroSceneController({
       camera: createHeroCamera(progress, width / height, yaw + userYaw, userElevation),
     });
     markHeroReady();
+    if (!readyReported) {
+      readyReported = true;
+      onReady?.();
+    }
   };
 
   const onFrame = (timestamp: number) => {

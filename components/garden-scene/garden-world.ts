@@ -29,6 +29,7 @@ import { createShrubPlanter } from "./shrubs";
 import { createRocks, createTerrain } from "./terrain";
 import { createGardenTextures } from "./textures";
 import { createTreePlanter } from "./trees";
+import { yieldToMain } from "./yield-to-main";
 
 export type GardenRenderRequest = {
   width: number;
@@ -41,6 +42,7 @@ export type GardenRenderRequest = {
 export type GardenWorld = {
   canvas: HTMLCanvasElement;
   render: (request: GardenRenderRequest) => void;
+  setLowPower: (enabled: boolean) => void;
   dispose: () => void;
 };
 
@@ -63,7 +65,7 @@ function disposeScene(scene: Scene) {
   scene.environment?.dispose();
 }
 
-export function createGardenWorld(canvas: HTMLCanvasElement, quality: QualityProfile): GardenWorld {
+export async function createGardenWorld(canvas: HTMLCanvasElement, quality: QualityProfile): Promise<GardenWorld> {
   const renderer = new WebGLRenderer({ canvas, antialias: quality.antialias, alpha: true });
   renderer.setPixelRatio(1);
   renderer.setClearColor(0x000000, 0);
@@ -84,9 +86,14 @@ export function createGardenWorld(canvas: HTMLCanvasElement, quality: QualityPro
   const materials = createBuildMaterials(textures);
 
   const terrain = createTerrain(builder);
+  await yieldToMain();
+
   const hardscape = buildHardscape(builder, materials);
   const furniture = buildFurniture(builder, materials);
-  const { uniforms: grassUniforms, meadow } = buildGrass(builder, hardscape.steppingStones, quality.grassDensity);
+  await yieldToMain();
+
+  const { uniforms: grassUniforms, meadow } = await buildGrass(builder, hardscape.steppingStones, quality.grassDensity);
+  await yieldToMain();
 
   const foliage = createFoliage(builder);
   const { plantTree, canopies } = createTreePlanter(builder, foliage);
@@ -96,6 +103,8 @@ export function createGardenWorld(canvas: HTMLCanvasElement, quality: QualityPro
   shrubs.plantBorderBeds();
   const horizonBands = addHorizonBands(builder);
   const surroundings = shrubs.plantSurroundings();
+  await yieldToMain();
+
   buildHedge(builder, foliage);
   const rocks = createRocks(builder);
 
@@ -114,6 +123,11 @@ export function createGardenWorld(canvas: HTMLCanvasElement, quality: QualityPro
   let sizeKey = "";
   let shadowProgress = -1;
 
+  const setLowPower = (enabled: boolean) => {
+    renderer.shadowMap.enabled = !enabled;
+    if (!enabled) shadowProgress = -1;
+  };
+
   const render = ({ width, height, progress, time, camera: orbit }: GardenRenderRequest) => {
     const key = `${width}x${height}`;
     if (key !== sizeKey) {
@@ -123,7 +137,7 @@ export function createGardenWorld(canvas: HTMLCanvasElement, quality: QualityPro
 
     placeCamera(camera, orbit, width / height);
     buildAnimation.apply(progress, time);
-    if (progress !== shadowProgress) {
+    if (renderer.shadowMap.enabled && progress !== shadowProgress) {
       shadowProgress = progress;
       renderer.shadowMap.needsUpdate = true;
     }
@@ -138,5 +152,5 @@ export function createGardenWorld(canvas: HTMLCanvasElement, quality: QualityPro
     renderer.forceContextLoss();
   };
 
-  return { canvas, render, dispose };
+  return { canvas, render, setLowPower, dispose };
 }

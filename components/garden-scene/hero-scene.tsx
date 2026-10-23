@@ -12,7 +12,7 @@ type HeroSceneProps = {
 export function HeroScene({ progressSource, onDisplayedProgress }: HeroSceneProps) {
   const hostRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const failed = useHeroScene(hostRef, canvasRef, progressSource, onDisplayedProgress);
+  const { failed, ready } = useHeroScene(hostRef, canvasRef, progressSource, onDisplayedProgress);
 
   return (
     <div ref={hostRef} className="absolute inset-0 h-full w-full touch-pan-y [@media(pointer:fine)]:cursor-grab">
@@ -22,12 +22,22 @@ export function HeroScene({ progressSource, onDisplayedProgress }: HeroSceneProp
           <span className="text-[14px] text-stone-400">Terrasse · Clôture · Plantations</span>
         </div>
       ) : (
-        <canvas
-          ref={canvasRef}
-          role="img"
-          aria-label="Maquette 3D d’un jardin qui se construit au défilement : terrasse, portail, clôture, arbres et mobilier."
-          className="block h-full w-full"
-        />
+        <>
+          <div
+            aria-hidden="true"
+            className="absolute inset-0 flex items-center justify-center rounded-[15px] transition-opacity duration-500"
+            style={{ opacity: ready ? 0 : 1, pointerEvents: "none" }}
+          >
+            <div className="h-[46%] w-[72%] animate-pulse rounded-[15px] bg-stone-400/10" />
+          </div>
+          <canvas
+            ref={canvasRef}
+            role="img"
+            aria-label="Maquette 3D d’un jardin qui se construit au défilement : terrasse, portail, clôture, arbres et mobilier."
+            className="block h-full w-full transition-opacity duration-500"
+            style={{ opacity: ready ? 1 : 0 }}
+          />
+        </>
       )}
     </div>
   );

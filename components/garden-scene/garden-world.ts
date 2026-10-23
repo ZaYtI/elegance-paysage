@@ -29,6 +29,7 @@ import { createShrubPlanter } from "./shrubs";
 import { createRocks, createTerrain } from "./terrain";
 import { createGardenTextures } from "./textures";
 import { createTreePlanter } from "./trees";
+import { yieldToMain } from "./yield-to-main";
 
 export type GardenRenderRequest = {
   width: number;
@@ -64,7 +65,7 @@ function disposeScene(scene: Scene) {
   scene.environment?.dispose();
 }
 
-export function createGardenWorld(canvas: HTMLCanvasElement, quality: QualityProfile): GardenWorld {
+export async function createGardenWorld(canvas: HTMLCanvasElement, quality: QualityProfile): Promise<GardenWorld> {
   const renderer = new WebGLRenderer({ canvas, antialias: quality.antialias, alpha: true });
   renderer.setPixelRatio(1);
   renderer.setClearColor(0x000000, 0);
@@ -85,9 +86,14 @@ export function createGardenWorld(canvas: HTMLCanvasElement, quality: QualityPro
   const materials = createBuildMaterials(textures);
 
   const terrain = createTerrain(builder);
+  await yieldToMain();
+
   const hardscape = buildHardscape(builder, materials);
   const furniture = buildFurniture(builder, materials);
-  const { uniforms: grassUniforms, meadow } = buildGrass(builder, hardscape.steppingStones, quality.grassDensity);
+  await yieldToMain();
+
+  const { uniforms: grassUniforms, meadow } = await buildGrass(builder, hardscape.steppingStones, quality.grassDensity);
+  await yieldToMain();
 
   const foliage = createFoliage(builder);
   const { plantTree, canopies } = createTreePlanter(builder, foliage);
@@ -97,6 +103,8 @@ export function createGardenWorld(canvas: HTMLCanvasElement, quality: QualityPro
   shrubs.plantBorderBeds();
   const horizonBands = addHorizonBands(builder);
   const surroundings = shrubs.plantSurroundings();
+  await yieldToMain();
+
   buildHedge(builder, foliage);
   const rocks = createRocks(builder);
 

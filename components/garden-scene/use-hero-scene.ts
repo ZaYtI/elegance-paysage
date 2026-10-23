@@ -32,7 +32,7 @@ export function useHeroScene(
       import("./hero-scene-controller")
         .then(({ createHeroSceneController }) => {
           if (cancelled) return;
-          const controller = createHeroSceneController({
+          return createHeroSceneController({
             canvas,
             host,
             initialProgress: progressSource.current,
@@ -40,6 +40,13 @@ export function useHeroScene(
             onDisplayedProgress,
             onReady: () => setReady(true),
           });
+        })
+        .then((controller) => {
+          if (!controller) return;
+          if (cancelled) {
+            controller.dispose();
+            return;
+          }
 
           const stopProgress = progressSource.subscribe(controller.setTargetProgress);
           const stopVisibility = observeVisibility(host, controller.setVisible);

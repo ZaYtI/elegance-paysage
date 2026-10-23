@@ -45,16 +45,16 @@ type HeroSceneOptions = {
   onReady?: () => void;
 };
 
-export function createHeroSceneController({
+export async function createHeroSceneController({
   canvas,
   host,
   initialProgress,
   reducedMotion,
   onDisplayedProgress,
   onReady,
-}: HeroSceneOptions): HeroSceneController {
+}: HeroSceneOptions): Promise<HeroSceneController> {
   const quality = chooseQualityProfile();
-  const world = createGardenWorld(canvas, quality);
+  const world = await createGardenWorld(canvas, quality);
   const autoplays = !reducedMotion && isTouchDevice();
   let targetProgress = reducedMotion ? 1 : initialProgress;
   let progress = targetProgress;

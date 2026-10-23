@@ -12,6 +12,7 @@ import { hexToLinearRgb, mixRgb, type Rgb } from "./color-utils";
 import { createStandardMaterial, type GardenBuilder } from "./garden-builder";
 import { GROUND_HALF_DEPTH, GROUND_HALF_WIDTH, diagonalWave, gentleHeight, groundZone, roughHeight, valueNoise } from "./noise";
 import type { SteppingStone } from "./hardscape";
+import { yieldToMain } from "./yield-to-main";
 
 export type GrassUniforms = {
   progress: { value: number };
@@ -150,7 +151,7 @@ function isOnSteppingStone(stones: SteppingStone[], x: number, z: number): boole
   });
 }
 
-export function buildGrass(builder: GardenBuilder, steppingStones: SteppingStone[], density: number) {
+export async function buildGrass(builder: GardenBuilder, steppingStones: SteppingStone[], density: number) {
   const { random } = builder;
   const scaled = (count: number) => Math.round(count * density);
   const uniforms: GrassUniforms = { progress: { value: 0 }, time: { value: 0 } };
@@ -186,6 +187,8 @@ export function buildGrass(builder: GardenBuilder, steppingStones: SteppingStone
     },
   });
 
+  await yieldToMain();
+
   scatterGrass(builder, uniforms, {
     count: scaled(3000),
     withering: true,
@@ -202,6 +205,8 @@ export function buildGrass(builder: GardenBuilder, steppingStones: SteppingStone
       };
     },
   });
+
+  await yieldToMain();
 
   const meadow = scatterGrass(builder, uniforms, {
     count: scaled(28000),

@@ -12,6 +12,16 @@ const PROGRESS_SMOOTHING_PER_SECOND = 5.5;
 const YAW_SMOOTHING_PER_SECOND = 7;
 const SETTLE_THRESHOLD = 0.0005;
 
+// Weak/integrated GPUs (common on many Windows & Linux machines) can't keep up
+// with full shadows + pixel ratio, which makes the scroll-driven build look
+// janky and out of sync. Measure actual frame times and drop to a lighter
+// render mode once, instead of guessing from platform or core count.
+const PERF_WARMUP_SECONDS = 1.2;
+const PERF_WINDOW_SECONDS = 1.5;
+const SLOW_FRAME_SECONDS = 1 / 24;
+const SLOW_FRAME_RATIO_THRESHOLD = 0.6;
+const LOW_POWER_MAX_PIXEL_RATIO = 1;
+
 function easeToward(current: number, target: number, smoothingPerSecond: number, seconds: number) {
   const next = current + (target - current) * (1 - Math.exp(-smoothingPerSecond * seconds));
   return Math.abs(target - next) < SETTLE_THRESHOLD ? target : next;
@@ -57,6 +67,9 @@ export function createHeroSceneController({
   let secondsSinceDraw = 0;
   let visible = true;
   let frameHandle = 0;
+  let lowPowerApplied = false;
+  let perfSampleSeconds = 0;
+  let perfSlowSeconds = 0;
 
   const draw = () => {
     const width = host.clientWidth;
@@ -82,6 +95,20 @@ export function createHeroSceneController({
       autoplaySeconds += elapsed;
       targetProgress = Math.max(targetProgress, buildAutoplayProgress(autoplaySeconds));
     }
+    if (!lowPowerApplied && time > PERF_WARMUP_SECONDS) {
+      perfSampleSeconds += elapsed;
+      if (elapsed > SLOW_FRAME_SECONDS) perfSlowSeconds += elapsed;
+      if (perfSampleSeconds >= PERF_WINDOW_SECONDS) {
+        if (perfSlowSeconds / perfSampleSeconds > SLOW_FRAME_RATIO_THRESHOLD) {
+          lowPowerApplied = true;
+          quality.maxPixelRatio = Math.min(quality.maxPixelRatio, LOW_POWER_MAX_PIXEL_RATIO);
+          world.setLowPower(true);
+        }
+        perfSampleSeconds = 0;
+        perfSlowSeconds = 0;
+      }
+    }
+
     const previousProgress = progress;
     progress = limitProgressRise(
       progress,

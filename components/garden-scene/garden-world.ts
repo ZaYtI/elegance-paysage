@@ -41,6 +41,7 @@ export type GardenRenderRequest = {
 export type GardenWorld = {
   canvas: HTMLCanvasElement;
   render: (request: GardenRenderRequest) => void;
+  setLowPower: (enabled: boolean) => void;
   dispose: () => void;
 };
 
@@ -114,6 +115,11 @@ export function createGardenWorld(canvas: HTMLCanvasElement, quality: QualityPro
   let sizeKey = "";
   let shadowProgress = -1;
 
+  const setLowPower = (enabled: boolean) => {
+    renderer.shadowMap.enabled = !enabled;
+    if (!enabled) shadowProgress = -1;
+  };
+
   const render = ({ width, height, progress, time, camera: orbit }: GardenRenderRequest) => {
     const key = `${width}x${height}`;
     if (key !== sizeKey) {
@@ -123,7 +129,7 @@ export function createGardenWorld(canvas: HTMLCanvasElement, quality: QualityPro
 
     placeCamera(camera, orbit, width / height);
     buildAnimation.apply(progress, time);
-    if (progress !== shadowProgress) {
+    if (renderer.shadowMap.enabled && progress !== shadowProgress) {
       shadowProgress = progress;
       renderer.shadowMap.needsUpdate = true;
     }
@@ -138,5 +144,5 @@ export function createGardenWorld(canvas: HTMLCanvasElement, quality: QualityPro
     renderer.forceContextLoss();
   };
 
-  return { canvas, render, dispose };
+  return { canvas, render, setLowPower, dispose };
 }

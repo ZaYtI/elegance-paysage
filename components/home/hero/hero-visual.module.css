@@ -20,15 +20,20 @@
 @media (max-width: 650px) {
   .visual {
     bottom: auto;
-    height: 46svh;
+    height: 38svh;
+  }
+
+  .image {
+    object-position: 60% 48%;
   }
 
   .fade {
     background: linear-gradient(
       180deg,
-      rgba(23, 20, 15, 0.25) 0%,
-      transparent 30%,
-      rgba(23, 20, 15, 0.75) 78%,
+      rgba(23, 20, 15, 0.3) 0%,
+      transparent 20%,
+      rgba(23, 20, 15, 0.45) 55%,
+      rgba(23, 20, 15, 0.85) 82%,
       var(--ink-950) 100%
     );
   }

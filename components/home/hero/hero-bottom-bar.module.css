@@ -6,16 +6,10 @@
   z-index: 3;
   display: flex;
   align-items: flex-end;
-  justify-content: space-between;
+  justify-content: flex-end;
   gap: 20px;
   font-size: 12px;
   letter-spacing: 1px;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .bar {
-    opacity: calc(1 - var(--hero-progress, 0) * 0.85);
-  }
 }
 
 @media (max-width: 650px) {

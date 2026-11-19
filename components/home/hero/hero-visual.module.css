@@ -1,0 +1,35 @@
+.visual {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+
+.image {
+  object-fit: cover;
+  object-position: 68% 38%;
+}
+
+.fade {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(180deg, rgba(23, 20, 15, 0.35) 0%, transparent 22%, transparent 78%, var(--ink-950) 100%),
+    linear-gradient(90deg, var(--ink-950) 0%, rgba(23, 20, 15, 0.92) 20%, rgba(23, 20, 15, 0.4) 44%, transparent 66%);
+}
+
+@media (max-width: 650px) {
+  .visual {
+    bottom: auto;
+    height: 46svh;
+  }
+
+  .fade {
+    background: linear-gradient(
+      180deg,
+      rgba(23, 20, 15, 0.25) 0%,
+      transparent 30%,
+      rgba(23, 20, 15, 0.75) 78%,
+      var(--ink-950) 100%
+    );
+  }
+}

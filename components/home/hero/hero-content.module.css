@@ -4,7 +4,6 @@
   width: 49%;
   padding: 140px 0 160px 6%;
   pointer-events: none;
-  will-change: transform;
 }
 
 .content a {
@@ -87,12 +86,6 @@
   }
 }
 
-@media (prefers-reduced-motion: no-preference) and (min-width: 651px) {
-  .content {
-    transform: translateY(calc(var(--hero-progress, 0) * -55px));
-  }
-}
-
 @media (max-width: 950px) {
   .content {
     width: 45%;
@@ -103,7 +96,7 @@
 @media (max-width: 650px) {
   .content {
     width: 100%;
-    padding: calc(var(--scene-top) + var(--scene-height) + 28px) 22px 30px;
+    padding: 24px 22px 30px;
   }
 
   .eyebrow {

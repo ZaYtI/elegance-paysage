@@ -95,8 +95,10 @@
 
 @media (max-width: 650px) {
   .content {
+    position: absolute;
+    inset: auto 0 0 0;
     width: 100%;
-    padding: 24px 22px 30px;
+    padding: 24px 22px 40px;
   }
 
   .eyebrow {

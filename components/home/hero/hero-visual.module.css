@@ -18,23 +18,18 @@
 }
 
 @media (max-width: 650px) {
-  .visual {
-    bottom: auto;
-    height: 38svh;
-  }
-
   .image {
-    object-position: 60% 48%;
+    object-position: 62% 42%;
   }
 
   .fade {
     background: linear-gradient(
       180deg,
-      rgba(23, 20, 15, 0.3) 0%,
-      transparent 20%,
-      rgba(23, 20, 15, 0.45) 55%,
-      rgba(23, 20, 15, 0.85) 82%,
-      var(--ink-950) 100%
+      rgba(23, 20, 15, 0.15) 0%,
+      rgba(23, 20, 15, 0.1) 30%,
+      rgba(23, 20, 15, 0.55) 52%,
+      rgba(23, 20, 15, 0.88) 68%,
+      var(--ink-950) 84%
     );
   }
 }
